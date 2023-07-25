@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Navbar ()
 {
@@ -8,6 +9,7 @@ export default function Navbar ()
                 <p>Chien</p>
                 <p>Druide</p>
                 <p>Chat</p>
+                <Link to='/form'>Ajouter un article</Link>
             </div>
 
         </div>
