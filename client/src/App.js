@@ -7,6 +7,7 @@ import ArticleSeeMore from './Views/ArticleSeemore';
 import FormArticle from './Components/Form/FormArticle/CreateArticle';
 import ReadUser from './Components/Form/User/ReadUser';
 import CreateUser from './Components/Form/User/CreateUser';
+import UpdateArticle from './Components/Form/FormArticle/UpdateArticle';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path='/createArticle' Component={FormArticle} />
         <Route path='/login' Component={ReadUser} />
         <Route path='/register' Component={CreateUser} />
+        <Route path='/articles/update/:id' Component={UpdateArticle} />
       </Routes>
     </Router>
   );

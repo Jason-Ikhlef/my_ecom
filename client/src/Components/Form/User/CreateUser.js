@@ -45,30 +45,32 @@ export default function CreateUser ()
 
     return (
         <div>
-            <h1>Créer un compte</h1>
-            <form onSubmit={handleClick}>
-                <label htmlFor="email">Email</label>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    placeholder="Email"
-                    className='border'
-                />
-                <label htmlFor="password">Mot de passe</label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    value={form.password}
-                    onChange={handleChange}
-                    placeholder="Mot de passe"
-                    className='border'
-                />
-                <button type="submit" className='border'>Ajouter l'article</button>
-            </form>
+            <h1 className='text-center my-5'>Créer un compte</h1>
+            <div className='w-1/2 mx-auto'>
+                <form onSubmit={handleClick} className='flex flex-col'>
+                    <label htmlFor="email">Email</label>
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        value={form.email}
+                        onChange={handleChange}
+                        placeholder="Email"
+                        className='border'
+                    />
+                    <label htmlFor="password">Mot de passe</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        value={form.password}
+                        onChange={handleChange}
+                        placeholder="Mot de passe"
+                        className='border'
+                    />
+                    <button type="submit" className='border mt-5'>S'enregistrer</button>
+                </form>
+            </div>
         </div>
     )
 }

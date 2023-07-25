@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import axios from "axios";
 import { toast } from 'react-toastify';
-import { Link } from 'react-router-dom';
 
-export default function CreateArticle() {
+export default function UpdateArticle() {
     const [form, setForm] = useState({
         title: '',
         description: '',
@@ -21,12 +20,9 @@ export default function CreateArticle() {
         }
     }
 
-    const submit = async (e) => {
+    const submit = async (e) => 
+    {
         e.preventDefault();
-        if(form.title.length < 3)
-        {
-            toast.error('Non');
-        }
         //  try {
         //      if (form.title.length < 3) {
         //          toast.error("Le titre doit faire plus de 3 caractères");
@@ -46,13 +42,13 @@ export default function CreateArticle() {
         //  } catch (e) {
         //      console.log(e);
         //  }
-    console.log(form)
-     }
+
+        console.log(form)
+    }
 
     return (
         <div>
-            <Link to='/articles'>Voir les articles</Link>
-            <h1 className='text-center my-5'>Formulaire d'ajout d'article</h1>
+            <h1 className='text-center my-5'>Mettre à jour l'article</h1>
             <div className='border w-1/2 mx-auto'>
                 <form onSubmit={submit} className='flex flex-col'>
                     <label htmlFor="title">Titre de l'article</label>
@@ -99,7 +95,7 @@ export default function CreateArticle() {
                         onChange={handleChange}
                         multiple
                     />
-                    <button type="submit" className='border mt-5'>Ajouter l'article</button>
+                    <button type="submit" className='border my-5'>Mettre à jour l'article</button>
                 </form>
             </div>
         </div>
