@@ -62,6 +62,17 @@ app.post("/create", async (req, res) => {
     }
 });
 
+app.get("/articles", async (req, res) => {
+    try {
+        const articles= await articleCollection.find({});
+        res.json(articles);
+    } catch (e) {
+        // voir pour envoyer des messages plus clairs en fonction des erreurs
+        console.log(e);
+        res.json("fail");
+    }
+});
+
 app.post("/update", async (req, res) => {
     let idArt = req.params.id;
 
