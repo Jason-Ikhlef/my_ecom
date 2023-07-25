@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import { useLocation} from "react-router-dom";
 import img from '../assets/garden-path-ge6d499b25_640.jpg';
 
-export default function Article_seemore ()
+export default function ArticleSeeMore ()
 {
     
     const [id, setId] = useState('');

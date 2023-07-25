@@ -7,7 +7,7 @@ import img from '../assets/garden-path-ge6d499b25_640.jpg';
 import img2 from '../assets/martial-arts-gd36c1998a_640.jpg';
 import img3 from '../assets/Support.jpg'
 
-export default function Home_page (params) 
+export default function HomePage (params) 
 {
     var settings = {
         dots: true,
