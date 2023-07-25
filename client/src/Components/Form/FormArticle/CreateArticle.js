@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 
-export default function FormArticle() {
+export default function CreateArticle() {
     const [form, setForm] = useState({
         title: '',
         description: '',
@@ -23,25 +23,29 @@ export default function FormArticle() {
 
     const submit = async (e) => {
         e.preventDefault();
-         try {
-             if (form.title.length < 3) {
-                 toast.error("Le titre doit faire plus de 3 caractères");
-             } else {
-                 try {
-                     const response = await axios.post("http://localhost:8000/AddArticle", form);
-                     if (response.data === "success") {
-                         toast.success("Nouvel article ajouté !");
-                     } else {
-                         toast.error("Une erreur est survenue");
-                     }
-                 } catch (error) {
-                     console.error("Error submitting form:", error);
-                     toast.error("Une erreur est survenue lors de l'ajout de l'article");
-                 }
-             }
-         } catch (e) {
-             console.log(e);
-         }
+        if(form.title.length < 3)
+        {
+            toast.error('Non');
+        }
+        //  try {
+        //      if (form.title.length < 3) {
+        //          toast.error("Le titre doit faire plus de 3 caractères");
+        //      } else {
+        //          try {
+        //              const response = await axios.post("http://localhost:8000/AddArticle", form);
+        //              if (response.data === "success") {
+        //                  toast.success("Nouvel article ajouté !");
+        //              } else {
+        //                  toast.error("Une erreur est survenue");
+        //              }
+        //          } catch (error) {
+        //              console.error("Error submitting form:", error);
+        //              toast.error("Une erreur est survenue lors de l'ajout de l'article");
+        //          }
+        //      }
+        //  } catch (e) {
+        //      console.log(e);
+        //  }
     console.log(form)
      }
 
@@ -58,6 +62,7 @@ export default function FormArticle() {
                     value={form.title}
                     onChange={handleChange}
                     placeholder="Titre de l'article"
+                    className='border'
                 />
                 <label htmlFor="description">Description de l'article</label>
                 <input
@@ -67,6 +72,7 @@ export default function FormArticle() {
                     value={form.description}
                     onChange={handleChange}
                     placeholder="Description de l'article"
+                    className='border'
                 />
                 <label htmlFor="price">Prix de l'article</label>
                 <input
@@ -76,6 +82,7 @@ export default function FormArticle() {
                     value={form.price}
                     onChange={handleChange}
                     placeholder="Prix de l'article"
+                    className='border'
                 />
                 <label htmlFor="characteristics">Caractéristiques de l'article</label>
                 <input
@@ -85,16 +92,18 @@ export default function FormArticle() {
                     value={form.characteristics}
                     onChange={handleChange}
                     placeholder="Caractéristiques de l'article"
+                    className='border'
                 />
                 <label htmlFor="photo">Photo de l'article</label>
                 <input
                     type="file"
                     id="photo"
                     name="photo"
+                    className='border'
                     onChange={handleChange}
                     multiple
                 />
-                <button type="submit">Ajouter l'article</button>
+                <button type="submit" className='border'>Ajouter l'article</button>
             </form>
         </div>
     );
