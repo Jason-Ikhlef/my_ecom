@@ -62,6 +62,54 @@ app.post("/create", async (req, res) => {
     }
 });
 
+app.post("/update", async (req, res) => {
+    let idArt = req.params.id;
+
+    const {
+        title,
+        description,
+        price,
+        caracteristics,
+        pictures
+    } = req.body;
+
+    // faut gerer les images pour le stockage
+
+    let data = {
+        title: title,
+        description: description,
+        price: price,
+        caracteristics: caracteristics
+    };
+
+    try {
+        await articleCollection.updateOne({
+            _id: idArt
+        }, 
+        {
+            $set: data
+        });
+        res.json("success");
+    } catch (e) {
+        // voir pour envoyer des messages plus clairs en fonction des erreurs
+        console.log(e);
+        res.json("fail");
+    }
+});
+
+app.post("/delete", async (req, res) => {
+    let idArt = req.params.id;
+
+    try {
+        await articleCollection.deleteOne({_id: idArt});
+        res.json("success");
+    } catch (e) {
+        // voir pour envoyer des messages plus clairs en fonction des erreurs
+        console.log(e);
+        res.json("fail");
+    }
+});
+
 app.post("/createUser", async(req, res) => {
     const {
         email,
