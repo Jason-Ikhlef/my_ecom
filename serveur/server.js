@@ -16,6 +16,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
+// jason mongodb+srv://root:root@petheaven.ygomfkk.mongodb.net/petHeaven
+// marie mongodb+srv://mrbn2212:Ma22Rie12@pool.zuhpca4.mongodb.net/petHeaven
+
 mongoose.connect("mongodb+srv://root:root@petheaven.ygomfkk.mongodb.net/petHeaven", {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -33,8 +36,48 @@ app.listen(PORT, () => {
 
 app.post("/create", async (req, res) => {
     const {
-        name,
-        pictures,
-        description
+        title,
+        description,
+        price,
+        caracteristics,
+        pictures
     } = req.body;
+
+    // faut gerer les images pour le stockage
+
+    let data = {
+        title: title,
+        description: description,
+        price: price,
+        caracteristics: caracteristics
+    };
+
+    try {
+        await articleCollection.create(data);
+        res.json("success");
+    } catch (e) {
+        // voir pour envoyer des messages plus clairs en fonction des erreurs
+        console.log(e);
+        res.json("fail");
+    }
 });
+
+app.post("/createUser", async(req, res) => {
+    const {
+        email,
+        password
+    } = req.body;
+
+    let data = {
+        email: email,
+        password: password
+    };
+
+    try {
+        await userCollection.create(data);
+        res.json("success");
+    } catch (e) {
+        console.log(e);
+        res.json("fail");
+    }
+})

@@ -26,11 +26,7 @@ const userSchema = new mongoose.Schema({
 });
 
 const articleSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    pictures: {
+    title: {
         type: String,
         required: true
     },
@@ -38,13 +34,18 @@ const articleSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    // categories: {
-    //     type: String,
-    //     required: true
-    // }, tags: {
-    //     type: String,
-    //     required: true
-    // }
+    categories: {
+        type: String,
+        required: true
+    },
+    price: {
+        type: Number,
+        required: true
+    },
+    pictures: {
+        type: String,
+        required: true
+    }
 })
 
 const userCollection = mongoose.model("user", userSchema)
