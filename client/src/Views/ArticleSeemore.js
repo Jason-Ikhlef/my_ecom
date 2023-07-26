@@ -54,6 +54,15 @@ export default function ArticleSeeMore ()
                 <p>{article.price} €</p>
                 <p>{article.caracteristique}</p>
             </div>
+
+            <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-slate-400">
+                <Link className="w-3/4 mx-auto" to={`/articles/update/${article._id}`} state={{ id : article._id}}>
+                    Modifier 
+                </Link>
+            </p>
+            <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-slate-400" onClick={deleteOnClick}>
+                Supprimer
+            </p>
       </div>
     )
 

@@ -1,8 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { toast } from 'react-toastify';
 
 export default function UpdateArticle() {
+
+    const [id, setId] = useState('');
+    const [article, setArticle] = useState(null);
+   
+    const location = useLocation()
+
+    useEffect(() => {
+
+        location.state === null ? setId(window.location.href.split('/')[5]) : setId(location.state.id);
+
+    },[location])
+
+    useEffect(() => {
+        const fetchArticle = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8000/article/${id}`);
+                setArticle(response.data)
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchArticle();
+    }, [id]);
+
+
     const [form, setForm] = useState({
         title: '',
         description: '',
@@ -11,6 +38,18 @@ export default function UpdateArticle() {
         photo: null
     });
 
+    useEffect(() => {
+        if (article) {
+            setForm ({
+                title: article.title,
+                description: article.description,
+                price: article.price,
+                caracteristics: article.caracteristics,
+                photo: null
+            })
+        }
+    },[article])
+    
     const handleChange = (e) => {
         const { name, value, files } = e.target;
         if (name === 'photo') {
@@ -18,33 +57,47 @@ export default function UpdateArticle() {
         } else {
             setForm({ ...form, [name]: value });
         }
-    }
+    };
 
-    const submit = async (e) => 
-    {
+    const submit = async (e) => {
         e.preventDefault();
-        //  try {
-        //      if (form.title.length < 3) {
-        //          toast.error("Le titre doit faire plus de 3 caractères");
-        //      } else {
-        //          try {
-        //              const response = await axios.post("http://localhost:8000/AddArticle", form);
-        //              if (response.data === "success") {
-        //                  toast.success("Nouvel article ajouté !");
-        //              } else {
-        //                  toast.error("Une erreur est survenue");
-        //              }
-        //          } catch (error) {
-        //              console.error("Error submitting form:", error);
-        //              toast.error("Une erreur est survenue lors de l'ajout de l'article");
-        //          }
-        //      }
-        //  } catch (e) {
-        //      console.log(e);
-        //  }
+        try {
+            if (form.title.length < 3) {
+                toast.error("Le titre doit faire plus de 3 caractères");
+            } else {
+                try {
+                    const formData = new FormData();
+                    formData.append("title", form.title);
+                    formData.append("description", form.description);
+                    formData.append("price", form.price);
+                    formData.append("caracteristics", form.caracteristics);
+                    formData.append("id", id);
 
-        console.log(form)
-    }
+                                        if (form.photo) {
+                        for (let i = 0; i < form.photo.length; i++) {
+                            formData.append("photo", form.photo[i]);
+                        }
+                    }
+                    console.log(formData);
+
+                    const response = await axios.post("http://localhost:8000/UpdateArticle", formData);
+
+                    console.log(response.data);
+
+                    if (response.data.message === "success") {
+                        toast.success("Nouvel article ajouté !");
+                    } else {
+                        toast.error("Une erreur est survenue");
+                    }
+                } catch (error) {
+                    console.error("Error submitting form:", error);
+                    toast.error("Une erreur est survenue lors de l'ajout de l'article");
+                }
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    };
 
     return (
         <div>

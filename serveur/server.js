@@ -126,36 +126,37 @@ app.get("/article/:id", async (req, res) => {
     }
 })
 
-app.post("/update", async (req, res) => {
-    let idArt = req.params.id;
+app.post("/UpdateArticle", upload.array('photo'), async (req, res) => {
 
     const {
         title,
         description,
         price,
         caracteristics,
-        pictures
+        id
     } = req.body;
 
-    // faut gerer les images pour le stockage
+    const picturesNames = req.files.map(file => file.filename);
 
     let data = {
         title: title,
         description: description,
         price: price,
-        caracteristics: caracteristics
+        caracteristics: caracteristics,
+        pictures: picturesNames
     };
 
     try {
         await articleCollection.updateOne({
-            _id: idArt
+            _id: id
         }, 
         {
             $set: data
         });
+
         res.json("success");
     } catch (e) {
-        // voir pour envoyer des messages plus clairs en fonction des erreurs
+        
         console.log(e);
         res.json("fail");
     }
