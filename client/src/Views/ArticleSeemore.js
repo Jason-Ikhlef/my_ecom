@@ -16,6 +16,11 @@ export default function ArticleSeeMore ()
 
     },[location])
 
+    const deleteOnClick = (e) => 
+    {
+        console.log(id);    
+    }
+
     return (
         <div>
             <div className="bg-red-200 w-3/4 mx-auto mt-10 content_border">
@@ -31,6 +36,9 @@ export default function ArticleSeeMore ()
                 <Link className="w-3/4 mx-auto" to='/articles/update/1' state={{ id : '1'}}>
                     Modifier 
                 </Link>
+            </p>
+            <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-slate-400" onClick={deleteOnClick}>
+                Supprimer
             </p>
         </div>
     )
