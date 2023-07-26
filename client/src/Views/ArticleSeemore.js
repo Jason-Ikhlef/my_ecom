@@ -5,6 +5,7 @@ import React, {
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import img from '../assets/garden-path-ge6d499b25_640.jpg';
+import { Link } from "react-router-dom";
 
 export default function ArticleSeeMore ()
 {
@@ -15,9 +16,15 @@ export default function ArticleSeeMore ()
     const location = useLocation()
 
     useEffect(() => {
+
         location.state === null ? setId(window.location.href.split('/')[4]) : setId(location.state.id);
 
     },[location])
+
+    const deleteOnClick = (e) => 
+    {
+        console.log(id);    
+    }
 
     useEffect(() => {
         const fetchArticle = async () => {
