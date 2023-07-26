@@ -7,7 +7,7 @@ export default function UpdateArticle() {
         title: '',
         description: '',
         price: '',
-        characteristics: '',
+        caracteristics: '',
         photo: null
     });
 
@@ -78,12 +78,12 @@ export default function UpdateArticle() {
                         onChange={handleChange}
                         placeholder="Prix de l'article"
                     />
-                    <label htmlFor="characteristics">Caractéristiques de l'article</label>
+                    <label htmlFor="caracteristics">Caractéristiques de l'article</label>
                     <input
                         type="text"
-                        id="characteristics"
-                        name="characteristics"
-                        value={form.characteristics}
+                        id="caracteristics"
+                        name="caracteristics"
+                        value={form.caracteristics}
                         onChange={handleChange}
                         placeholder="Caractéristiques de l'article"
                     />
