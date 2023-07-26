@@ -104,6 +104,28 @@ app.get("/articles", async (req, res) => {
     }
 });
 
+app.get("/article/:id", async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const article = await articleCollection.findOne({
+            _id: id
+        });
+
+        if (!article) {
+            return res.status(404).json({
+                message: "Article introuvable"
+            });
+        }
+        res.json(article);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: "Erreur lors de la récupération de l'article"
+        });
+    }
+})
+
 app.post("/update", async (req, res) => {
     let idArt = req.params.id;
 

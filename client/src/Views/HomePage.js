@@ -48,13 +48,14 @@ export default function HomePage(params) {
             <div className="bg-red-200 w-1/2 mx-auto mt-10">
                 <Slider {...settings}>
                     {articles.map((article) => (
+                    <Link className="w-3/4 mx-auto" to={`/articles/${article._id}`} state={{ id : article._id}}>
                         <div key={article._id}>
                             <h2 className="text-center text-white text-2xl">{article.title}</h2>
-                            {/* <img src={`./../serveur/storage/${article.pictures[0]}`} className="border mx-auto w-full" alt="article img"></img> */}
-                            <img src='http://localhost:8000/storage/1lABuXfU7j.jpg' alt="test" />
+                            <img src={`http://localhost:8000/storage/${article.pictures[0]}`} alt="test" />
 
                             <p className="text-center">{article.description}</p>
                         </div>
+                        </Link>
                     ))}
                 </Slider>
             </div>
