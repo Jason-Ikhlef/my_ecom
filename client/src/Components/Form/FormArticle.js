@@ -34,9 +34,7 @@ export default function FormArticle() {
                     formData.append("price", form.price);
                     formData.append("caracteristics", form.caracteristics);
 
-                    
-                    // Ajoutez toutes les images sélectionnées à l'instance de FormData
-                    if (form.photo) {
+                                        if (form.photo) {
                         for (let i = 0; i < form.photo.length; i++) {
                             formData.append("photo", form.photo[i]);
                         }
@@ -45,10 +43,9 @@ export default function FormArticle() {
 
                     const response = await axios.post("http://localhost:8000/AddArticle", formData);
 
-                    // Traitez la réponse du backend si nécessaire
                     console.log(response.data);
 
-                    if (response.data.message === "Image téléchargée avec succès.") {
+                    if (response.data.message === "success") {
                         toast.success("Nouvel article ajouté !");
                     } else {
                         toast.error("Une erreur est survenue");

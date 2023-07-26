@@ -18,6 +18,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 
+app.use('/storage', express.static(path.join(__dirname, 'storage')));
+
 // jason mongodb+srv://root:root@petheaven.ygomfkk.mongodb.net/petHeaven
 // marie mongodb+srv://mrbn2212:Ma22Rie12@pool.zuhpca4.mongodb.net/petHeaven
 
