@@ -4,8 +4,8 @@ import React, {
 } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
-import img from '../assets/garden-path-ge6d499b25_640.jpg';
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function ArticleSeeMore ()
 {
@@ -21,9 +21,19 @@ export default function ArticleSeeMore ()
 
     },[location])
 
-    const deleteOnClick = (e) => 
+    const deleteOnClick = async (e) => 
     {
-        console.log(id);    
+        try {
+            const response = await axios.delete(`http://localhost:8000/DeleteArticle/${id}`);
+            if (response.data.message === "success") {
+                toast.success("Article supprimé !");
+            } else {
+                toast.error("Une erreur est survenue");
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error("Une erreur est survenue");
+        }
     }
 
     useEffect(() => {

@@ -162,11 +162,14 @@ app.post("/UpdateArticle", upload.array('photo'), async (req, res) => {
     }
 });
 
-app.post("/delete", async (req, res) => {
-    let idArt = req.params.id;
+app.delete("/DeleteArticle/:id", async (req, res) => {
+
+    // verifier que l'article existe bien avant de le delete pou renvoyer un message clair au front
+    const { id } = req.params;
 
     try {
-        await articleCollection.deleteOne({_id: idArt});
+        await articleCollection.deleteOne({_id: id});
+        console.log("ici");
         res.json("success");
     } catch (e) {
         // voir pour envoyer des messages plus clairs en fonction des erreurs
