@@ -1,5 +1,7 @@
 const cors = require('cors');
 const express = require('express');
+const multer = require('multer');
+const path = require('path');
 
 const {
     userCollection,
@@ -30,28 +32,55 @@ mongoose.connect("mongodb+srv://root:root@petheaven.ygomfkk.mongodb.net/petHeave
     console.error("Erreur lors de la connexion à MongoDB :", err);
 });
 
+const uploadDir = path.join(__dirname, './storage');
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, uploadDir);
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = RandomName();
+    const extension = path.extname(file.originalname);
+    cb(null, uniqueSuffix + extension);
+  }
+});
+
+const upload = multer({ storage });
+
+function RandomName() {
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+    let counter = 0;
+    while (counter < 10) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      counter += 1;
+    }
+    return result;
+}
+  
+
 app.listen(PORT, () => {
     console.log("Utilisation du port " + PORT);
 });
 
-app.post("/create", async (req, res) => {
+app.post("/AddArticle", upload.array('photo'), async (req, res) => {
     const {
         title,
         description,
         price,
         caracteristics,
-        pictures
     } = req.body;
 
-    // faut gerer les images pour le stockage
-
+    const picturesNames = req.files.map(file => file.filename);
+        
     let data = {
         title: title,
         description: description,
         price: price,
-        caracteristics: caracteristics
+        caracteristics: caracteristics,
+        pictures: picturesNames
     };
-
+    
     try {
         await articleCollection.create(data);
         res.json("success");
