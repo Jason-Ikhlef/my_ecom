@@ -34,7 +34,7 @@ const articleSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    categories: {
+    caracteristics: {
         type: String,
         required: true
     },
@@ -43,7 +43,8 @@ const articleSchema = new mongoose.Schema({
         required: true
     },
     pictures: {
-        type: String,
+        type: Array,
+        default: [],
         required: true
     }
 })
