@@ -3,14 +3,14 @@ const router = express.Router();
 
 const { userCollection } = require("../../mongo");
 
-router.post("/UpdateUser/:id", async(req, res) => {
+router.put("/UpdateUser/:id", async(req, res) => {
     
-    let userId = req.params.id;
+    let userId = req.body.id;
 
     const {
         email,
         password
-    } = req.body;
+    } = req.body.data;
 
     let data = {
         email: email,
@@ -18,7 +18,7 @@ router.post("/UpdateUser/:id", async(req, res) => {
     };
 
     try {
-        await articleCollection.updateOne({
+        await userCollection.updateOne({
             _id: userId
         }, 
         {

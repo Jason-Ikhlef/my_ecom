@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
 
-const { articleCollection } = require("../../mongo");
+const { userCollection } = require("../../mongo");
 
-router.get("/articles", async (req, res) => {
+router.get("/users", async (req, res) => {
 
     try {
-        const articles = await articleCollection.find({});
-        res.json(articles);
+        const users = await userCollection.find({});
+        res.json(users);
     } catch (e) {
         // voir pour envoyer des messages plus clairs en fonction des erreurs
         console.log(e);

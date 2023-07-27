@@ -1,6 +1,7 @@
 import React from "react";
 import profilPicture from "../assets/user-line.svg";
 import { Link } from "react-router-dom";
+import LogOut from "../Components/LogOut";
 
 export default function UserProfilPage ()
 {
@@ -30,9 +31,12 @@ export default function UserProfilPage ()
                     {/* <Link className="w-3/4 mx-auto" to={`/profil/update/${article._id}`} state={{ id : article._id}}>
                         Modifier 
                     </Link> */}
-                    <Link className="w-3/4 mx-auto" to={`/profil/update/1`}>
+                    <Link className="w-3/4 mx-auto" to={`/profil/update`}>
                         Modifier 
                     </Link>
+                </p>
+                <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-slate-400 cursor-pointer" onClick={LogOut}>
+                    DECO
                 </p>
                 <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-slate-400 cursor-pointer" onClick={deleteOnClick}>
                     Supprimer

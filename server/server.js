@@ -53,28 +53,42 @@ app.use('/', Articles);
 const AddArticle = require('./routes/articles/new');
 app.use('/', AddArticle);
 
-const ShowArticles = require('./routes/articles/show');
-app.use('/', ShowArticles);
+const ShowArticle = require('./routes/articles/show');
+app.use('/', ShowArticle);
 
-const UpdateArticles = require('./routes/articles/update');
-app.use('/', UpdateArticles);
+const UpdateArticle = require('./routes/articles/update');
+app.use('/', UpdateArticle);
 
-const DeleteArticles = require('./routes/articles/delete');
-app.use('/', DeleteArticles);
+const DeleteArticle = require('./routes/articles/delete');
+app.use('/', DeleteArticle);
 
 // USERS
 
-const LogIn = require('./routes/users/login');
-app.use('/', LogIn);
-
-const CurrentUser = require('./routes/users/current_user');
-app.use('/', CurrentUser);
+const Users = require('./routes/users/index');
+app.use('/', Users);
 
 const AddUser = require('./routes/users/new');
 app.use('/', AddUser);
 
+const ShowUser = require('./routes/users/show');
+app.use('/', ShowUser);
+
 const UpdateUser = require('./routes/users/update');
 app.use('/', UpdateUser);
+
+const DeleteUser = require('./routes/users/delete');
+app.use('/', DeleteUser);
+
+// AUTH
+
+const CurrentUser = require('./routes/auth/current_user');
+app.use('/', CurrentUser);
+
+const LogIn = require('./routes/auth/login');
+app.use('/', LogIn);
+
+const LogOut = require('./routes/auth/logout');
+app.use('/', LogOut);
 
 app.listen(PORT, () => {
     console.log("Utilisation du port " + PORT);
