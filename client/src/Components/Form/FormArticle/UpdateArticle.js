@@ -79,7 +79,11 @@ export default function UpdateArticle() {
                             formData.append("photo", form.photo[i]);
                         }
                     }
-                    const response = await axios.post("http://localhost:8000/UpdateArticle", formData);
+
+                          
+
+                    const response = await axios.put("http://localhost:8000/UpdateArticle", formData);
+
 
                     if (response.data === "success") {
                         toast.success("Article modifié !");
