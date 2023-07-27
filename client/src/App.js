@@ -8,6 +8,8 @@ import FormArticle from './Components/Form/FormArticle/CreateArticle';
 import ReadUser from './Components/Form/User/ReadUser';
 import CreateUser from './Components/Form/User/CreateUser';
 import UpdateArticle from './Components/Form/FormArticle/UpdateArticle';
+import UserProfilPage from './Views/UserProfilPage';
+import UpdateUser from './Components/Form/User/UpdateUser';
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
         <Route path='/login' Component={ReadUser} />
         <Route path='/register' Component={CreateUser} />
         <Route path='/articles/update/:id' Component={UpdateArticle} />
+        <Route path='/profil' Component={UserProfilPage} />
+        <Route path='/profil/update/:id' Component={UpdateUser} />
       </Routes>
     </Router>
   );

@@ -12,6 +12,7 @@ export default function Navbar ()
             <Link to='/createArticle'>Ajouter un article</Link>
             <Link to='/login'>Se connecter</Link>
             <Link to='/register'>Créer un compte</Link>
+            <Link to='/profil'>Profil</Link>
         </div>
     )
 }

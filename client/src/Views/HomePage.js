@@ -55,8 +55,7 @@ export default function HomePage(params) {
                     <Link className="w-3/4 mx-auto" to={`/articles/${article._id}`} state={{ id : article._id}}>
                         <div key={article._id}>
                             <h2 className="text-center text-white text-2xl">{article.title}</h2>
-                            <img src={`http://localhost:8000/storage/${article.pictures[0]}`} alt="test" className="mx-auto" />
-
+                            <img src={`http://localhost:8000/storage/${article.pictures[0]}`} alt="test" className="w-[200px] mx-auto" />
                             <p className="text-center">{article.description}</p>
                         </div>
                         </Link>
