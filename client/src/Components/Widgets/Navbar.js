@@ -44,6 +44,7 @@ export default function Navbar() {
                 </div>
             </div>
             <Link to="/createArticle">Ajouter un article</Link>
+            <Link to='/createCategory'>Créer une catégorie</Link>
             <div className="navbar_login flex items-center justify-center w-[9%] bg-[#4FBEB7] rounded-lg h-10">
                 <img src={profilPicture} alt="Profil" className="w-8" />
                 <Link to="/login" className="text-xl">
