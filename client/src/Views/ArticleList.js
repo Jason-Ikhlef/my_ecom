@@ -37,7 +37,7 @@ if (!articles) {
         <div key={article._id} className="bg-red-200 w-3/4 mx-auto mt-10 content_border">
           <Link className="w-3/4 mx-auto" to={`/articles/${article._id}`} state={{ id : article._id}}>
             <p className="text-center text-white mb-6 p-2 bg-slate-400">{article.title}</p>
-            <img src={`http://localhost:8000/storage/${article.pictures[0]}`} className="w-fit mx-auto" alt="article img"></img> 
+            <img src={`http://localhost:8000/storage/${article.pictures[0]}`} className="w-[200px] mx-auto" alt="article img"></img> 
             <p className="text-center my-10">{article.description}</p>
             <div className="flex justify-around pb-5">
               <p>{article.price} €</p>

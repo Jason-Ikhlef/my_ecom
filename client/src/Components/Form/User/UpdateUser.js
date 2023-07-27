@@ -3,7 +3,7 @@ import axios from "axios";
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 
-export default function CreateUser ()
+export default function UpdateUser ()
 {
 
     const [form, setForm] = useState({
@@ -45,7 +45,7 @@ export default function CreateUser ()
 
     return (
         <div>
-            <h1 className='text-center my-5'>Créer un compte</h1>
+            <h1 className='text-center my-5'>Modifier vos informations</h1>
             <div className='w-1/2 mx-auto'>
                 <form onSubmit={handleClick} className='flex flex-col'>
                     <label htmlFor="email">Email</label>
@@ -70,7 +70,7 @@ export default function CreateUser ()
                         placeholder="Mot de passe"
                         className='border'
                     />
-                    <button type="submit" className='border mt-5'>S'enregistrer</button>
+                    <button type="submit" className='border mt-5'>Modifier</button>
                 </form>
             </div>
         </div>

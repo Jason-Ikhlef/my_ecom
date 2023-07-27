@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from "axios";
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function CreateArticle() {
     const [form, setForm] = useState({
@@ -39,14 +40,14 @@ export default function CreateArticle() {
                             formData.append("photo", form.photo[i]);
                         }
                     }
-                    console.log(formData);
 
                     const response = await axios.put("http://localhost:8000/AddArticle", formData);
 
-                    console.log(response.data);
-
-                    if (response.data.message === "success") {
+                    if (response.data === "success") {
                         toast.success("Nouvel article ajouté !");
+                        setTimeout(() => {
+                            window.location.href = 'http://localhost:3000/articles'
+                        }, 1500);
                     } else {
                         toast.error("Une erreur est survenue");
                     }
@@ -63,6 +64,7 @@ export default function CreateArticle() {
     return (
         <div>
             <Link to='/articles'>Voir les articles</Link>
+            <ToastContainer />
             <h1 className='text-center my-5'>Formulaire d'ajout d'article</h1>
             <div className='border w-1/2 mx-auto'>
                 <form onSubmit={submit} className='flex flex-col'>
@@ -73,6 +75,7 @@ export default function CreateArticle() {
                         name="title"
                         value={form.title}
                         onChange={handleChange}
+                        required
                         placeholder="Titre de l'article"
                     />
                     <label htmlFor="description">Description de l'article</label>
@@ -82,6 +85,7 @@ export default function CreateArticle() {
                         name="description"
                         value={form.description}
                         onChange={handleChange}
+                        required
                         placeholder="Description de l'article"
                     />
                     <label htmlFor="price">Prix de l'article</label>
@@ -91,6 +95,7 @@ export default function CreateArticle() {
                         name="price"
                         value={form.price}
                         onChange={handleChange}
+                        required
                         placeholder="Prix de l'article"
                     />
                     <label htmlFor="caracteristics">Caractéristiques de l'article</label>
@@ -100,6 +105,7 @@ export default function CreateArticle() {
                         name="caracteristics"
                         value={form.caracteristics}
                         onChange={handleChange}
+                        required
                         placeholder="Caractéristiques de l'article"
                     />
                     <label htmlFor="photo">Photo de l'article</label>

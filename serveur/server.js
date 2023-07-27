@@ -27,7 +27,9 @@ app.use(cors({
     origin: ["http://localhost:3000"]
 }));
 
+
 app.use('/storage', express.static(path.join(__dirname, 'storage')));
+
 
 mongoose.connect("mongodb+srv://root:root@petheaven.ygomfkk.mongodb.net/petHeaven", {
     useNewUrlParser: true,
