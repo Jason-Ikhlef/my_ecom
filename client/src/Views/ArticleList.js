@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 
 export default function SimpleSlider() {
 
-  const [articles, setArticles] = useState([]);
+  const [articles, setArticles] = useState(null);
 
     useEffect(() => {
         const fetchArticles = async () => {
@@ -27,12 +27,16 @@ export default function SimpleSlider() {
 
 console.log(articles);
 
+if (!articles) {
+  return <p>Chargement des articles</p>;
+}
+
     return (
       <>
       {articles.map((article) => (
         <div key={article._id} className="bg-red-200 w-3/4 mx-auto mt-10 content_border">
           <Link className="w-3/4 mx-auto" to={`/articles/${article._id}`} state={{ id : article._id}}>
-            <p className="text-center text-white mb-6 p-2 bg-slate-400">Titre de l'article</p>
+            <p className="text-center text-white mb-6 p-2 bg-slate-400">{article.title}</p>
             <img src={`http://localhost:8000/storage/${article.pictures[0]}`} className="w-fit mx-auto" alt="article img"></img> 
             <p className="text-center my-10">{article.description}</p>
             <div className="flex justify-around pb-5">

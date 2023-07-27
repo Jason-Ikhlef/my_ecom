@@ -11,7 +11,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 export default function HomePage(params) {
-    const [articles, setArticles] = useState([]);
+    const [articles, setArticles] = useState(null);
 
     useEffect(() => {
         const fetchArticles = async () => {
@@ -36,6 +36,10 @@ export default function HomePage(params) {
         slidesToShow: 1,
         slidesToScroll: 1
     };
+
+    if (!articles) {
+        return <p>Chargement des articles...</p>;
+    }
 
     return (
         <div>

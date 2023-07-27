@@ -8,7 +8,7 @@ export default function CreateArticle() {
         title: '',
         description: '',
         price: '',
-        characteristics: '',
+        caracteristics: '',
         photo: null
     });
 
@@ -19,35 +19,46 @@ export default function CreateArticle() {
         } else {
             setForm({ ...form, [name]: value });
         }
-    }
+    };
 
     const submit = async (e) => {
         e.preventDefault();
-        if(form.title.length < 3)
-        {
-            toast.error('Non');
+        try {
+            if (form.title.length < 3) {
+                toast.error("Le titre doit faire plus de 3 caractères");
+            } else {
+                try {
+                    const formData = new FormData();
+                    formData.append("title", form.title);
+                    formData.append("description", form.description);
+                    formData.append("price", form.price);
+                    formData.append("caracteristics", form.caracteristics);
+
+                                        if (form.photo) {
+                        for (let i = 0; i < form.photo.length; i++) {
+                            formData.append("photo", form.photo[i]);
+                        }
+                    }
+                    console.log(formData);
+
+                    const response = await axios.post("http://localhost:8000/AddArticle", formData);
+
+                    console.log(response.data);
+
+                    if (response.data.message === "success") {
+                        toast.success("Nouvel article ajouté !");
+                    } else {
+                        toast.error("Une erreur est survenue");
+                    }
+                } catch (error) {
+                    console.error("Error submitting form:", error);
+                    toast.error("Une erreur est survenue lors de l'ajout de l'article");
+                }
+            }
+        } catch (e) {
+            console.log(e);
         }
-        //  try {
-        //      if (form.title.length < 3) {
-        //          toast.error("Le titre doit faire plus de 3 caractères");
-        //      } else {
-        //          try {
-        //              const response = await axios.post("http://localhost:8000/AddArticle", form);
-        //              if (response.data === "success") {
-        //                  toast.success("Nouvel article ajouté !");
-        //              } else {
-        //                  toast.error("Une erreur est survenue");
-        //              }
-        //          } catch (error) {
-        //              console.error("Error submitting form:", error);
-        //              toast.error("Une erreur est survenue lors de l'ajout de l'article");
-        //          }
-        //      }
-        //  } catch (e) {
-        //      console.log(e);
-        //  }
-    console.log(form)
-     }
+    };
 
     return (
         <div>
@@ -82,12 +93,12 @@ export default function CreateArticle() {
                         onChange={handleChange}
                         placeholder="Prix de l'article"
                     />
-                    <label htmlFor="characteristics">Caractéristiques de l'article</label>
+                    <label htmlFor="caracteristics">Caractéristiques de l'article</label>
                     <input
                         type="text"
-                        id="characteristics"
-                        name="characteristics"
-                        value={form.characteristics}
+                        id="caracteristics"
+                        name="caracteristics"
+                        value={form.caracteristics}
                         onChange={handleChange}
                         placeholder="Caractéristiques de l'article"
                     />
