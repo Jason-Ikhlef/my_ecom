@@ -63,9 +63,6 @@ export default function HomePage(params) {
                         </Link>
                     ))}
                 </Slider>
-                <GoogleLogin
-            
-          />
             </div>
         </div>
     )

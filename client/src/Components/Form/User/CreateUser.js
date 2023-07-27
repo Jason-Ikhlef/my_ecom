@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
-import { GoogleLogin } from '@react-oauth/google';
+import { GoogleLogin,googleLogout,useGoogleLogin } from '@react-oauth/google';
+import CreateWithGoogle from './CreateWithGoogle';
 // import FacebookLogin from 'react-facebook-login'; 
 
 export default function CreateUser() {
+    
   const [form, setForm] = useState({
     email: '',
     password: '',
@@ -81,10 +83,7 @@ export default function CreateUser() {
           </button>
         </form>
         <div>
-          <GoogleLogin
-            onSuccess={handleGoogleSuccess}
-            onFailure={handleGoogleFailure}
-          />
+        <CreateWithGoogle />
           {/* <FacebookLogin
             appId="son app id client facebook"
             autoLoad={false}
