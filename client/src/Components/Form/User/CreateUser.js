@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
-import { GoogleLogin } from 'react-oauth2'; // Replace with the correct OAuth2 library for Google authentication
-import FacebookLogin from 'react-facebook-login'; // Replace with the correct OAuth2 library for Facebook authentication
+import { GoogleLogin } from '@react-oauth/google';
+// import FacebookLogin from 'react-facebook-login'; 
 
 export default function CreateUser() {
   const [form, setForm] = useState({
@@ -82,17 +82,16 @@ export default function CreateUser() {
         </form>
         <div>
           <GoogleLogin
-            clientId="YOUR_GOOGLE_CLIENT_ID"
             onSuccess={handleGoogleSuccess}
             onFailure={handleGoogleFailure}
           />
-          <FacebookLogin
-            appId="YOUR_FACEBOOK_APP_ID"
+          {/* <FacebookLogin
+            appId="son app id client facebook"
             autoLoad={false}
             fields="name,email,picture"
             callback={handleFacebookResponse}
             onFailure={handleFacebookFailure}
-          />
+          /> */}
         </div>
       </div>
     </div>
