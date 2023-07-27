@@ -55,6 +55,7 @@ export default function CreateUser ()
                         name="email"
                         value={form.email}
                         onChange={handleChange}
+                        required
                         placeholder="Email"
                         className='border'
                     />
@@ -65,6 +66,7 @@ export default function CreateUser ()
                         name="password"
                         value={form.password}
                         onChange={handleChange}
+                        required
                         placeholder="Mot de passe"
                         className='border'
                     />

@@ -22,6 +22,7 @@ app.use('/storage', express.static(path.join(__dirname, 'storage')));
 
 // jason mongodb+srv://root:root@petheaven.ygomfkk.mongodb.net/petHeaven
 // marie mongodb+srv://mrbn2212:Ma22Rie12@pool.zuhpca4.mongodb.net/petHeaven
+// quentin mongodb+srv://voltzex:quen2@cluster0.kcoscvc.mongodb.net/petHeaven
 
 mongoose.connect("mongodb+srv://root:root@petheaven.ygomfkk.mongodb.net/petHeaven", {
     useNewUrlParser: true,
