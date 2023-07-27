@@ -41,7 +41,7 @@ export default function CreateArticle() {
                     }
                     console.log(formData);
 
-                    const response = await axios.post("http://localhost:8000/AddArticle", formData);
+                    const response = await axios.put("http://localhost:8000/AddArticle", formData);
 
                     console.log(response.data);
 

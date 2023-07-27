@@ -80,7 +80,7 @@ export default function UpdateArticle() {
                     }
                     console.log(formData);
 
-                    const response = await axios.post("http://localhost:8000/UpdateArticle", formData);
+                    const response = await axios.put("http://localhost:8000/UpdateArticle", formData);
 
                     console.log(response.data);
 
