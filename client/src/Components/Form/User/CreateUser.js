@@ -35,21 +35,21 @@ export default function CreateUser() {
     }
   };
 
-  const handleGoogleSuccess = (response) => {
-    console.log('Google response:', response);
-  };
+  // const handleGoogleSuccess = (response) => {
+  //   console.log('Google response:', response);
+  // };
 
-  const handleGoogleFailure = (error) => {
-    console.error('Google login error:', error);
-  };
+  // const handleGoogleFailure = (error) => {
+  //   console.error('Google login error:', error);
+  // };
 
-  const handleFacebookResponse = (response) => {
-    console.log('Facebook response:', response);
-  };
+  // const handleFacebookResponse = (response) => {
+  //   console.log('Facebook response:', response);
+  // };
 
-  const handleFacebookFailure = (error) => {
-    console.error('Facebook login error:', error);
-  };
+  // const handleFacebookFailure = (error) => {
+  //   console.error('Facebook login error:', error);
+  // };
 
   return (
     <div>
@@ -84,7 +84,7 @@ export default function CreateUser() {
         </form>
 
         <div>
-        <CreateWithGoogle />
+        {/* <CreateWithGoogle /> */}
           {/* <FacebookLogin
             appId="son app id client facebook"
             autoLoad={false}

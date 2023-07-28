@@ -62,6 +62,9 @@ app.use('/', UpdateArticle);
 const DeleteArticle = require('./routes/articles/delete');
 app.use('/', DeleteArticle);
 
+const SearchArticle = require('./routes/articles/search');
+app.use('/', SearchArticle);
+
 // USERS
 
 const Users = require('./routes/users/index');
