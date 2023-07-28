@@ -66,6 +66,8 @@ export default function ArticleSeeMore ()
             <img src={`http://localhost:8000/storage/${article.pictures[0]}`} className="w-[200px] mx-auto" alt="article img"></img> 
             <p className="text-center my-10">{article.description}</p>
             <div className="flex justify-around pb-5">
+                
+                <p>Stock : {article.stock}</p>
                 <p>{article.price} €</p>
                 <p>{article.caracteristique}</p>
             </div>

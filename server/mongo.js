@@ -46,6 +46,15 @@ const articleSchema = new mongoose.Schema({
         type: Array,
         default: [],
         required: true
+    },
+    stock: {
+        type: Number,
+        required: true
+    },
+    state: {
+        type: Boolean,
+        default: true,
+        required: true
     }
 })
 

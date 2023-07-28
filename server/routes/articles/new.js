@@ -11,6 +11,7 @@ router.put("/AddArticle", storage.upload.array('photo'), async (req, res) => {
         description,
         price,
         caracteristics,
+        stock
     } = req.body;
 
     const picturesNames = req.files.map(file => file.filename);
@@ -20,7 +21,8 @@ router.put("/AddArticle", storage.upload.array('photo'), async (req, res) => {
         description: description,
         price: price,
         caracteristics: caracteristics,
-        pictures: picturesNames
+        pictures: picturesNames,
+        stock: stock
     };
     
     try {
