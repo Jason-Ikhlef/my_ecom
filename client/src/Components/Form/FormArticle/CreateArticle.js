@@ -34,6 +34,7 @@ export default function CreateArticle() {
                     formData.append("description", form.description);
                     formData.append("price", form.price);
                     formData.append("caracteristics", form.caracteristics);
+                    formData.append("stock", form.stock);
 
                                         if (form.photo) {
                         for (let i = 0; i < form.photo.length; i++) {
@@ -107,6 +108,16 @@ export default function CreateArticle() {
                         onChange={handleChange}
                         required
                         placeholder="Caractéristiques de l'article"
+                    />
+                    <label htmlFor="stock">Stock (nombre)</label>
+                    <input
+                        type="number"
+                        id="stock"
+                        name="stock"
+                        value={form.stock}
+                        onChange={handleChange}
+                        required
+                        placeholder="Stock (nombre)"
                     />
                     <label htmlFor="photo">Photo de l'article</label>
                     <input
