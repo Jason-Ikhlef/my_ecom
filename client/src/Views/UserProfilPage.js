@@ -1,13 +1,32 @@
 import React from "react";
 import profilPicture from "../assets/user-line.svg";
 import { Link } from "react-router-dom";
+import LogOut from "../Components/LogOut";
+import axios from "axios";
+import User from "../Components/User";
 
 export default function UserProfilPage ()
 {
 
+    const { currentUser, userLoading } = User()
+
+    if (userLoading) {
+
+        return <p>Loading...</p>
+    }
+
     const deleteOnClick = async (e) => 
     {
-        console.log('Supprimer');
+        e.preventDefault()
+
+        await axios
+        .delete(`http://localhost:8000/deleteUser/${currentUser.id}`, { withCredentials: true })
+        .then(response => {
+            response.data === "success" ? console.log('success') : console.log('fail');;
+        })
+        .catch(err => {
+            console.error(err)
+        })
     }
 
     return (
@@ -30,9 +49,12 @@ export default function UserProfilPage ()
                     {/* <Link className="w-3/4 mx-auto" to={`/profil/update/${article._id}`} state={{ id : article._id}}>
                         Modifier 
                     </Link> */}
-                    <Link className="w-3/4 mx-auto" to={`/profil/update/1`}>
+                    <Link className="w-3/4 mx-auto" to={`/profil/update`}>
                         Modifier 
                     </Link>
+                </p>
+                <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-slate-400 cursor-pointer" onClick={LogOut}>
+                    DECO
                 </p>
                 <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-slate-400 cursor-pointer" onClick={deleteOnClick}>
                     Supprimer

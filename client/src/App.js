@@ -26,7 +26,7 @@ function App() {
         <Route path='/register' Component={CreateUser} />
         <Route path='/articles/update/:id' Component={UpdateArticle} />
         <Route path='/profil' Component={UserProfilPage} />
-        <Route path='/profil/update/:id' Component={UpdateUser} />
+        <Route path='/profil/update' Component={UpdateUser} />
       </Routes>
     </Router>
   );

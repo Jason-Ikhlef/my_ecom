@@ -16,7 +16,7 @@ export default function HomePage(params) {
     useEffect(() => {
         const fetchArticles = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/articles');
+                const response = await axios.get('http://localhost:8000/articles', { withCredentials: true });
                 setArticles(response.data)
             } catch (error) {
                 console.error(error);
