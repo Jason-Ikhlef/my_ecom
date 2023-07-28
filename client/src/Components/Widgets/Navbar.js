@@ -10,10 +10,19 @@ import Terra from "../../assets/Salamander.png";
 import profilPicture from "../../assets/user-line.svg";
 import Cart from "../../assets/Cart.png";
 import User from "../Widgets/User";
+import { Dropdown } from "rsuite";
+import DropdownItem from "rsuite/esm/Dropdown/DropdownItem";
 
 export default function Navbar() {
 
     const { currentUser, userLoading } = User();
+
+    const options = [
+        'Gérer les articles',
+        'Gérer les utilisateurs'
+    ];
+    
+    const defaultOption = options[0];
 
     if (userLoading) {
 
@@ -56,30 +65,44 @@ export default function Navbar() {
                     <p className="text-xl">Terra</p>
                 </div>
             </div>
-            
-                <>
-                    currentUser ? (
-                        <div className="flex items-center justify-center p-2 bg-[#4FBEB7] rounded-lg h-10 mr-[-50px]">
-                            <Link to="/profil" className="text-xl flex">
+                {
+                currentUser ? (
+                    <div className="flex items-center justify-center gap-8  h-10 mr-[-50px]">
+                        <Link to="/profil" className="text-xl flex bg-[#4FBEB7] p-2 rounded-lg">
+                            <img src={profilPicture} alt="Profil" className="w-8" />
+                            Profil
+                        </Link>
+                        <div>
+                            {currentUser.admin
+                            ?
+                            <div>
+                                <Dropdown title='Gestion admin'>
+                                    <DropdownItem as='a' href="http://localhost:3000/admin/articles">
+                                        Gestion des articles
+                                    </DropdownItem>
+                                    <DropdownItem as='a' href="http://localhost:3000/admin/users">
+                                        Gestion des utilisateurs
+                                    </DropdownItem>
+                                </Dropdown>
+                            </div>
+                            :
+                            null
+                            }
+                        </div>
+                    </div>
+                    
+                ) : (
+                    <div className="flex flex-col items-center">
+                        <div className="bg-[#4FBEB7] rounded-xl px-2">
+                            <Link to="/login" className="flex py-2">
                                 <img src={profilPicture} alt="Profil" className="w-8" />
-                                Profil
+                                Se connecter
                             </Link>
                         </div>
-                            {currentUser.admin && (
-                                <div>Bonjour</div>
-                            )}
-                        
-                    ) : (
-                        <div className="flex flex-col items-center">
-                            <div className="bg-[#4FBEB7] rounded-xl px-2">
-                                <Link to="/login" className="flex py-2">
-                                    <img src={profilPicture} alt="Profil" className="w-8" />
-                                    Se connecter
-                                </Link>
-                            </div>
-                        </div>
-                    )
-                </>
+                    </div>
+                )
+                }
+                
             {/* <div className="bg-[#4FBEB7] rounded-lg h-10 p-2 ml-[-50px] w-14 flex justify-center items-center">
                 <img src={Cart} alt="Panier" className="w-7" />
             </div> */}

@@ -52,7 +52,7 @@ export default function UserProfilPage ()
                     </Link>
                 </p>
                 <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-slate-400 cursor-pointer" onClick={LogOut}>
-                    DECO
+                    Se déconnecter
                 </p>
                 <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-slate-400 cursor-pointer" onClick={deleteOnClick}>
                     Supprimer

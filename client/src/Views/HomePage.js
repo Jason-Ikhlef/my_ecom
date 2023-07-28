@@ -9,7 +9,6 @@ import {
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { GoogleLogin } from '@react-oauth/google';
 
 
 export default function HomePage(params) {
@@ -60,7 +59,7 @@ export default function HomePage(params) {
                             <img src={`http://localhost:8000/storage/${article.pictures[0]}`} alt="test" className="w-[200px] mx-auto" />
                             <p className="text-center">{article.description}</p>
                         </div>
-                        </Link>
+                     </Link>
                     ))}
                 </Slider>
             </div>
