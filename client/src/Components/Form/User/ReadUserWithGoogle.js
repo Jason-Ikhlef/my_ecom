@@ -25,15 +25,14 @@ export default function CreateWithGoogle() {
         }
     }, [user])
 
-    function SendToDatabase(){
-        axios.post('http://localhost:8000/createUser', profile)
+    function ReadWithGoogle(){
+        axios.get('http://localhost:8000/login', profile, {withCredentials: true})
         .then(res => console.log(res))
         .catch(err => console.log(err))
     }
     if(profile){
-        SendToDatabase();
+        ReadWithGoogle();
     }
-    
     const logout = () => {
         googleLogout();
         setProfile(null);
