@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import { Link } from 'react-router-dom';
-import { GoogleLogin,googleLogout,useGoogleLogin } from '@react-oauth/google';
 import CreateWithGoogle from './CreateWithGoogle';
 // import FacebookLogin from 'react-facebook-login'; 
 
@@ -33,22 +31,6 @@ export default function CreateUser() {
       console.error('Error submitting form:', error);
       toast.error("Une erreur est survenue lors de l'ajout de l'article");
     }
-  };
-
-  const handleGoogleSuccess = (response) => {
-    console.log('Google response:', response);
-  };
-
-  const handleGoogleFailure = (error) => {
-    console.error('Google login error:', error);
-  };
-
-  const handleFacebookResponse = (response) => {
-    console.log('Facebook response:', response);
-  };
-
-  const handleFacebookFailure = (error) => {
-    console.error('Facebook login error:', error);
   };
 
   return (

@@ -54,7 +54,7 @@ export default function HomePage(params) {
             <div className="bg-red-200 w-1/2 mx-auto mt-10">
                 <Slider {...settings}>
                     {articles.map((article) => (
-                    <Link className="w-3/4 mx-auto" to={`/articles/${article._id}`} state={{ id : article._id}}>
+                    <Link className="w-3/4 mx-auto" to={`/articles/${article._id}`} state={{ id : article._id}} key={article._id}>
                         <div key={article._id}>
                             <h2 className="text-center text-white text-2xl">{article.title}</h2>
                             <img src={`http://localhost:8000/storage/${article.pictures[0]}`} alt="test" className="w-[200px] mx-auto" />

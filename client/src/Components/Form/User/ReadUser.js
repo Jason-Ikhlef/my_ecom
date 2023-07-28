@@ -26,7 +26,9 @@ export default function ReadUser ()
             if (response.data === "success") 
             {
                 toast.success("Bienvenue !");
-                console.log('success');
+                setTimeout(() => {
+                    window.location.href = 'http://localhost:3000'
+                }, 1500);
             } 
             else 
             {
@@ -67,6 +69,14 @@ export default function ReadUser ()
                     />
                     <button type="submit" className='border mt-5'>Se connecter</button>
                 </form>
+                <div className='mt-2 border'>
+                    <p className='flex gap-2 '>
+                        Pas de compte ? 
+                        <Link to='http://localhost:3000/register'>
+                            Inscrivez-vous !
+                        </Link>
+                    </p>
+                </div>
             </div>
         </div>
     )
