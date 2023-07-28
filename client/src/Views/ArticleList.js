@@ -26,8 +26,6 @@ export default function SimpleSlider() {
         fetchArticles();
     }, []);
 
-  console.log(articles);
-
   if (!articles) {
     return <p>Chargement des articles</p>;
   }
@@ -52,6 +50,8 @@ export default function SimpleSlider() {
             <button type="submit" onClick={searchArticle} className="searchButton">Search</button>
         </div>
       </div>
+      <button>Name</button>
+      <button>Category</button>
       {articles.map((article) => (
         <div key={article._id} className="bg-red-200 w-3/4 mx-auto mt-10 content_border">
           <Link className="w-3/4 mx-auto" to={`/articles/${article._id}`} state={{ id : article._id}}>
