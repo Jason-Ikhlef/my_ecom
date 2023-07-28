@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
         trim: true
     },
     admin: {
-        type: Boolean, 
+        type: Boolean,
         default: false
     },
 });
@@ -46,15 +46,55 @@ const articleSchema = new mongoose.Schema({
         type: Array,
         default: [],
         required: true
+    },
+    animals: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'animals',
+        required: true
+    },
+    categories: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'categories'
+    },
+    subCategories: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'subCategories'
     }
 })
 
+const subCategoriesSchema = new mongoose.Schema({
+    name: {
+        type: String
+    }
+});
+
+const categoriesSchema = new mongoose.Schema({
+    name: {
+        type: String,
+    },
+    categories: [subCategoriesSchema]
+});
+
+const animalsSchema = new mongoose.Schema({
+    name: {
+        type: String,
+    },
+    categories: [categoriesSchema]
+});
+
+
 const userCollection = mongoose.model("user", userSchema)
 const articleCollection = mongoose.model("article", articleSchema)
+const animalsCollection = mongoose.model("animals", animalsSchema)
+const categoriesCollection = mongoose.model("categories", categoriesSchema)
+const subCategoriesCollection = mongoose.model("subCategories", subCategoriesSchema)
 
 const collection = {
     userCollection,
     articleCollection,
+    animalsCollection,
+    categoriesCollection,
+    subCategoriesCollection,
 }
 
 module.exports = collection

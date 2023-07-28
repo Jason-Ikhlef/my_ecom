@@ -64,6 +64,20 @@ app.use('/', DeleteArticles);
 const AddUser = require('./routes/users/new');
 app.use('/', AddUser);
 
+// CATEGORIES
+
+const NewCategory = require('./routes/animals/new');
+app.use('/', NewCategory);
+
+
+
+
+
+
+
+
+// A GARDER APRÈS TOUTES LES ROUTES
+
 app.listen(PORT, () => {
     console.log("Utilisation du port " + PORT);
 });
