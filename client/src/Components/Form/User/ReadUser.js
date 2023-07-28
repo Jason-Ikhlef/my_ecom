@@ -19,26 +19,25 @@ export default function ReadUser ()
     const handleClick = async (e) => {
         e.preventDefault();
 
-        // try 
-        // {
-        //     const response = await axios.post("http://localhost:8000/createUser", form);
-        //     if (response.data === "success") 
-        //     {
-        //         toast.success("Bienvenue !");
-        //     } 
-        //     else 
-        //     {
-        //         toast.error("Une erreur est survenue");
-        //     }
-        // } 
-        // catch (error) 
-        // {
-        //     console.error("Error submitting form:", error);
-        //     toast.error("Une erreur est survenue lors de l'ajout de l'article");
-        // }
-
-        console.log(form);
+        try 
+        {
+            const response = await axios.post("http://localhost:8000/login", form, { withCredentials: true });
     
+            if (response.data === "success") 
+            {
+                toast.success("Bienvenue !");
+                console.log('success');
+            } 
+            else 
+            {
+                toast.error("Une erreur est survenue");
+            }
+        } 
+        catch (error) 
+        {
+            console.error("Error submitting form:", error);
+            toast.error("Une erreur est survenue lors de l'ajout de l'article");
+        }    
     }
 
     return (

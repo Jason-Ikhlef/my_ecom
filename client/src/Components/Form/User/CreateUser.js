@@ -82,6 +82,7 @@ export default function CreateUser() {
             S'enregistrer
           </button>
         </form>
+
         <div>
         <CreateWithGoogle />
           {/* <FacebookLogin
