@@ -13,6 +13,7 @@ import UserProfilPage from './Views/UserProfilPage';
 import UpdateUser from './Components/Form/User/UpdateUser';
 import AdminUser from './Views/Admin/User';
 import AdminArticles from './Views/Admin/Articles';
+import Footer from './Components/Widgets/Footer';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path='/admin/users' Component={AdminUser} />
         <Route path='/admin/articles' Component={AdminArticles} />
       </Routes>
+      {/* <Footer /> */}
     </Router>
   );
 }

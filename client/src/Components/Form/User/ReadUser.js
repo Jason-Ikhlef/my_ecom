@@ -43,8 +43,8 @@ export default function ReadUser ()
     }
 
     return (
-        <div>
-            <h1 className='text-center my-5'>Se connecter</h1>
+        <div className='bg-[#C1E1C1] mt-10 w-1/2 mx-auto'>
+            <h1 className='text-center my-5 bg-[#4FBEB7] p-2'>Se connecter</h1>
             <div className='w-1/2 mx-auto'>
                 <form onSubmit={handleClick} className='flex flex-col'>
                     <label htmlFor="email">Email</label>
@@ -67,13 +67,12 @@ export default function ReadUser ()
                         placeholder="Mot de passe"
                         className='border'
                     />
-                    <button type="submit" className='border mt-5'>Se connecter</button>
+                    <button type="submit" className='mt-5 bg-[#4FBEB7] p-2 mb-2'>Se connecter</button>
                 </form>
-                <div className='mt-2 border'>
-                    <p className='flex gap-2 '>
-                        Pas de compte ? 
+                <div className='mt-2 pb-4'>
+                    <p className='bg-[#4FBEB7] text-center'>
                         <Link to='http://localhost:3000/register'>
-                            Inscrivez-vous !
+                            Pas de compte ? Inscrivez-vous !
                         </Link>
                     </p>
                 </div>

@@ -34,8 +34,8 @@ export default function CreateUser() {
   };
 
   return (
-    <div>
-      <h1 className="text-center my-5">Créer un compte</h1>
+    <div className='bg-[#C1E1C1] mt-10 w-1/2 mx-auto'>
+      <h1 className= 'text-center my-5 bg-[#4FBEB7] p-2'>Créer un compte</h1>
       <div className="w-1/2 mx-auto">
         <form onSubmit={handleSubmit} className="flex flex-col">
           <label htmlFor="email">Email</label>
@@ -60,12 +60,12 @@ export default function CreateUser() {
             placeholder="Mot de passe"
             className="border"
           />
-          <button type="submit" className="border mt-5">
+          <button type="submit" className="mt-5 bg-[#4FBEB7] p-2 mb-2">
             S'enregistrer
           </button>
         </form>
 
-        <div>
+        <div className='bg-gray-200'>
         <CreateWithGoogle />
           {/* <FacebookLogin
             appId="son app id client facebook"

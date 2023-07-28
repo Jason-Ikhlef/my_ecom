@@ -47,7 +47,7 @@ export default function HomePage(params) {
             <div className="bg-red-300 text-center p-2">
                 <h1>Page d'accueil</h1>
             </div>
-            <p className="bg-slate-400 text-center mt-10">
+            <p className="bg-[#4FBEB7] text-center mt-10">
                 <Link to='/articles'>Voir les articles</Link>
             </p>
             <div className="bg-red-200 w-1/2 mx-auto mt-10">

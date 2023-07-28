@@ -34,16 +34,16 @@ export default function UserProfilPage ()
             <div className="border w-3/4 mx-auto mt-10 rounded-3xl">
                 <div className="bg-[#C1E1C1] rounded-t-3xl relative p-8">
                     <h1 className="text-center text-3xl text-slate-400">Bonjour {currentUser.email}</h1>
-                    <img src={profilPicture} alt="profilPicture" className="w-[100px] h-[100px] absolute bg-slate-400 rounded-full border-8"></img>
+                    <img src={profilPicture} alt="profilPicture" className="w-[100px] h-[100px] absolute bg-[#4FBEB7] rounded-full border-8"></img>
                 </div>
-                <div className="mt-2 bg-slate-400">
+                <div className="mt-2 bg-[#4FBEB7]">
                     <p className="text-center">Vos informations :</p>
                     <p className="text-center">Email : {currentUser.email}  </p>
                     <p className="text-center">Role: {currentUser.admin ? 'administrateur' : 'Utilisateur'}  </p>
                 </div>
             </div>
             <div className="flex">
-                <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-slate-400 cursor-pointer">
+                <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer">
                     {/* <Link className="w-3/4 mx-auto" to={`/profil/update/${article._id}`} state={{ id : article._id}}>
                         Modifier 
                     </Link> */}
@@ -51,10 +51,10 @@ export default function UserProfilPage ()
                         Modifier 
                     </Link>
                 </p>
-                <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-slate-400 cursor-pointer" onClick={LogOut}>
+                <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={LogOut}>
                     Se déconnecter
                 </p>
-                <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-slate-400 cursor-pointer" onClick={deleteOnClick}>
+                <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={deleteOnClick}>
                     Supprimer
                 </p>
             </div>
