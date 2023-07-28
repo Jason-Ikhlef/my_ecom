@@ -9,6 +9,8 @@ import {
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { GoogleLogin } from '@react-oauth/google';
+
 
 export default function HomePage(params) {
     const [articles, setArticles] = useState(null);
