@@ -22,12 +22,12 @@ router.post("/NewCategory", async (req, res) => {
         }
 
         if(category){
-            const categories = new categoriesCollection({
+            const cat2 = new categoriesCollection({
+                name: category,
                 categories: category
             })
-            console.log(categories);
             try {
-                await categories.save()
+                await cat2.save()
                 console.log('category saved');
             } catch (e) {
                 // voir pour envoyer des messages plus clairs en fonction des erreurs
@@ -36,22 +36,25 @@ router.post("/NewCategory", async (req, res) => {
             }
             
             if(subCategory){
-                const subCategories = new subCategoriesCollection({
+                const cat3 = new subCategoriesCollection({
+                    name: subCategory,
                     subCategories: subCategory
                 })
                 
                 try {
-                    await subCategories.save();
+                    await cat3.save();
                     console.log('subcategory saved');
                 } catch (e) {
                     // voir pour envoyer des messages plus clairs en fonction des erreurs
                     console.log(e);
                     res.json("fail");
                 }
-
-                await animals.push({categories});
-                await categories.push({subCategories});
+                
+                animal.categories.push(cat2);
+                animal.categories[0].subCategories.push(cat3);
             }
+
+            await animalsCollection.create(animal);
         }
     }
 });

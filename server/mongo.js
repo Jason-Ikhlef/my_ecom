@@ -72,7 +72,7 @@ const categoriesSchema = new mongoose.Schema({
     name: {
         type: String,
     },
-    categories: [subCategoriesSchema]
+    subCategories: [subCategoriesSchema]
 });
 
 const animalsSchema = new mongoose.Schema({
