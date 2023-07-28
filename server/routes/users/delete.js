@@ -17,6 +17,11 @@ router.delete("/deleteUser/:id", async (req, res) => {
         console.log(e);
         res.json("fail");
     }
+
+    if (userId === req.session.user.id) {
+
+        req.session.destroy();
+    }
 });
 
 module.exports = router

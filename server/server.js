@@ -34,7 +34,7 @@ app.use(cors({
 app.use('/storage', express.static(path.join(__dirname, 'storage')));
 
 
-mongoose.connect("mongodb+srv://dorian:123@mern.3xjknmf.mongodb.net/petHeaven", {
+mongoose.connect("mongodb+srv://root:root@petheaven.ygomfkk.mongodb.net/petHeaven", {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })

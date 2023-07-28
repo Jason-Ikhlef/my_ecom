@@ -5,11 +5,10 @@ router.get('/current_user', (req, res) => {
 
     if (!req.session.user) {
 
-        return false;
+        res.status(400).json('fail');
     }
     
-    console.log('ouidsugbdjfgndfg');
-    res.json(req.session.user);
+    res.status(200).json(req.session.user);
 });
 
 module.exports = router

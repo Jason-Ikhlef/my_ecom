@@ -2,13 +2,31 @@ import React from "react";
 import profilPicture from "../assets/user-line.svg";
 import { Link } from "react-router-dom";
 import LogOut from "../Components/LogOut";
+import axios from "axios";
+import User from "../Components/User";
 
 export default function UserProfilPage ()
 {
 
+    const { currentUser, userLoading } = User()
+
+    if (userLoading) {
+
+        return <p>Loading...</p>
+    }
+
     const deleteOnClick = async (e) => 
     {
-        console.log('Supprimer');
+        e.preventDefault()
+
+        await axios
+        .delete(`http://localhost:8000/deleteUser/${currentUser.id}`, { withCredentials: true })
+        .then(response => {
+            response.data === "success" ? console.log('success') : console.log('fail');;
+        })
+        .catch(err => {
+            console.error(err)
+        })
     }
 
     return (

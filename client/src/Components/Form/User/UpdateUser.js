@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from "axios";
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
-// import User from '../../User'
+import User from '../../User';
 
 export default function UpdateUser ()
 {
@@ -13,26 +13,9 @@ export default function UpdateUser ()
         admin : false
     });
 
-    const [currentUser, setCurrentUser] = useState(null);
-    const [isLoading, setIsLoading] = useState(true)
+    const { currentUser, userLoading } = User()
 
-    useEffect(() => {
-
-        axios
-        .get('http://localhost:8000/current_user', { withCredentials: true })
-        .then(response => {
-            setCurrentUser(response.data);
-        })
-        .catch(error => {
-            console.error(error);
-            setCurrentUser(null)
-        })
-        .finally(() => {
-            setIsLoading(false)
-        })
-    }, []);
-
-    if (!currentUser && isLoading) {
+    if (userLoading) {
 
         return <p>Loading...</p>
     }
