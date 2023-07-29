@@ -63,7 +63,6 @@ export default function CreateCategory ()
                         name="category"
                         value={form.category}
                         onChange={handleChange}
-                        required
                         placeholder="Catégorie"
                         className='border'
                     />
@@ -74,7 +73,6 @@ export default function CreateCategory ()
                         name="subCategory"
                         value={form.subCategory}
                         onChange={handleChange}
-                        required
                         placeholder="Sous catégorie"
                         className='border'
                     />
