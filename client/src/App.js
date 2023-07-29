@@ -32,6 +32,7 @@ function App() {
         <Route path='/profil/update' Component={UpdateUser} />
         <Route path='/admin/users' Component={AdminUser} />
         <Route path='/admin/articles' Component={AdminArticles} />
+        <Route path='/articles/seatch/:name' Component={UpdateUser} />
       </Routes>
       {/* <Footer /> */}
     </Router>

@@ -67,6 +67,7 @@ export default function CreateUser() {
 
         <div className='bg-gray-200'>
         <CreateWithGoogle />
+
           {/* <FacebookLogin
             appId="son app id client facebook"
             autoLoad={false}
