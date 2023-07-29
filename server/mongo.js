@@ -59,6 +59,7 @@ const articleSchema = new mongoose.Schema({
     subCategories: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'subCategories'
+    },
     stock: {
         type: Number,
         required: true
