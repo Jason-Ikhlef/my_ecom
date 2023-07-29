@@ -8,28 +8,29 @@ const {
 } = require("../../mongo");
 
 router.post("/NewCategory", async (req, res) => {
-
     const {
         animals,
         category,
         subCategory
     } = req.body;
 
-    let animal, group, series = null;
+    let animal, group, series, idCat = null;
 
-    if (animals) {
-
+    if (animals !== '') {
         animal = await animalsCollection.find({
-            name: animals,
+            name: animals
         });
 
         if (animal.length === 0) {
             animal = new animalsCollection({
                 name: animals
             });
-    
+            
             try {
                 await animal.save();
+                animal = await animalsCollection.find({
+                    name: animals
+                });
                 console.log('animal category saved');
             } catch (e) {
                 // voir pour envoyer des messages plus clairs en fonction des erreurs
@@ -38,14 +39,15 @@ router.post("/NewCategory", async (req, res) => {
             }
         }
     }
+    
 
-    if (category) {
+    if (category !== '') {
 
         let flag = false;
-
+        
         animal[0].categories.forEach(element => {
-
             if (element.name === category) {
+                idCat = animal[0].categories.indexOf(element);
                 flag = true;
             }
         });
@@ -70,26 +72,37 @@ router.post("/NewCategory", async (req, res) => {
         }
     }
 
-    if (subCategory) {
-        series = new subCategoriesCollection({
-            name: subCategory,
-            subCategories: subCategory
+    if (subCategory !== '') {
+        flag = false;
+
+        // console.log(animal[0].categories[idCat]);
+        if (!idCat) {
+            idCat = (animal[0].categories.length)-1;
+        }
+
+        animal[0].categories[idCat].subCategories.forEach(element => {
+            if (element.name === subCategory) {
+                flag = true;
+            }
         })
 
-        try {
-            await series.save();
-            console.log('subcategory saved');
-        } catch (e) {
-            // voir pour envoyer des messages plus clairs en fonction des erreurs
-            console.log(e);
-            res.json("fail");
+        if (!flag) {
+            series = new subCategoriesCollection({
+                name: subCategory,
+                subCategories: subCategory
+            })
+
+            try {
+                await series.save();
+                animal[0].categories[idCat].subCategories.push(series);
+                console.log('subcategory saved');
+            } catch (e) {
+                // voir pour envoyer des messages plus clairs en fonction des erreurs
+                console.log(e);
+                res.json("fail");
+            }
         }
     }
-
-    if (series) {
-        animal.categories[0].subCategories.push(series);
-    }
-
     await animalsCollection.create(animal);
 });
 
