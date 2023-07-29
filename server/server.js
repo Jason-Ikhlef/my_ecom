@@ -87,6 +87,9 @@ app.use('/', DeleteUser);
 const NewCategory = require('./routes/animals/new');
 app.use('/', NewCategory);
 
+const Categorie = require('./routes/animals/index');
+app.use('/', Categorie);
+
 // AUTH
 
 const CurrentUser = require('./routes/auth/current_user');
