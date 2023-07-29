@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from "axios";
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 
 export default function ReadUser ()
@@ -44,6 +45,7 @@ export default function ReadUser ()
 
     return (
         <div className='bg-[#C1E1C1] mt-10 w-1/2 mx-auto'>
+            <ToastContainer />
             <h1 className='text-center my-5 bg-[#4FBEB7] p-2'>Se connecter</h1>
             <div className='w-1/2 mx-auto'>
                 <form onSubmit={handleClick} className='flex flex-col'>

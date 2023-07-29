@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import CreateWithGoogle from './CreateWithGoogle';
+import 'react-toastify/dist/ReactToastify.css';
+
 // import FacebookLogin from 'react-facebook-login'; 
 
 export default function CreateUser() {
@@ -23,7 +25,10 @@ export default function CreateUser() {
     try {
       const response = await axios.post('http://localhost:8000/createUser', form);
       if (response.data === 'success') {
-        toast.success('Bienvenue !');
+        toast.success('Votre compte a été crée avec succès !');
+        setTimeout(() => {
+          window.location.href = 'http://localhost:3000/login'
+        }, 1500);
       } else {
         toast.error('Une erreur est survenue');
       }
@@ -35,6 +40,7 @@ export default function CreateUser() {
 
   return (
     <div className='bg-[#C1E1C1] mt-10 w-1/2 mx-auto'>
+      <ToastContainer />
       <h1 className= 'text-center my-5 bg-[#4FBEB7] p-2'>Créer un compte</h1>
       <div className="w-1/2 mx-auto">
         <form onSubmit={handleSubmit} className="flex flex-col">
