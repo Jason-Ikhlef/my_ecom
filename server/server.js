@@ -2,6 +2,7 @@ const cors = require('cors');
 const express = require('express');
 const path = require('path');
 const session = require('express-session')
+const cookieParser = require('cookie-parser');
 
 const PORT = process.env.PORT || 8000;
 
@@ -11,12 +12,14 @@ const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 app.use(session({
     secret: 'my secret',
     cookie: { maxAge: 3600000 * 4 },
     saveUninitialized: true,
     resave: false,
+    credentials: true,
 }));
 
 app.use(cors({
@@ -50,33 +53,50 @@ app.use('/', Articles);
 const AddArticle = require('./routes/articles/new');
 app.use('/', AddArticle);
 
-const ShowArticles = require('./routes/articles/show');
-app.use('/', ShowArticles);
+const ShowArticle = require('./routes/articles/show');
+app.use('/', ShowArticle);
 
-const UpdateArticles = require('./routes/articles/update');
-app.use('/', UpdateArticles);
+const UpdateArticle = require('./routes/articles/update');
+app.use('/', UpdateArticle);
 
-const DeleteArticles = require('./routes/articles/delete');
-app.use('/', DeleteArticles);
+const DeleteArticle = require('./routes/articles/delete');
+app.use('/', DeleteArticle);
+
+const SearchArticle = require('./routes/articles/search');
+app.use('/', SearchArticle);
 
 // USERS
 
+const Users = require('./routes/users/index');
+app.use('/', Users);
+
 const AddUser = require('./routes/users/new');
 app.use('/', AddUser);
+
+const ShowUser = require('./routes/users/show');
+app.use('/', ShowUser);
+
+const UpdateUser = require('./routes/users/update');
+app.use('/', UpdateUser);
+
+const DeleteUser = require('./routes/users/delete');
+app.use('/', DeleteUser);
 
 // CATEGORIES
 
 const NewCategory = require('./routes/animals/new');
 app.use('/', NewCategory);
 
+// AUTH
 
+const CurrentUser = require('./routes/auth/current_user');
+app.use('/', CurrentUser);
 
+const LogIn = require('./routes/auth/login');
+app.use('/', LogIn);
 
-
-
-
-
-// A GARDER APRÈS TOUTES LES ROUTES
+const LogOut = require('./routes/auth/logout');
+app.use('/', LogOut);
 
 app.listen(PORT, () => {
     console.log("Utilisation du port " + PORT);

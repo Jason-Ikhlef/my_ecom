@@ -20,7 +20,7 @@ export default function UpdateArticle() {
     useEffect(() => {
         const fetchArticle = async () => {
             try {
-                const response = await axios.get(`http://localhost:8000/article/${id}`);
+                const response = await axios.get(`http://localhost:8000/article/${id}`, { withCredentials: true });
                 setArticle(response.data)
             } catch (error) {
                 console.error(error);
