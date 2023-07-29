@@ -48,6 +48,7 @@ export default function ArticleSeeMore ()
                 const response = await axios.get(`http://localhost:8000/article/${id}`);
                 setArticle(response.data)
                 setImg(response.data.pictures[0])
+                console.log(response.data.pictures.length);
             } catch (error) {
                 console.error(error);
             }
@@ -56,7 +57,7 @@ export default function ArticleSeeMore ()
         fetchArticle();
     }, [id]);
 
-    console.log(article);
+    
 
     if (!article) {
         
@@ -87,9 +88,20 @@ export default function ArticleSeeMore ()
                     </p>
                 </div>
             </div>
-            <div className="mt-10">
-                <p>Img en cours</p>
-            </div>
+            {
+                article.pictures.length > 1
+                ?
+                <div className="flex p-4 justify-evenly">
+                {article.pictures.map((img) => (
+                    <div key={img} className="p-2 border cursor-pointer">
+                        <img src={`http://localhost:8000/storage/${img}`} className="w-[50px] h-auto" onClick={(e) => {setImg(e.target.src.split('/')[4])}}></img>
+                    </div>
+                )
+                )}
+                </div>
+                :
+                null
+            }
         </div>
         <div className="border rounded-xl w-full lg:w-2/5 ">
             <p className="p-2 ml-5">Livraison</p>
