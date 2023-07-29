@@ -80,9 +80,13 @@ export default function Navbar() {
                                     <DropdownItem as='a' href="http://localhost:3000/admin/articles">
                                         Gestion des articles
                                     </DropdownItem>
+                                    <DropdownItem as='a' href="http://localhost:3000/admin/categories">
+                                        Gestion des categories
+                                    </DropdownItem>
                                     <DropdownItem as='a' href="http://localhost:3000/admin/users">
                                         Gestion des utilisateurs
                                     </DropdownItem>
+                                    
                                 </Dropdown>
                             </div>
                             :

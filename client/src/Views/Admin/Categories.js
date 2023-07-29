@@ -2,7 +2,7 @@ import React from "react";
 import User from '../../Components/Widgets/User';
 import CreateCategory from "../../Components/Form/Category/CreateCategory";
 
-export default function AdminArticles ()
+export default function AdminCategories ()
 {
     const { currentUser, userLoading } = User()
 
@@ -19,7 +19,7 @@ export default function AdminArticles ()
     return (
 
         <div>
-            <h1>oui</h1>
+            <CreateCategory />
         </div>
     
     )

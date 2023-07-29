@@ -13,6 +13,7 @@ import UserProfilPage from './Views/UserProfilPage';
 import UpdateUser from './Components/Form/User/UpdateUser';
 import AdminUser from './Views/Admin/User';
 import AdminArticles from './Views/Admin/Articles';
+import AdminCategories from './Views/Admin/Categories';
 import Footer from './Components/Widgets/Footer';
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
         <Route path='/profil/update' Component={UpdateUser} />
         <Route path='/admin/users' Component={AdminUser} />
         <Route path='/admin/articles' Component={AdminArticles} />
+        <Route path='/admin/categories' Component={AdminCategories} />
         <Route path='/articles/seatch/:name' Component={UpdateUser} />
       </Routes>
       {/* <Footer /> */}
