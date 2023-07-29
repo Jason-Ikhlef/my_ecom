@@ -4,7 +4,7 @@ import React, {
 } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
+import Search from "../assets/search-line.svg"
 
 export default function SimpleSlider() {
 
@@ -43,9 +43,11 @@ export default function SimpleSlider() {
     return (
       <div className="scroll">
         <div className="wrap">
-          <div className="search">
-              <input type="text" onChange={ (e) => setSearchValue(e.target.value) } className="searchTerm" placeholder="Que cherchez vous ?"></input>
-              <button type="submit" onClick={searchArticle} className="searchButton">Search</button>
+          <div className="search border w-1/3 mx-auto my-5 flex justify-between relative ">
+              <input type="text" onChange={ (e) => setSearchValue(e.target.value) } className="searchTerm w-full p-2" placeholder="Que cherchez vous ?"></input>
+              <button type="submit" onClick={searchArticle} className="searchButton absolute right-0 mr-2 p-2">
+                <img src={Search} alt="search icon" className="w-[20px] h-[20px]"></img>
+              </button>
           </div>
         </div>
         <button>Name</button>
