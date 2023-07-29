@@ -14,7 +14,9 @@ import UpdateUser from './Components/Form/User/UpdateUser';
 import AdminUser from './Views/Admin/User';
 import AdminArticles from './Views/Admin/Articles';
 import AdminCategories from './Views/Admin/Categories';
+import DeleteCategory from './Components/Form/Category/DeleteCategory';
 import Footer from './Components/Widgets/Footer';
+
 
 function App() {
   return (
@@ -35,6 +37,7 @@ function App() {
         <Route path='/admin/articles' Component={AdminArticles} />
         <Route path='/admin/categories' Component={AdminCategories} />
         <Route path='/articles/seatch/:name' Component={UpdateUser} />
+        <Route path='/admin/deleteCategory' Component={DeleteCategory} />
       </Routes>
       {/* <Footer /> */}
     </Router>
