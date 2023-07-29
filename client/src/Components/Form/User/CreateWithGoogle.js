@@ -26,38 +26,18 @@ export default function CreateWithGoogle() {
     }, [user])
 
     function SendToDatabase(){
-        axios.post('http://localhost:8000/createUser', profile)
+        axios.post('http://localhost:8000/create', profile)
         .then(res => console.log(res))
         .catch(err => console.log(err))
     }
     if(profile){
         SendToDatabase();
     }
-    
-    const logout = () => {
-        googleLogout();
-        setProfile(null);
-    }
 
     console.log(profile);
     return (
-        <div>
-                <h2>React Google Login</h2>
-                <br />
-                <br />
-                {profile ? (
-                    <div>
-                        <img src={profile.picture} alt="user image" />
-                        <h3>User Logged in</h3>
-                        <p>Name: {profile.name}</p>
-                        <p>Email Address: {profile.email}</p>
-                        <br />
-                        <br />
-                        <button onClick={logout}>Log out</button>
-                    </div>
-                ) : (
-                    <button onClick={() => login()}>Sign in with Google 🚀 </button>
-                )}
-            </div>
+        <div className='w-fit mx-auto mt-5'>
+            <button onClick={() => login()}>Se connecter avec Google 🚀 </button>
+        </div>
     )
 }

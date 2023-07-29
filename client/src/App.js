@@ -11,6 +11,9 @@ import CreateCategory from './Components/Form/Category/CreateCategory';
 import UpdateArticle from './Components/Form/FormArticle/UpdateArticle';
 import UserProfilPage from './Views/UserProfilPage';
 import UpdateUser from './Components/Form/User/UpdateUser';
+import AdminUser from './Views/Admin/User';
+import AdminArticles from './Views/Admin/Articles';
+import Footer from './Components/Widgets/Footer';
 
 function App() {
   return (
@@ -27,8 +30,11 @@ function App() {
         <Route path='/articles/update/:id' Component={UpdateArticle} />
         <Route path='/profil' Component={UserProfilPage} />
         <Route path='/profil/update' Component={UpdateUser} />
+        <Route path='/admin/users' Component={AdminUser} />
+        <Route path='/admin/articles' Component={AdminArticles} />
         <Route path='/articles/seatch/:name' Component={UpdateUser} />
       </Routes>
+      {/* <Footer /> */}
     </Router>
   );
 }
