@@ -7,12 +7,14 @@ import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import checked from "../assets/checked.svg"
 
 export default function ArticleSeeMore ()
 {
     
     const [id, setId] = useState('');
     const [article, setArticle] = useState(null);
+    const [img, setImg] = useState('');
 
     const location = useLocation()
 
@@ -45,6 +47,7 @@ export default function ArticleSeeMore ()
             try {
                 const response = await axios.get(`http://localhost:8000/article/${id}`);
                 setArticle(response.data)
+                setImg(response.data.pictures[0])
             } catch (error) {
                 console.error(error);
             }
@@ -61,28 +64,63 @@ export default function ArticleSeeMore ()
     }
 
     return (
-        <div className="bg-[#C1E1C1] w-3/4 mx-auto mt-10 content_border">
-            <ToastContainer />
-            <p className="text-center text-white mb-6 p-2 bg-[#4FBEB7]">{article.title}</p>
-            <img src={`http://localhost:8000/storage/${article.pictures[0]}`} className="w-[200px] mx-auto" alt="article img"></img> 
-            <p className="text-center my-10">{article.description}</p>
-            <div className="flex justify-around pb-5">
-                
-                <p>Stock : {article.stock}</p>
-                <p>{article.price} €</p>
-                <p>{article.caracteristique}</p>
+    <div className="flex flex-col lg:flex-row w-3/4 mx-auto justify-evenly mt-10">
+        <div className="flex flex-col w-full lg:w-2/5">
+            <div className="bg-[#C1E1C1] border rounded-xl">
+                <ToastContainer />
+                <p className="text-center text-white mb-6 p-2 bg-[#4FBEB7] rounded-t-xl">{article.title}</p>
+                <img src={`http://localhost:8000/storage/${img}`} className="w-[200px] mx-auto" alt="article img"></img> 
+                <p className="text-center my-10">{article.description}</p>
+                <div className="flex justify-around pb-5">
+                    <p>Stock : {article.stock}</p>
+                    <p>{article.price} €</p>
+                    <p>{article.caracteristique}</p>
+                </div>
+                <div className="flex pb-5">
+                    <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7]">
+                        <Link className="w-3/4 mx-auto" to={`/articles/update/${article._id}`} state={{ id : article._id}}>
+                            Modifier 
+                        </Link>
+                    </p>
+                    <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={deleteOnClick}>
+                        Supprimer
+                    </p>
+                </div>
             </div>
-            <div className="flex pb-5">
-                <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7]">
-                    <Link className="w-3/4 mx-auto" to={`/articles/update/${article._id}`} state={{ id : article._id}}>
-                        Modifier 
-                    </Link>
-                </p>
-                <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={deleteOnClick}>
-                    Supprimer
-                </p>
+            <div className="mt-10">
+                <p>Img en cours</p>
             </div>
-      </div>
+        </div>
+        <div className="border rounded-xl w-full lg:w-2/5 ">
+            <p className="p-2 ml-5">Livraison</p>
+            <p className="p-2 ml-5">{article.price} €</p>
+            <hr className="mx-5"></hr>
+            <div className="flex my-4 justify-evenly w-full mx-auto">
+                <input type="number" id="nbArticles" name="nbArticles" value='1' className="w-1/3 p-2 rounded-xl"
+                max="100"></input>
+                <button className="bg-[#4FBEB7] w-1/3 p-2 rounded-xl">Commander</button>
+            </div>
+            <hr className="mx-5"></hr>
+            <div className="flex flex-col gap-4">
+                <div className="flex my-4 ml-5 gap-8 w-full mx-auto">
+                    <img src={checked} className="w-[20px] h-auto"></img>
+                    <p>Livraison à domicile en Belgique (gratuit) et en France</p>
+                </div>
+                <div className="flex my-4 ml-5 gap-8 w-full mx-auto">
+                    <img src={checked} className="w-[20px] h-auto"></img>
+                    <p>Délai court</p>
+                </div>
+                <div className="flex my-4 ml-5 gap-8 w-full mx-auto">
+                    <img src={checked} className="w-[20px] h-auto"></img>
+                    <p>2 ans de garantie d’usine</p>
+                </div>
+                <div className="flex my-4 ml-5 gap-8 w-full mx-auto">
+                    <img src={checked} className="w-[20px] h-auto"></img>
+                    <p>Besoin de conseils ? Visitez notre jardinerie à Mouscron</p>
+                </div>
+            </div>
+        </div>
+    </div>
     )
 
 }
