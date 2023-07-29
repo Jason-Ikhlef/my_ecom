@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const crypto = require('crypto');
 
 const { userCollection } = require("../../mongo");
 
@@ -14,7 +15,7 @@ router.put("/UpdateUser/:id", async(req, res) => {
 
     let data = {
         email: email,
-        password: password
+        password: crypto.createHash('sha1').update(JSON.stringify(password)).digest('hex')
     };
 
     try {
