@@ -31,13 +31,15 @@ export default function SimpleSlider() {
   async function searchArticle() {
 
     await axios
-    .get(`http://localhost:8000/article/search/${searchValue}`, { withCredentials: true })
-    .then(response => {
-      setArticles(response.data)
-    })
-    .catch(err => {
-      console.error(err)
-    })
+      .get(`http://localhost:8000/article/search/${searchValue}`, {
+        withCredentials: true
+      })
+      .then(response => {
+        setArticles(response.data)
+      })
+      .catch(err => {
+        console.error(err)
+      })
   }
 
     return (
@@ -61,6 +63,9 @@ export default function SimpleSlider() {
               <p>Stock: {article.stock}</p>
               <p>{article.price} €</p>
               <p>{article.caracteristics}</p>
+              {/* <p>{article.animalsName}</p>
+              <p>{article.categoriesName}</p>
+              <p>{article.subCategoriesName}</p> */}
             </div>
           </Link>
         </div>

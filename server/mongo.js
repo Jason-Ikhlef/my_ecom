@@ -54,11 +54,25 @@ const articleSchema = new mongoose.Schema({
     },
     categories: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'categories'
+        ref: 'categories',
+        required: true
     },
     subCategories: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'subCategories'
+        ref: 'subCategories',
+        required: true
+    },
+    animalsName: {
+        type: String,
+        required: true
+    },
+    categoriesName: {
+        type: String,
+        required: true
+    },    
+    subCategoriesName: {
+        type: String,
+        required: true
     },
     stock: {
         type: Number,
