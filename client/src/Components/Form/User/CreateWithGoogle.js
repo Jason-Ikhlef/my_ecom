@@ -31,10 +31,14 @@ export default function CreateWithGoogle() {
     }, [user])
 
     async function SendToDatabase() {
-
         await axios
         .post('http://localhost:8000/createGoogle', profile, { withCredentials: true })
-        .then(res => console.log(res))
+        .then(res => {
+            console.log(res)
+            setTimeout(() => {
+                window.location.href = 'http://localhost:3000'
+            }, 1500)
+        })
         .catch(err => console.log(err))
     }
 

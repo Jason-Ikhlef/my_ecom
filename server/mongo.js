@@ -45,6 +45,26 @@ const googleSchema = new mongoose.Schema({
     },
 });
 
+const facebookSchema = new mongoose.Schema({
+    email: {
+        type: String,
+        trim: true,
+        lowercase: true,
+        unique: true,
+        required: 'Adresse email requise',
+        validate: {
+            validator: function (value) {
+                return /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(value);
+            },
+            message: 'Format incorrect'
+        },
+    },
+    admin: {
+        type: Boolean,
+        default: false
+    },
+});
+
 const articleSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -128,6 +148,7 @@ const animalsSchema = new mongoose.Schema({
 
 const userCollection = mongoose.model("user", userSchema)
 const googleCollection = mongoose.model("google", googleSchema)
+const facebookCollection = mongoose.model("facebook" , facebookSchema)
 const articleCollection = mongoose.model("article", articleSchema)
 const animalsCollection = mongoose.model("animals", animalsSchema)
 const categoriesCollection = mongoose.model("categories", categoriesSchema)
@@ -136,6 +157,7 @@ const subCategoriesCollection = mongoose.model("subCategories", subCategoriesSch
 const collection = {
     userCollection,
     googleCollection,
+    facebookCollection,
     articleCollection,
     animalsCollection,
     categoriesCollection,
