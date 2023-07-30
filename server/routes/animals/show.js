@@ -1,13 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
-const { animalsCollection } = require("../../mongo");
+const { categoriesCollection } = require("../../mongo");
 
-router.get("/animals/:id", async (req, res) => {
-    const { id } = req.params;
+router.post("/showCategories", async (req, res) => {
 
     try {
-        const animal = await animalsCollection.findOne({
+        const animal = await categoriesCollection.findOne({
             _id: id
         });
 

@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { Dropdown } from "rsuite";
 import DropdownItem from "rsuite/esm/Dropdown/DropdownItem";
 
-export default function CreateCategory ()
+export default function DeleteCategory ()
 {
     const [animals, setAnimals] = useState(null);
     const [selectedAnimal, setSelectedAnimal] = useState(null);
@@ -16,6 +16,12 @@ export default function CreateCategory ()
     const [dropdownAnimals, setDropdownAnimals] = useState("Animaux")
     const [dropdownCat, setDropdownCat] = useState("Categorie")
     const [dropdownSubCat, setDropdownSubCat] = useState("Sous-categorie")
+
+    const [form, setForm] = useState({
+        animals: '',
+        category: '',
+        subCategory:''
+    });
 
     useEffect(() => {
         const fetchAnimals = async () => {
@@ -61,24 +67,11 @@ export default function CreateCategory ()
         }
     }, [animalIndex, animals, catIndex, selectedCat]);
 
-    const [form, setForm] = useState({
-        animals: '',
-        category: '',
-        subCategory:''
-    });
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setForm((prevForm) => ({
-          ...prevForm,
-          [name]: value,
-        }));
-      };
-      
-      const handleClick = async (e) => {
+    const handleClick = async (e) => {
         e.preventDefault();
+        console.log(form);
         try {
-          const response = await axios.post("http://localhost:8000/NewCategory", form);
+          const response = await axios.post("http://localhost:8000/DeleteCategory", form);
           if (response.data === "success") {
             toast.success("Ajout effectué !");
           } else {
@@ -88,9 +81,9 @@ export default function CreateCategory ()
           console.error("Error submitting form:", error);
           toast.error("Une erreur est survenue lors de l'ajout de l'article");
         }
-      };
-      
-      const handleAnimals = (animal) => {
+    }
+
+    const handleAnimals = (animal) => {
         setDropdownAnimals(animal.name);
         setForm((prevForm) => ({
           ...prevForm,
@@ -125,17 +118,6 @@ export default function CreateCategory ()
             <h1 className='text-center my-5'>Créer une catégorie</h1>
             <div className='w-1/2 mx-auto'>
                 <form onSubmit={handleClick} className='flex flex-col'>
-                    <label htmlFor="animals">Catégorie d'animal</label>
-                    <input
-                        type="text"
-                        id="animals"
-                        name="animals"
-                        value={form.animals}
-                        onChange={handleChange}
-                        required
-                        placeholder="Animal"
-                        className='border'
-                    />
                     <div>
                         <Dropdown title={dropdownAnimals}>
                             {animals.map((animal) => (
@@ -147,16 +129,6 @@ export default function CreateCategory ()
                     </div>
                     {selectedAnimal !== null && animalIndex !== null && (
                         <div>
-                            <label htmlFor="category">Nom de la catégorie</label>
-                            <input
-                                type="text"
-                                id="category"
-                                name="category"
-                                value={form.category}
-                                onChange={handleChange}
-                                placeholder="Catégorie"
-                                className='border'
-                            />
                             <div>
                                 <Dropdown title={dropdownCat}>
                                     {animals[animalIndex].categories.map((animal) => (
@@ -170,16 +142,6 @@ export default function CreateCategory ()
                     )}
                     {selectedCat !== null && catIndex !== null && (
                         <div>
-                            <label htmlFor="subCategory">Sous catégorie</label>
-                            <input
-                                type="text"
-                                id="subCategory"
-                                name="subCategory"
-                                value={form.subCategory}
-                                onChange={handleChange}
-                                placeholder="Sous catégorie"
-                                className='border'
-                            />
                             <div>
                                 <Dropdown title={dropdownSubCat}>
                                     {animals[animalIndex].categories[catIndex].subCategories.map((animal) => (
@@ -191,7 +153,6 @@ export default function CreateCategory ()
                             </div>
                         </div>
                     )}
-                    <button type="submit" className='border mt-5'>Créer</button>
                     <button type="submit" className='border mt-5'>Supprimer</button>
                 </form>
             </div>

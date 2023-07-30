@@ -8,6 +8,7 @@ const {
 } = require("../../mongo");
 
 router.post("/NewCategory", async (req, res) => {
+    
     const {
         animals,
         category,
@@ -66,16 +67,15 @@ router.post("/NewCategory", async (req, res) => {
 
             } catch (e) {
                 // voir pour envoyer des messages plus clairs en fonction des erreurs
-                console.log(e);
                 res.json("fail");
             }
         }
     }
 
     if (subCategory !== '') {
+
         flag = false;
 
-        // console.log(animal[0].categories[idCat]);
         if (!idCat) {
             idCat = (animal[0].categories.length)-1;
         }

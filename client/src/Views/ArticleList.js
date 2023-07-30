@@ -31,13 +31,15 @@ export default function SimpleSlider() {
   async function searchArticle() {
 
     await axios
-    .get(`http://localhost:8000/article/search/${searchValue}`, { withCredentials: true })
-    .then(response => {
-      setArticles(response.data)
-    })
-    .catch(err => {
-      console.error(err)
-    })
+      .get(`http://localhost:8000/article/search/${searchValue}`, {
+        withCredentials: true
+      })
+      .then(response => {
+        setArticles(response.data)
+      })
+      .catch(err => {
+        console.error(err)
+      })
   }
 
     return (
@@ -50,23 +52,25 @@ export default function SimpleSlider() {
               </button>
           </div>
         </div>
-        <button>Name</button>
-        <button>Category</button>
-        <div className="flex w-full lg:w-3/4 mx-auto justify-center flex-wrap gap-8 rounded-xl">
-        {articles.map((article) => (
-          <div key={article._id} className=" w-3/4 lg:w-1/6 border rounded-xl ">
-            <Link className="w-3/4 mx-auto" to={`/articles/${article._id}`} state={{ id : article._id}}>
-              <p className="text-center text-white mb-6 p-2 bg-[#4FBEB7] rounded-t-xl">{article.title}</p>
-              <img src={`http://localhost:8000/storage/${article.pictures[0]}`} className="w-[200px] mx-auto" alt="article img"></img> 
-              <p className="text-center my-10">{article.description}</p>
-              <div className="flex justify-around pb-5">
-                {/* pour etat : article.state */}
-                <p>Stock: {article.stock}</p>
-                <p>{article.price} €</p>
-                <p>{article.caracteristics}</p>
-              </div>
-            </Link>
-          </div>
+      </div>
+      <button>Name</button>
+      <button>Category</button>
+      {articles.map((article) => (
+        <div key={article._id} className="bg-red-200 w-3/4 mx-auto mt-10 content_border">
+          <Link className="w-3/4 mx-auto" to={`/articles/${article._id}`} state={{ id : article._id}}>
+            <p className="text-center text-white mb-6 p-2 bg-[#4FBEB7]">{article.title}</p>
+            <img src={`http://localhost:8000/storage/${article.pictures[0]}`} className="w-[200px] mx-auto" alt="article img"></img> 
+            <p className="text-center my-10">{article.description}</p>
+            <div className="flex justify-around pb-5">
+              {/* pour etat : article.state */}
+              <p>Stock: {article.stock}</p>
+              <p>{article.price} €</p>
+              <p>{article.caracteristics}</p>
+              {/* <p>{article.animalsName}</p>
+              <p>{article.categoriesName}</p>
+              <p>{article.subCategoriesName}</p> */}
+            </div>
+          </Link>
         ))}
         </div>
       </div>

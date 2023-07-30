@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const storage = require('../../middleware/storage')
+const mongoose = require('mongoose')
 
 const { articleCollection } = require("../../mongo");
 
@@ -11,7 +12,13 @@ router.put("/AddArticle", storage.upload.array('photo'), async (req, res) => {
         description,
         price,
         caracteristics,
-        stock
+        stock,
+        animal,
+        category,
+        subCategory,
+        animalsName,
+        categoriesName,
+        subCategoriesName
     } = req.body;
 
     const picturesNames = req.files.map(file => file.filename);
@@ -22,9 +29,19 @@ router.put("/AddArticle", storage.upload.array('photo'), async (req, res) => {
         price: price,
         caracteristics: caracteristics,
         pictures: picturesNames,
-        stock: stock
+        stock: stock,
+        animals: new mongoose.Types.ObjectId(animal),
+        categories: new mongoose.Types.ObjectId(category),
+        subCategories: new mongoose.Types.ObjectId(subCategory),
+        animalsName: animalsName,
+        categoriesName: categoriesName,
+        subCategoriesName: subCategoriesName
     };
-    
+
+    console.log('====================================');
+    console.log(data);
+    console.log('====================================');
+
     try {
         await articleCollection.create(data);
         res.json("success");
