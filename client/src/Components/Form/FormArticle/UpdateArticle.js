@@ -3,11 +3,24 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Dropdown } from "rsuite";
+import DropdownItem from "rsuite/esm/Dropdown/DropdownItem";
 
 export default function UpdateArticle() {
 
     const [id, setId] = useState('');
     const [article, setArticle] = useState(null);
+
+    const [animals, setAnimals] = useState(null);
+    const [selectedAnimal, setSelectedAnimal] = useState(null);
+    const [selectedCat, setSelectedCat] = useState(null);
+
+    const [animalIndex, setAnimalIndex] = useState(null);
+    const [catIndex, setCatIndex] = useState(null);
+
+    const [dropdownAnimals, setDropdownAnimals] = useState("Animaux")
+    const [dropdownCat, setDropdownCat] = useState("Categorie")
+    const [dropdownSubCat, setDropdownSubCat] = useState("Sous-categorie")
    
     const location = useLocation()
 
@@ -30,13 +43,64 @@ export default function UpdateArticle() {
         fetchArticle();
     }, [id]);
 
+    useEffect(() => {
+        const fetchAnimals = async () => {
+            try {
+                const response = await axios.get('http://localhost:8000/categories');
+                setAnimals(response.data)
+
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchAnimals();
+    }, []);
+
+    useEffect(() => {
+        if (selectedAnimal) {
+            const getAnimalIndex = async () => {
+    
+                animals.forEach(element => {
+                    if (element._id === selectedAnimal) {
+                        setAnimalIndex(animals.indexOf(element));
+                    }
+                });
+            }
+            getAnimalIndex();
+        }
+    }, [animalIndex, animals, selectedAnimal]);
+
+    useEffect(() => {
+        if (selectedCat) {
+            const getCatIndex = async () => {
+    
+                animals[animalIndex].categories.forEach(element => {
+
+                    if (element._id === selectedCat) {
+                        setCatIndex(animals[animalIndex].categories.indexOf(element));
+                    }
+                });
+            }
+
+            getCatIndex();
+        }
+    }, [animalIndex, animals, catIndex, selectedCat]);
+
 
     const [form, setForm] = useState({
         title: '',
         description: '',
         price: '',
         caracteristics: '',
-        photo: null
+        photo: null,
+        stock: '',
+        animal: '',
+        category: '',
+        subCategory: '',
+        animalName: '',
+        categoryName: '',
+        subCategoriesName: ''
     });
 
     useEffect(() => {
@@ -46,7 +110,14 @@ export default function UpdateArticle() {
                 description: article.description,
                 price: article.price,
                 caracteristics: article.caracteristics,
-                photo: null
+                photo: null,
+                stock: article.stock,
+                animal: article.animals,
+                category: article.categories,
+                subCategory: article.subCategories,
+                animalName: article.animalsName,
+                categoryName: article.categoriesName,
+                subCategoriesName: article.subCategoriesName
             })
         }
     },[article])
@@ -59,6 +130,35 @@ export default function UpdateArticle() {
             setForm({ ...form, [name]: value });
         }
     };
+
+    const handleAnimals = (animal) => {
+        setDropdownAnimals(animal.name);
+        setForm((prevForm) => ({
+          ...prevForm,
+          animal: animal._id,
+          animalName: animal.name
+        }));
+        setSelectedAnimal(animal._id);
+      };
+      
+      const handleCat = (cat) => {
+        setDropdownCat(cat.name);
+        setForm((prevForm) => ({
+          ...prevForm,
+          category: cat._id,
+          categoryName: cat.name
+        }));
+        setSelectedCat(cat._id);
+      };
+      
+      const handleSubCat = (subCat) => {
+        setDropdownSubCat(subCat.name);
+        setForm((prevForm) => ({
+          ...prevForm,
+          subCategory: subCat._id,
+          subCategoriesName: subCat.name
+        }));
+      };
 
     const submit = async (e) => {
         e.preventDefault();
@@ -73,17 +173,23 @@ export default function UpdateArticle() {
                     formData.append("price", form.price);
                     formData.append("caracteristics", form.caracteristics);
                     formData.append("id", id);
+                    formData.append("stock", form.stock);
+                    formData.append("animal", form.animal);
+                    formData.append("category", form.category);
+                    formData.append("subCategory", form.subCategory);
+                    formData.append("animalsName", form.animalName);
+                    formData.append("categoriesName", form.categoryName);
+                    formData.append("subCategoriesName", form.subCategoriesName);
 
-                                        if (form.photo) {
+                    if (form.photo) {
                         for (let i = 0; i < form.photo.length; i++) {
                             formData.append("photo", form.photo[i]);
                         }
                     }
 
-                          
+                    console.log(form);
 
                     const response = await axios.put("http://localhost:8000/UpdateArticle", formData);
-
 
                     if (response.data === "success") {
                         toast.success("Article modifié !");
@@ -102,6 +208,10 @@ export default function UpdateArticle() {
             console.log(e);
         }
     };
+
+    if (!article) {
+        return (<div>Chargement de l'article</div>)
+    }
 
     return (
         <div>
@@ -149,6 +259,16 @@ export default function UpdateArticle() {
                         required
                         placeholder="Caractéristiques de l'article"
                     />
+                    <label htmlFor="stock">Stock (nombre)</label>
+                    <input
+                        type="number"
+                        id="stock"
+                        name="stock"
+                        value={form.stock}
+                        onChange={handleChange}
+                        required
+                        placeholder="Stock (nombre)"
+                    />
                     <label htmlFor="photo">Photo de l'article</label>
                     <input
                         type="file"
@@ -157,6 +277,46 @@ export default function UpdateArticle() {
                         onChange={handleChange}
                         multiple
                     />
+                    <p>Catégories actuelle :</p>
+                    <p>Animal : {article.animalsName}</p>
+                    <p>Categorie : {article.categoriesName}</p>
+                    <p>Sous-catégorie : {article.subCategoriesName}</p>
+                    <div>
+                        <p>Pour changer de catégorie, choisir ici :</p>
+                        <Dropdown title={dropdownAnimals}>
+                            {animals.map((animal) => (
+                                <DropdownItem key={animal._id} onSelect={() => handleAnimals(animal)}>
+                                    {animal.name}
+                                </DropdownItem>
+                            ))}
+                        </Dropdown>
+                    </div>
+                    {selectedAnimal !== null && animalIndex !== null && (
+                        <div>
+                            <div>
+                                <Dropdown title={dropdownCat}>
+                                    {animals[animalIndex].categories.map((animal) => (
+                                        <DropdownItem key={animal._id} onSelect={() => handleCat(animal)}>
+                                            {animal.name}
+                                        </DropdownItem>
+                                    ))}
+                                </Dropdown>
+                            </div>
+                        </div>
+                    )}
+                    {selectedCat !== null && catIndex !== null && (
+                        <div>
+                            <div>
+                                <Dropdown title={dropdownSubCat}>
+                                    {animals[animalIndex].categories[catIndex].subCategories.map((animal) => (
+                                        <DropdownItem key={animal._id} onSelect={() => handleSubCat(animal)}>
+                                            {animal.name}
+                                        </DropdownItem>
+                                    ))}
+                                </Dropdown>
+                            </div>
+                        </div>
+                    )}
                     <button type="submit" className='border my-5'>Mettre à jour l'article</button>
                 </form>
             </div>
