@@ -3,23 +3,55 @@ const router = express.Router();
 
 const { articleCollection } = require("../../mongo");
 
-router.get("/article/search/:value", async (req, res) => {
+router.post("/article/search", async (req, res) => {
+    
+    const {
+        animals,
+        search
+    } = req.body;
 
-    const value = req.params.value;
-
-    await articleCollection
-    .find({
-        $or: [
-            { title: {$regex: value} },
-            { description: {$regex: value} }
-        ]
-    })
-    .then(response => {
-        res.status(200).json(response)
-    })
-    .catch(err => {
-        res.status(400).json(err)
-    })
+    if (animals !== '' && search !== '') {
+        await articleCollection.find({
+            $and: [
+                { animalsName: animals },
+                {
+                    $or: [
+                        { title: { $regex: search, $options: "i" } }, 
+                        { description: { $regex: search, $options: "i" } }
+                    ]
+                }
+            ]
+        })
+            .then(response => {
+                res.status(200).json(response)
+            })
+            .catch(err => {
+            res.status(400).json(err)
+        })
+    } else if (animals !== '') {
+        await articleCollection.find({
+            animalsName: animals,
+        })
+            .then(response => {
+                res.status(200).json(response)
+            })
+            .catch(err => {
+            res.status(400).json(err)
+        })
+    } else {
+        await articleCollection.find({
+            $or: [
+                { title: { $regex: search, $options: "i" } }, 
+                { description: { $regex: search, $options: "i" } }
+            ]
+        })
+            .then(response => {
+                res.status(200).json(response)
+            })
+            .catch(err => {
+            res.status(400).json(err)
+        })
+    }
 })
 
 module.exports = router
