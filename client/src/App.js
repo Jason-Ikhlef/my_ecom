@@ -32,12 +32,12 @@ function App() {
         <Route path='/register' Component={CreateUser} />
         <Route path='/articles/update/:id' Component={UpdateArticle} />
         <Route path='/profil' Component={UserProfilPage} />
-        <Route path='/profil/update' Component={UpdateUser} />
         <Route path='/admin/users' Component={AdminUser} />
         <Route path='/admin/articles' Component={AdminArticles} />
         <Route path='/admin/categories' Component={AdminCategories} />
         <Route path='/articles/seatch/:name' Component={UpdateUser} />
         <Route path='/admin/deleteCategory' Component={DeleteCategory} />
+        {/* <Route path='/articles/seatch/:name' Component={UpdateUser} /> */}
       </Routes>
       {/* <Footer /> */}
     </Router>

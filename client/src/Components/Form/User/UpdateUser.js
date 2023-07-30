@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from "axios";
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 import User from '../../Widgets/User';
 
@@ -30,11 +31,14 @@ export default function UpdateUser ()
 
         try 
         {
-            const response = await axios.put("http://localhost:8000/updateUser", { data: form, id: currentUser.id });
+            const response = await axios.put(`http://localhost:8000/updateUser/${currentUser.id}`, { data: form, id: currentUser.id });
 
             if (response.data === "success") 
             {
-                toast.success("Bienvenue !");
+                toast.success("Vos informations ont bien été modifiés");
+                setTimeout(() => {
+                    window.location.href = 'http://localhost:3000/profil'
+                }, 1500);
             } 
             else 
             {
@@ -44,7 +48,7 @@ export default function UpdateUser ()
         catch (error) 
         {
             console.error("Error submitting form:", error);
-            toast.error("Une erreur est survenue lors de l'ajout de l'article");
+            toast.error("Une erreur est survenue lors de la modification de vos données");
         }
 
         console.log(form);
@@ -54,6 +58,7 @@ export default function UpdateUser ()
     return (
         currentUser ? (
             <div>
+                <ToastContainer />
                 <h1 className='text-center my-5'>Modifier vos informations</h1>
                 <div className='w-1/2 mx-auto'>
                     <form onSubmit={handleClick} className='flex flex-col'>

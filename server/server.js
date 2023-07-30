@@ -82,6 +82,11 @@ app.use('/', UpdateUser);
 const DeleteUser = require('./routes/users/delete');
 app.use('/', DeleteUser);
 
+// GOOGLE
+
+const AddGoogle = require('./routes/users/google/new');
+app.use('/', AddGoogle);
+
 // CATEGORIES
 
 const NewCategory = require('./routes/animals/new');
