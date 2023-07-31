@@ -87,6 +87,11 @@ app.use('/', DeleteUser);
 const AddGoogle = require('./routes/users/google/new');
 app.use('/', AddGoogle);
 
+// FACEBOOK
+
+const AddFacebook = require('./routes/users/facebook/new');
+app.use('/', AddFacebook);
+
 // CATEGORIES
 
 const NewCategory = require('./routes/animals/new');

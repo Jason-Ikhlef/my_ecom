@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import CreateWithGoogle from './CreateWithGoogle';
+import CreateWithFacebook from './CreateWithFacebook';
 import 'react-toastify/dist/ReactToastify.css';
 
 // import FacebookLogin from 'react-facebook-login'; 
@@ -73,7 +74,7 @@ export default function CreateUser() {
 
         <div className='bg-gray-200'>
         <CreateWithGoogle />
-
+        <CreateWithFacebook />
           {/* <FacebookLogin
             appId="son app id client facebook"
             autoLoad={false}
