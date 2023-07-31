@@ -58,6 +58,7 @@ export default function ReadUser ()
                         onChange={handleChange}
                         placeholder="Email"
                         className='border'
+                        autoComplete='on'
                     />
                     <label htmlFor="password">Mot de passe</label>
                     <input
