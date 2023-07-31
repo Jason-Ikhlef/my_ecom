@@ -3,6 +3,7 @@ import axios from "axios";
 import { toast } from 'react-toastify';
 import { Dropdown } from "rsuite";
 import DropdownItem from "rsuite/esm/Dropdown/DropdownItem";
+import Loader from '../../Widgets/Loader';
 
 export default function DeleteCategory ()
 {
@@ -109,9 +110,13 @@ export default function DeleteCategory ()
         }));
       };
 
-    if (!animals) {
-        return <p>Chargement des animaux</p>;
-    }
+      if (!animals) 
+        {
+            return (<div className='w-fit mx-auto'>
+                    <Loader />
+                </div>
+                );
+        }
 
     return (
         <div>

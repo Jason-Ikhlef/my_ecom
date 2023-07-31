@@ -7,10 +7,10 @@ import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import checked from "../assets/checked.svg"
+import checked from "../../assets/checked.svg"
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import Footer from "../Components/Widgets/Footer";
+// import Footer from "../Components/Widgets/Footer";
 
 
 export default function ArticleSeeMore ()

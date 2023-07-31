@@ -4,7 +4,7 @@ import React, {
 } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import Search from "../assets/search-line.svg";
+import Search from "../../assets/search-line.svg";
 import { Dropdown } from "rsuite";
 import DropdownItem from "rsuite/esm/Dropdown/DropdownItem";
 

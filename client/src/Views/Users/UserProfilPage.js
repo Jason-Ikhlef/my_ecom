@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import profilPicture from "../assets/user-line.svg";
+import profilPicture from "../../assets/user-line.svg";
 import { Link } from "react-router-dom";
-import LogOut from "../Components/Widgets/LogOut";
+import LogOut from "../../Components/Widgets/LogOut";
 import axios from "axios";
-import User from "../Components/Widgets/User"
-import ReadUser from "../Components/Form/User/ReadUser";
-import UpdateUser from "../Components/Form/User/UpdateUser";
+import User from "../../Components/Widgets/User";
+import ReadUser from "../../Components/Form/User/ReadUser";
+import UpdateUser from "../../Components/Form/User/UpdateUser";
 
 export default function UserProfilPage ()
 {
