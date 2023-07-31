@@ -20,7 +20,7 @@ router.post('/login', async (req, res) => {
     })
     .then(user => {
         if (user) {
-            req.session.user = { id: user._id, email: user.email, admin : user.admin }
+            req.session.user = { id: user._id, email: user.email, admin : user.admin, auth: 'petheaven' }
             res.status(200).json("success")
         } else {
             res.status(400).json("nom de compte ou mot de passe incorrect")

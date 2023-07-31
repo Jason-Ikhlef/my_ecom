@@ -82,16 +82,6 @@ app.use('/', UpdateUser);
 const DeleteUser = require('./routes/users/delete');
 app.use('/', DeleteUser);
 
-// GOOGLE
-
-const AddGoogle = require('./routes/users/google/new');
-app.use('/', AddGoogle);
-
-// FACEBOOK
-
-const AddFacebook = require('./routes/users/facebook/new');
-app.use('/', AddFacebook);
-
 // CATEGORIES
 
 const NewCategory = require('./routes/animals/new');
@@ -116,6 +106,12 @@ app.use('/', LogIn);
 
 const LogOut = require('./routes/auth/logout');
 app.use('/', LogOut);
+
+const AddGoogle = require('./routes/auth/google');
+app.use('/', AddGoogle);
+
+const AddFacebook = require('./routes/auth/facebook');
+app.use('/', AddFacebook);
 
 app.listen(PORT, () => {
     console.log("Utilisation du port " + PORT);

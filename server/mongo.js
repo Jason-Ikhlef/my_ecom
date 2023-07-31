@@ -43,6 +43,10 @@ const googleSchema = new mongoose.Schema({
             message: 'Format incorrect'
         },
     },
+    cart: {
+        type: Array,
+        default: []
+    },
     admin: {
         type: Boolean,
         default: false
@@ -62,6 +66,10 @@ const facebookSchema = new mongoose.Schema({
             },
             message: 'Format incorrect'
         },
+    },
+    cart: {
+        type: Array,
+        default: []
     },
     admin: {
         type: Boolean,
