@@ -119,10 +119,7 @@ export default function CreateCategory ()
 
       if (!animals) 
       {
-          return (<div className='w-fit mx-auto'>
-                  <Loader />
-              </div>
-              );
+          return <Loader />
       }
 
     return (

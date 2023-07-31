@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import Search from "../../assets/search-line.svg";
 import { Dropdown } from "rsuite";
 import DropdownItem from "rsuite/esm/Dropdown/DropdownItem";
+import Loader from "../../Components/Widgets/Loader";
 
 export default function SimpleSlider() {
 
@@ -36,7 +37,7 @@ export default function SimpleSlider() {
   }, []);
 
   if (!articles) {
-    return <p>Chargement des articles</p>;
+    return <Loader />
   }
 
   async function searchArticle(e) {
@@ -81,7 +82,7 @@ export default function SimpleSlider() {
 
   if (!animals) {
     return(
-      <div>Chargement des catégories</div>
+      <Loader />
     )
   }
 

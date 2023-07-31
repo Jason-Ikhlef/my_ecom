@@ -112,10 +112,7 @@ export default function DeleteCategory ()
 
       if (!animals) 
         {
-            return (<div className='w-fit mx-auto'>
-                    <Loader />
-                </div>
-                );
+            return <Loader />
         }
 
     return (

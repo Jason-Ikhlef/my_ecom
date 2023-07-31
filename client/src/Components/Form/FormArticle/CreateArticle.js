@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { Dropdown } from "rsuite";
 import DropdownItem from "rsuite/esm/Dropdown/DropdownItem";
+import Loader from '../../Widgets/Loader';
 
 export default function CreateArticle() {
 
@@ -164,7 +165,7 @@ export default function CreateArticle() {
     };
 
     if (!animals) {
-        return (<div>Chargement des catégories...</div>)
+        return <Loader />
     }
 
     return (

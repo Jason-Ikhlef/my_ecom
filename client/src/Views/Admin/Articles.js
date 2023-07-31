@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import User from '../../Components/Widgets/User';
 import CreateArticle from "../../Components/Form/FormArticle/CreateArticle";
 import UpdateArticle from "../../Components/Form/FormArticle/UpdateArticle";
+import Loader from "../../Components/Widgets/Loader";
 
 export default function AdminCategories ()
 {
@@ -27,7 +28,7 @@ export default function AdminCategories ()
 
     if (userLoading) {
 
-        return <p>Loading...</p>
+        return <Loader />
     }
 
     if(!currentUser || currentUser.admin === false)
