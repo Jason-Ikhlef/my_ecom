@@ -82,6 +82,11 @@ app.use('/', UpdateUser);
 const DeleteUser = require('./routes/users/delete');
 app.use('/', DeleteUser);
 
+// CARTS
+
+const AddCart = require('./routes/users/cart/new');
+app.use('/', AddCart);
+
 // CATEGORIES
 
 const NewCategory = require('./routes/animals/new');
