@@ -10,48 +10,35 @@ router.post("/article/search", async (req, res) => {
         search
     } = req.body;
 
+    let query = null;
+
     if (animals !== '' && search !== '') {
-        await articleCollection.find({
-            $and: [
-                { animalsName: animals },
-                {
-                    $or: [
-                        { title: { $regex: search, $options: "i" } }, 
-                        { description: { $regex: search, $options: "i" } }
-                    ]
-                }
-            ]
-        })
-            .then(response => {
-                res.status(200).json(response)
-            })
-            .catch(err => {
-            res.status(400).json(err)
-        })
+        query = {$and: [
+            { animalsName: animals },
+            {
+                $or: [
+                    { title: { $regex: search, $options: "i" } }, 
+                    { description: { $regex: search, $options: "i" } }
+                ]
+            }
+        ]}
     } else if (animals !== '') {
-        await articleCollection.find({
-            animalsName: animals,
-        })
-            .then(response => {
-                res.status(200).json(response)
-            })
-            .catch(err => {
-            res.status(400).json(err)
-        })
+        query = { animalsName: animals }
     } else {
-        await articleCollection.find({
-            $or: [
-                { title: { $regex: search, $options: "i" } }, 
-                { description: { $regex: search, $options: "i" } }
-            ]
-        })
-            .then(response => {
-                res.status(200).json(response)
-            })
-            .catch(err => {
-            res.status(400).json(err)
-        })
+        query = { $or: [
+            { title: { $regex: search, $options: "i" } }, 
+            { description: { $regex: search, $options: "i" } }
+        ]}
     }
+
+    await articleCollection.find(query)
+        .then(response => {
+            res.status(200).json(response)
+        })
+        .catch(err => {
+        res.status(400).json(err)
+    })
 })
+
 
 module.exports = router

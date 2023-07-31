@@ -57,11 +57,19 @@ export default function SimpleSlider() {
   }
 
   const handleAnimals = (animal) => {
-    setDropdownAnimals(animal.name);
-    setForm((prevForm) => ({
-      ...prevForm,
-      animals: animal.name,
-    }));
+    if (animal === "Aucun") {
+      setDropdownAnimals("Aucun");
+      setForm((prevForm) => ({
+        ...prevForm,
+        animals: "",
+      }));
+    } else {
+      setDropdownAnimals(animal.name);
+      setForm((prevForm) => ({
+        ...prevForm,
+        animals: animal.name,
+      }));
+    }
   };
 
   const handleChange = (e) => {
@@ -84,6 +92,9 @@ export default function SimpleSlider() {
         <form onSubmit={searchArticle} className="search border w-1/3 mx-auto my-5 flex justify-between relative">
           <div>
             <Dropdown title={dropdownAnimals}>
+            <DropdownItem onSelect={() => handleAnimals("Aucun")}>
+                  Aucun
+                </DropdownItem>
               {animals.map((animal) => (
                 <DropdownItem key={animal._id} onSelect={() => handleAnimals(animal)}>
                   {animal.name}
