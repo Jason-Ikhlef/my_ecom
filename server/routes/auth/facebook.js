@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
-const { googleCollection } = require("../../../mongo");
+const { facebookCollection } = require("../../mongo");
 
 let user = null
 
-router.post('/createGoogle', async (req, res) => {
+router.post('/createFacebook', async (req, res) => {
 
     const {
         email,
@@ -18,15 +18,13 @@ router.post('/createGoogle', async (req, res) => {
     await userExists(email)
 
     if (user) {
-        
-        req.session.user = { id: user._id, email: user.email, admin : user.admin }
+        req.session.user = { id: user._id, email: user.email, admin : user.admin, auth: 'facebook' }
         res.status(200).json("success")
     } else {
-
-        await googleCollection
+        await facebookCollection
         .create(data)
         .then(response => {
-            req.session.user = { id: response._id, email: response.email, admin : response.admin }
+            req.session.user = { id: response._id, email: response.email, admin : response.admin, auth: 'facebook' }
             res.status(200).json("success")
         })
         .catch(err => {
@@ -37,7 +35,7 @@ router.post('/createGoogle', async (req, res) => {
 
 async function userExists(email) {
 
-    await googleCollection
+    await facebookCollection
     .findOne({ 
         email: email, 
     })
