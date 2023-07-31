@@ -89,7 +89,7 @@ export default function SimpleSlider() {
     <div className="scroll">
       <div className="wrap">
         <form onSubmit={searchArticle} className="search border w-1/3 mx-auto my-5 flex justify-between relative">
-          <div>
+          <div className="my-auto">
             <Dropdown title={dropdownAnimals}>
               <DropdownItem onSelect={() => handleAnimals("Aucun")}>
                 Aucun

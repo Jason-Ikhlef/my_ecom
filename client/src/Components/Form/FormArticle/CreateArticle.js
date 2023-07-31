@@ -169,7 +169,6 @@ export default function CreateArticle() {
 
     return (
         <div>
-            <Link to='/articles'>Voir les articles</Link>
             <ToastContainer />
             <h1 className='text-center my-5'>Formulaire d'ajout d'article</h1>
             <div className='border w-1/2 mx-auto'>

@@ -31,6 +31,19 @@ code {
   border: 10px solid #ffffff;
 }
 
+.rs-dropdown-toggle,
+.rs-dropdown-menu,
+.rs-dropdown-toggle:hover
+{
+  background-color: #4FBEB7;
+  color: #000;
+}
+
+.rs-dropdown-item:hover {
+  background-color: #4FBEB7;
+  color: #000;
+}
+
 .lds-roller {
   display: inline-block;
   position: relative;
