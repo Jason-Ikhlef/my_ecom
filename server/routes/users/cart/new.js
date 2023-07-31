@@ -32,11 +32,18 @@ router.post("/addToCart", async(req, res) => {
     
     await collection
     .findById(userId)
-    .then(response => {
-        response.cart.push({ articleId, quantity })
-        res.status(200).json(response.cart)
+    .then(user => {
+
+        const articleExists = user.cart.find(item => item.articleId === articleId)
+
+        articleExists ? articleExists.quantity += quantity : user.cart.push({ articleId, quantity })
+
+        user.markModified('cart');
+        user.save()
+        res.status(200).json(user.cart)
     })
     .catch(err => {
+        console.error(err)
         res.status(400).json(err)
     })
  
