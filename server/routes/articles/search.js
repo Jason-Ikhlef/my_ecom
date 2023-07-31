@@ -3,23 +3,42 @@ const router = express.Router();
 
 const { articleCollection } = require("../../mongo");
 
-router.get("/article/search/:value", async (req, res) => {
+router.post("/article/search", async (req, res) => {
+    
+    const {
+        animals,
+        search
+    } = req.body;
 
-    const value = req.params.value;
+    let query = null;
 
-    await articleCollection
-    .find({
-        $or: [
-            { title: {$regex: value} },
-            { description: {$regex: value} }
-        ]
-    })
-    .then(response => {
-        res.status(200).json(response)
-    })
-    .catch(err => {
+    if (animals !== '' && search !== '') {
+        query = {$and: [
+            { animalsName: animals },
+            {
+                $or: [
+                    { title: { $regex: search, $options: "i" } }, 
+                    { description: { $regex: search, $options: "i" } }
+                ]
+            }
+        ]}
+    } else if (animals !== '') {
+        query = { animalsName: animals }
+    } else {
+        query = { $or: [
+            { title: { $regex: search, $options: "i" } }, 
+            { description: { $regex: search, $options: "i" } }
+        ]}
+    }
+
+    await articleCollection.find(query)
+        .then(response => {
+            res.status(200).json(response)
+        })
+        .catch(err => {
         res.status(400).json(err)
     })
 })
+
 
 module.exports = router
