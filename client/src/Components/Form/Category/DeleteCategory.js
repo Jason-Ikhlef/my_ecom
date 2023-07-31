@@ -80,7 +80,7 @@ export default function DeleteCategory ()
           }
         } catch (error) {
           console.error("Error submitting form:", error);
-          toast.error("Une erreur est survenue lors de l'ajout de l'article");
+          toast.error("Une erreur est survenue lors de la supression de votre catégorie");
         }
     }
 

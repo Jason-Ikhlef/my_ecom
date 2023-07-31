@@ -201,7 +201,7 @@ export default function UpdateArticle() {
                     }
                 } catch (error) {
                     console.error("Error submitting form:", error);
-                    toast.error("Une erreur est survenue lors de l'ajout de l'article");
+                    toast.error("Une erreur est survenue lors de la modification de votre article");
                 }
             }
         } catch (e) {

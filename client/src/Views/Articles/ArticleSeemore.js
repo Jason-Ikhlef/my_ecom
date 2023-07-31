@@ -8,6 +8,8 @@ import { Link } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import checked from "../../assets/checked.svg"
+import User from "../../Components/Widgets/User";
+import Loader from "../../Components/Widgets/Loader";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 // import Footer from "../Components/Widgets/Footer";
@@ -19,6 +21,8 @@ export default function ArticleSeeMore ()
     const [id, setId] = useState('');
     const [article, setArticle] = useState(null);
     const [img, setImg] = useState('');
+
+    const { currentUser, userLoading } = User()
 
     const location = useLocation()
 
@@ -65,7 +69,13 @@ export default function ArticleSeeMore ()
 
     if (!article) {
         
-        return <p>Chargement des articles</p>;
+        return <Loader />;
+    }
+
+    if (userLoading) {
+
+        return <Loader />
+    
     }
 
     return (
@@ -82,16 +92,20 @@ export default function ArticleSeeMore ()
                         <p>{article.price} €</p>
                         <p>{article.caracteristique}</p>
                     </div>
-                    <div className="flex pb-5">
-                        <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7]">
-                            <Link className="w-3/4 mx-auto" to={`/articles/update/${article._id}`} state={{ id : article._id}}>
-                                Modifier 
-                            </Link>
-                        </p>
-                        <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={deleteOnClick}>
-                            Supprimer
-                        </p>
-                    </div>
+                    {
+                        currentUser && currentUser.admin ? 
+                        <div className="flex pb-5">
+                            <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7]">
+                                <Link className="w-3/4 mx-auto" to={`/articles/update/${article._id}`} state={{ id : article._id}}>
+                                    Modifier 
+                                </Link>
+                            </p>
+                            <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={deleteOnClick}>
+                                Supprimer
+                            </p>
+                        </div> : 
+                        null
+                    }
                 </div>
                 {
                     article.pictures.length > 1

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import GoogleLogo from "../../../assets/google-line.svg";
 import { googleLogout,useGoogleLogin } from '@react-oauth/google';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function CreateWithGoogle() {
 
@@ -34,7 +37,7 @@ export default function CreateWithGoogle() {
         await axios
         .post('http://localhost:8000/createGoogle', profile, { withCredentials: true })
         .then(res => {
-            console.log(res)
+            toast.success('Bienvenue !')
             setTimeout(() => {
                 window.location.href = 'http://localhost:3000'
             }, 1500)
@@ -42,14 +45,20 @@ export default function CreateWithGoogle() {
         .catch(err => console.log(err))
     }
 
-    if (profile) {
+    useEffect(() => {
 
-        SendToDatabase();
-    }
+        if (profile) 
+        {
+            SendToDatabase();
+        }
+    }, [profile]);
+
 
     return (
-        <div className='w-fit mx-auto mt-5'>
-            <button onClick={() => login()}>Se connecter avec Google 🚀 </button>
+        
+        <div className="w-1/6 mx-auto mt-5 flex bg-gray-300 cursor-pointer px-4 py-2 rounded-3xl gap-8" onClick={() => login()}>
+            <img src={GoogleLogo} className="w-[30px] h-[30px]" alt="facebook logo"></img>
+            <button>Se connecter avec Google</button>
         </div>
     )
 }
