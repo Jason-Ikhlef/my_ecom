@@ -11,7 +11,6 @@ import DropdownItem from "rsuite/esm/Dropdown/DropdownItem";
 export default function SimpleSlider() {
 
   const [articles, setArticles] = useState(null);
-  const [searchValue, setSearchValue] = useState(null);
 
   const [animals, setAnimals] = useState(null);
   const [dropdownAnimals, setDropdownAnimals] = useState("Animaux");
@@ -113,8 +112,6 @@ export default function SimpleSlider() {
           </button>
         </form>
       </div>
-      <button>Name</button>
-      <button>Category</button>
       <div className="flex w-full lg:w-3/4 mx-auto justify-center flex-wrap gap-8 rounded-xl">
         {articles.map((article) => (
           <div key={article._id} className="w-3/4 lg:w-1/6 border rounded-xl">
