@@ -18,13 +18,13 @@ router.post('/createFacebook', async (req, res) => {
     await userExists(email)
 
     if (user) {
-        req.session.user = { id: user._id, email: user.email, admin : user.admin, auth: 'facebook' }
+        req.session.user = { id: user._id, email: user.email, admin : user.admin, cart: user.cart, auth: 'facebook' }
         res.status(200).json("success")
     } else {
         await facebookCollection
         .create(data)
         .then(response => {
-            req.session.user = { id: response._id, email: response.email, admin : response.admin, auth: 'facebook' }
+            req.session.user = { id: response._id, email: response.email, admin : response.admin, cart: response.cart, auth: 'facebook' }
             res.status(200).json("success")
         })
         .catch(err => {
