@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
-import CreateWithGoogle from './CreateWithGoogle';
-import CreateWithFacebook from './CreateWithFacebook';
 import 'react-toastify/dist/ReactToastify.css';
 
 // import FacebookLogin from 'react-facebook-login'; 
@@ -35,7 +33,7 @@ export default function CreateUser() {
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      toast.error("Une erreur est survenue lors de l'ajout de l'article");
+      toast.error("Une erreur est survenue lors de la création de votre compte");
     }
   };
 
@@ -72,17 +70,6 @@ export default function CreateUser() {
           </button>
         </form>
 
-        <div className='bg-gray-200'>
-        <CreateWithGoogle />
-        <CreateWithFacebook />
-          {/* <FacebookLogin
-            appId="son app id client facebook"
-            autoLoad={false}
-            fields="name,email,picture"
-            callback={handleFacebookResponse}
-            onFailure={handleFacebookFailure}
-          /> */}
-        </div>
       </div>
     </div>
   );

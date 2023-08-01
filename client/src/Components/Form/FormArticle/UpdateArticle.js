@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Dropdown } from "rsuite";
 import DropdownItem from "rsuite/esm/Dropdown/DropdownItem";
+import Loader from '../../Widgets/Loader';
 
 export default function UpdateArticle() {
 
@@ -201,7 +202,7 @@ export default function UpdateArticle() {
                     }
                 } catch (error) {
                     console.error("Error submitting form:", error);
-                    toast.error("Une erreur est survenue lors de l'ajout de l'article");
+                    toast.error("Une erreur est survenue lors de la modification de votre article");
                 }
             }
         } catch (e) {
@@ -210,7 +211,7 @@ export default function UpdateArticle() {
     };
 
     if (!article) {
-        return (<div>Chargement de l'article</div>)
+        return <Loader />
     }
 
     return (

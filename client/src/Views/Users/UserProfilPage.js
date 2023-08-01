@@ -24,7 +24,7 @@ export default function UserProfilPage ()
         e.preventDefault()
 
         await axios
-        .delete(`http://localhost:8000/deleteUser/${currentUser.id}`, {withCredentials: true})
+        .delete(`http://localhost:8000/deleteUser/${currentUser.id}`, { withCredentials: true })
         .then(response => {
             response.data === "success" ? console.log('success') : console.log('fail');
             window.location.href = 'http://localhost:3000';

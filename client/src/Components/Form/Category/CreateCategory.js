@@ -3,6 +3,7 @@ import axios from "axios";
 import { toast } from 'react-toastify';
 import { Dropdown } from "rsuite";
 import DropdownItem from "rsuite/esm/Dropdown/DropdownItem";
+import Loader from '../../Widgets/Loader';
 
 export default function CreateCategory ()
 {
@@ -86,7 +87,7 @@ export default function CreateCategory ()
           }
         } catch (error) {
           console.error("Error submitting form:", error);
-          toast.error("Une erreur est survenue lors de l'ajout de l'article");
+          toast.error("Une erreur est survenue lors de l'ajout de votre catégorie");
         }
       };
       
@@ -116,9 +117,10 @@ export default function CreateCategory ()
         }));
       };
 
-    if (!animals) {
-        return <p>Chargement des animaux</p>;
-    }
+      if (!animals) 
+      {
+          return <Loader />
+      }
 
     return (
         <div>
@@ -192,7 +194,6 @@ export default function CreateCategory ()
                         </div>
                     )}
                     <button type="submit" className='border mt-5'>Créer</button>
-                    <button type="submit" className='border mt-5'>Supprimer</button>
                 </form>
             </div>
         </div>

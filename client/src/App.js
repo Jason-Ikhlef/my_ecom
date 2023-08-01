@@ -2,19 +2,17 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './Components/Widgets/Navbar';
 import HomePage from './Views/HomePage';
-import ArticleList from './Views/ArticleList';
-import ArticleSeeMore from './Views/ArticleSeemore';
+import ArticleList from './Views/Articles/ArticleList';
+import ArticleSeeMore from './Views/Articles/ArticleSeemore';
 import FormArticle from './Components/Form/FormArticle/CreateArticle';
 import ReadUser from './Components/Form/User/ReadUser';
 import CreateUser from './Components/Form/User/CreateUser';
-import CreateCategory from './Components/Form/Category/CreateCategory';
 import UpdateArticle from './Components/Form/FormArticle/UpdateArticle';
-import UserProfilPage from './Views/UserProfilPage';
+import UserProfilPage from './Views/Users/UserProfilPage';
 import UpdateUser from './Components/Form/User/UpdateUser';
 import AdminUser from './Views/Admin/User';
 import AdminArticles from './Views/Admin/Articles';
 import AdminCategories from './Views/Admin/Categories';
-import DeleteCategory from './Components/Form/Category/DeleteCategory';
 import Footer from './Components/Widgets/Footer';
 
 
@@ -27,7 +25,6 @@ function App() {
         <Route path='/articles' Component={ArticleList} />
         <Route path='/articles/:id' element={ <ArticleSeeMore/> }/>
         <Route path='/createArticle' Component={FormArticle} />
-        <Route path='/createCategory' Component={CreateCategory} />
         <Route path='/login' Component={ReadUser} />
         <Route path='/register' Component={CreateUser} />
         <Route path='/articles/update/:id' Component={UpdateArticle} />
@@ -36,7 +33,6 @@ function App() {
         <Route path='/admin/articles' Component={AdminArticles} />
         <Route path='/admin/categories' Component={AdminCategories} />
         <Route path='/articles/seatch/:name' Component={UpdateUser} />
-        <Route path='/admin/deleteCategory' Component={DeleteCategory} />
         {/* <Route path='/articles/seatch/:name' Component={UpdateUser} /> */}
       </Routes>
       {/* <Footer /> */}

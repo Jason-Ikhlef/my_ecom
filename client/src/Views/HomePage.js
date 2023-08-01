@@ -9,6 +9,7 @@ import {
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Loader from "../Components/Widgets/Loader";
 
 
 export default function HomePage(params) {
@@ -39,7 +40,7 @@ export default function HomePage(params) {
     };
 
     if (!articles) {
-        return <p>Chargement des articles...</p>;
+        return <Loader />;
     }
 
     return (

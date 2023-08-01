@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import 'react-toastify/dist/ReactToastify.css';
 import { Dropdown } from "rsuite";
 import DropdownItem from "rsuite/esm/Dropdown/DropdownItem";
+import Loader from '../../Widgets/Loader';
 
 export default function CreateArticle() {
 
@@ -164,12 +165,11 @@ export default function CreateArticle() {
     };
 
     if (!animals) {
-        return (<div>Chargement des catégories...</div>)
+        return <Loader />
     }
 
     return (
         <div>
-            <Link to='/articles'>Voir les articles</Link>
             <ToastContainer />
             <h1 className='text-center my-5'>Formulaire d'ajout d'article</h1>
             <div className='border w-1/2 mx-auto'>

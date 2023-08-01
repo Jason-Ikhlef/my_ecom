@@ -20,7 +20,6 @@ export default function ArticleSeeMore ()
     
     const [id, setId] = useState('');
     const [article, setArticle] = useState(null);
-    const [articleQuantity, setArticleQuantity] = useState(1);
     const [img, setImg] = useState('');
 
     const { currentUser, userLoading } = User()
@@ -66,17 +65,7 @@ export default function ArticleSeeMore ()
         fetchArticle();
     }, [id]);
 
-    async function addToCart() {
-
-        await axios
-        .post('http://localhost:8000/addToCart', {articleId: article._id, quantity: Number(articleQuantity)}, {withCredentials: true})
-        .then(response => {
-            console.log(response);
-        })
-        .catch(err => {
-            console.log(err);
-        })
-    }
+    
 
     if (!article) {
         
@@ -138,9 +127,9 @@ export default function ArticleSeeMore ()
                 <p className="p-2 ml-5">{article.price} €</p>
                 <hr className="mx-5"></hr>
                 <div className="flex my-4 justify-evenly w-full mx-auto">
-                    <input onChange={(e) => setArticleQuantity(e.target.value)} type="number" id="nbArticles" name="nbArticles" defaultValue={1} className="w-1/3 p-2 rounded-xl"
+                    <input type="number" id="nbArticles" name="nbArticles" value='1' className="w-1/3 p-2 rounded-xl"
                     max="100"></input>
-                    <button onClick={addToCart} className="bg-[#4FBEB7] w-1/3 p-2 rounded-xl">Commander</button>
+                    <button className="bg-[#4FBEB7] w-1/3 p-2 rounded-xl">Commander</button>
                 </div>
                 <hr className="mx-5"></hr>
                 <div className="flex flex-col gap-4">
