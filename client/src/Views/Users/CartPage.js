@@ -4,7 +4,7 @@ import User from '../../Components/Widgets/User';
 import Loader from '../../Components/Widgets/Loader';
 import Cart from '../../Components/User/Cart';
 
-const PanierPage = () => {
+const UserCart = () => {
   const { currentUser, userLoading } = User();
   const [cart, setCart] = useState([]);
 
@@ -20,4 +20,4 @@ const PanierPage = () => {
   );
 };
 
-export default PanierPage;
+export default UserCart;
