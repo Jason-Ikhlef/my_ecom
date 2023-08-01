@@ -31,7 +31,8 @@ export default function CreateArticle() {
         subCategory: '',
         animalName: '',
         categoryName: '',
-        subCategoriesName: ''
+        subCategoriesName: '',
+        recommanded: false
     });
 
     useEffect(() => {
@@ -82,6 +83,8 @@ export default function CreateArticle() {
         const { name, value, files } = e.target;
         if (name === 'photo') {
             setForm({ ...form, [name]: files });
+        } else if (name === "recommanded") {
+            setForm({...form, [name]: !form.recommanded})
         } else {
             setForm({ ...form, [name]: value });
         }
@@ -135,6 +138,7 @@ export default function CreateArticle() {
                     formData.append("animalsName", form.animalName);
                     formData.append("categoriesName", form.categoryName);
                     formData.append("subCategoriesName", form.subCategoriesName);
+                    formData.append("recommanded", form.recommanded);
 
                     if (form.photo) {
                         for (let i = 0; i < form.photo.length; i++) {
@@ -144,7 +148,7 @@ export default function CreateArticle() {
 
                     console.log(form);
 
-                    const response = await axios.put("http://localhost:8000/AddArticle", formData, { withCredentials: true });
+                    const response = await axios.put("http://localhost:8000/AddArticle", formData);
 
                     if (response.data === "success") {
                         toast.success("Nouvel article ajouté !");
@@ -267,6 +271,8 @@ export default function CreateArticle() {
                             </div>
                         </div>
                     )}
+                    <label htmlFor="recommanded">Recommander l'article :</label>
+                    <input onChange={handleChange} type="checkbox" name="recommanded" />
                     <button type="submit" className='border mt-5'>Ajouter l'article</button>
                 </form>
             </div>

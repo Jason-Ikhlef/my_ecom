@@ -18,7 +18,8 @@ router.put("/AddArticle", storage.upload.array('photo'), async (req, res) => {
         subCategory,
         animalsName,
         categoriesName,
-        subCategoriesName
+        subCategoriesName,
+        recommanded
     } = req.body;
 
     const picturesNames = req.files.map(file => file.filename);
@@ -35,12 +36,9 @@ router.put("/AddArticle", storage.upload.array('photo'), async (req, res) => {
         subCategories: new mongoose.Types.ObjectId(subCategory),
         animalsName: animalsName,
         categoriesName: categoriesName,
-        subCategoriesName: subCategoriesName
+        subCategoriesName: subCategoriesName,
+        recommanded: recommanded
     };
-
-    console.log('====================================');
-    console.log(data);
-    console.log('====================================');
 
     try {
         await articleCollection.create(data);

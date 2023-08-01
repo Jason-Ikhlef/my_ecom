@@ -18,7 +18,8 @@ router.put("/UpdateArticle", storage.upload.array('photo'), async (req, res) => 
         subCategory,
         animalsName,
         categoriesName,
-        subCategoriesName
+        subCategoriesName,
+        recommanded: recommanded
     } = req.body;
 
     const picturesNames = req.files.map(file => file.filename);
@@ -35,8 +36,13 @@ router.put("/UpdateArticle", storage.upload.array('photo'), async (req, res) => 
         subCategory,
         animalsName,
         categoriesName,
-        subCategoriesName
+        subCategoriesName,
+        recommanded
     };
+
+    console.log('====================================');
+    console.log(data);
+    console.log('====================================');
 
     try {
         await articleCollection.updateOne({

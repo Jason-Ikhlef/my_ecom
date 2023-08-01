@@ -11,6 +11,7 @@ export default function UpdateArticle() {
 
     const [id, setId] = useState('');
     const [article, setArticle] = useState(null);
+    const [recommanded, setRecommanded] = useState(true)
 
     const [animals, setAnimals] = useState(null);
     const [selectedAnimal, setSelectedAnimal] = useState(null);
@@ -101,7 +102,8 @@ export default function UpdateArticle() {
         subCategory: '',
         animalName: '',
         categoryName: '',
-        subCategoriesName: ''
+        subCategoriesName: '',
+        recommanded: false,
     });
 
     useEffect(() => {
@@ -118,8 +120,11 @@ export default function UpdateArticle() {
                 subCategory: article.subCategories,
                 animalName: article.animalsName,
                 categoryName: article.categoriesName,
-                subCategoriesName: article.subCategoriesName
+                subCategoriesName: article.subCategoriesName,
+                recommanded: article.recommanded
             })
+
+            setRecommanded(article.recommanded);
         }
     },[article])
     
@@ -127,7 +132,10 @@ export default function UpdateArticle() {
         const { name, value, files } = e.target;
         if (name === 'photo') {
             setForm({ ...form, [name]: files });
-        } else {
+        } else if (name === "recommanded") {
+            setForm({...form, [name]: !form.recommanded})
+            setRecommanded(!recommanded);
+        }  else {
             setForm({ ...form, [name]: value });
         }
     };
@@ -181,14 +189,13 @@ export default function UpdateArticle() {
                     formData.append("animalsName", form.animalName);
                     formData.append("categoriesName", form.categoryName);
                     formData.append("subCategoriesName", form.subCategoriesName);
+                    formData.append("recommanded", form.recommanded);
 
                     if (form.photo) {
                         for (let i = 0; i < form.photo.length; i++) {
                             formData.append("photo", form.photo[i]);
                         }
                     }
-
-                    console.log(form);
 
                     const response = await axios.put("http://localhost:8000/UpdateArticle", formData);
 
@@ -318,6 +325,8 @@ export default function UpdateArticle() {
                             </div>
                         </div>
                     )}
+                    <label htmlFor="recommanded">Recommander l'article :</label>
+                    <input onChange={handleChange} type="checkbox" name="recommanded" checked={recommanded}/>
                     <button type="submit" className='border my-5'>Mettre à jour l'article</button>
                 </form>
             </div>
