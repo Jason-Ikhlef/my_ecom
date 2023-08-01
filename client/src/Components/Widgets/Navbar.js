@@ -99,9 +99,9 @@ export default function Navbar() {
                     </div>
                 )
                 }
-            {/* <div className="bg-[#4FBEB7] rounded-lg h-10 p-2 ml-[-50px] w-14 flex justify-center items-center">
+            <div className="bg-[#4FBEB7] rounded-lg h-10 p-2 ml-[-50px] w-14 flex justify-center items-center">
                 <img src={Cart} alt="Panier" className="w-7" />
-            </div> */}
+            </div>
         </div>
     );
 }

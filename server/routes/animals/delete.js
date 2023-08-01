@@ -16,6 +16,8 @@ router.post("/DeleteCategory", async (req, res) => {
 
     let animal, group, series, idCat = null;
 
+    console.log(req.body);
+
     animal = await animalsCollection.findOne({
         name: animals
     });

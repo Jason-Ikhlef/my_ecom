@@ -50,6 +50,9 @@ mongoose.connect("mongodb+srv://root:root@petheaven.ygomfkk.mongodb.net/petHeave
 const Articles = require('./routes/articles/index');
 app.use('/', Articles);
 
+const SliderArticles = require('./routes/articles/slider');
+app.use('/', SliderArticles)
+
 const AddArticle = require('./routes/articles/new');
 app.use('/', AddArticle);
 
