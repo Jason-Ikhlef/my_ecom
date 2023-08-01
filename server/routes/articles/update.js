@@ -6,10 +6,6 @@ const { articleCollection } = require("../../mongo");
 
 router.put("/UpdateArticle", storage.upload.array('photo'), async (req, res) => {
 
-    console.log('====================================');
-    console.log(req.body);
-    console.log('====================================');
-
     const {
         title,
         description,
@@ -51,10 +47,6 @@ router.put("/UpdateArticle", storage.upload.array('photo'), async (req, res) => 
         subCategoriesName,
         recommanded
     };
-
-    console.log('====================================');
-    console.log(data);
-    console.log('====================================');
 
     try {
         await articleCollection.updateOne({

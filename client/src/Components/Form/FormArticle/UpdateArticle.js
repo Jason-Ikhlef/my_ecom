@@ -12,6 +12,7 @@ export default function UpdateArticle() {
     const [id, setId] = useState('');
     const [article, setArticle] = useState(null);
     const [recommanded, setRecommanded] = useState(true)
+    const [img, setImg] = useState('');
 
     const [animals, setAnimals] = useState(null);
     const [selectedAnimal, setSelectedAnimal] = useState(null);
@@ -37,6 +38,7 @@ export default function UpdateArticle() {
             try {
                 const response = await axios.get(`http://localhost:8000/article/${id}`, { withCredentials: true });
                 setArticle(response.data)
+                setImg(response.data.pictures)
             } catch (error) {
                 console.error(error);
             }
@@ -108,9 +110,6 @@ export default function UpdateArticle() {
 
     useEffect(() => {
         if (article) {
-            console.log('====================================');
-            console.log(article);
-            console.log('====================================');
             setForm ({
                 title: article.title,
                 description: article.description,
@@ -135,6 +134,9 @@ export default function UpdateArticle() {
         const { name, value, files } = e.target;
         if (name === 'photo') {
             setForm({ ...form, [name]: files });
+            addThumbnail(files);
+
+            e.target.value = '';
         } else if (name === "recommanded") {
             setForm({...form, [name]: !form.recommanded})
             setRecommanded(!recommanded);
@@ -172,6 +174,46 @@ export default function UpdateArticle() {
         }));
       };
 
+      const deleteImg = (e) => {
+        e.preventDefault();
+
+        let tempArray = [];
+        img.forEach(element => {
+            if (element !== e.target.value) {
+                tempArray.push(element);
+            }
+        });
+
+        setImg(tempArray);
+
+        e.target.parentNode.remove()
+      }
+
+      function addThumbnail (src) {
+        for (let i = 0; i < src.length; i++) {
+
+            const newDiv = document.createElement("div");
+            newDiv.classList.add("border", "cursor-pointer");
+          
+            const button = document.createElement("button");
+            button.textContent = "X";
+            button.addEventListener("click", deleteImg);
+            button.value = img;
+          
+            const imgElement = document.createElement("img");
+            imgElement.src = URL.createObjectURL(src[i]);
+            imgElement.alt = "imgProduct";
+            imgElement.classList.add("w-[50px]", "h-[50px]");
+          
+            newDiv.appendChild(button);
+            newDiv.appendChild(imgElement);
+          
+            const ref = document.querySelector(".test");
+    
+            ref.appendChild(newDiv);
+        }
+      } 
+
     const submit = async (e) => {
         e.preventDefault();
         try {
@@ -193,17 +235,13 @@ export default function UpdateArticle() {
                     formData.append("categoriesName", form.categoryName);
                     formData.append("subCategoriesName", form.subCategoriesName);
                     formData.append("recommanded", form.recommanded);
-                    formData.append("pictures", article.pictures);
+                    formData.append("pictures", img);
 
                     if (form.photo) {
                         for (let i = 0; i < form.photo.length; i++) {
                             formData.append("photo", form.photo[i]);
                         }
                     }
-
-                    console.log('====================================');
-                    console.log(form);
-                    console.log('====================================');
 
                     const response = await axios.put("http://localhost:8000/UpdateArticle", formData);
 
@@ -333,6 +371,21 @@ export default function UpdateArticle() {
                             </div>
                         </div>
                     )}
+                                    {
+                    article.pictures.length > 1
+                    ?
+                    <div className="flex p-4 justify-evenly test">
+                    {article.pictures.map((img) => (
+                        <div key={img} className="border cursor-pointer">
+                            <button onClick={deleteImg} value={img}>X</button>
+                            <img src={`http://localhost:8000/storage/${img}`} alt="imgProduct" className="w-[50px] h-[50px]"></img>
+                        </div>
+                    )
+                    )}
+                    </div>
+                    :
+                    <div className="mt-10"></div>
+                }
                     <label htmlFor="recommanded">Recommander l'article :</label>
                     <input onChange={handleChange} type="checkbox" name="recommanded" checked={recommanded}/>
                     <button type="submit" className='border my-5'>Mettre à jour l'article</button>
