@@ -289,7 +289,7 @@ export default function UpdateArticle({ idArticle }) {
                     <p>Animal : {article.animalsName}</p>
                     <p>Categorie : {article.categoriesName}</p>
                     <p>Sous-catégorie : {article.subCategoriesName}</p>
-                    {/* <div>
+                    <div>
                         <p>Pour changer de catégorie, choisir ici :</p>
                         <Dropdown title={dropdownAnimals}>
                             {animals.map((animal) => (
@@ -324,7 +324,7 @@ export default function UpdateArticle({ idArticle }) {
                                 </Dropdown>
                             </div>
                         </div>
-                    )}
+                    )} 
                     <label htmlFor="recommanded">Recommander l'article :</label>
                     <input onChange={handleChange} type="checkbox" name="recommanded" checked={recommanded}/>
                     <button type="submit" className='border my-5'>Mettre à jour l'article</button>
