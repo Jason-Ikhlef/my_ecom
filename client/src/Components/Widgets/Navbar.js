@@ -3,11 +3,12 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/LogoImage.png";
 import profilPicture from "../../assets/user-line.svg";
-import Cart from "../../assets/Cart.png";
+import cart from "../../assets/Cart.png";
 import User from "../Widgets/User";
 import { Dropdown } from "rsuite";
 import DropdownItem from "rsuite/esm/Dropdown/DropdownItem";
 import Loader from "./Loader";
+import Cart from "../../Views/Users/Cart"
 
 export default function Navbar() {
 
@@ -99,8 +100,13 @@ export default function Navbar() {
                     </div>
                 )
                 }
-            <div className="bg-[#4FBEB7] rounded-lg h-10 p-2 ml-[-50px] w-14 flex justify-center items-center">
-                <img src={Cart} alt="Panier" className="w-7" />
+            <div className="bg-[#4FBEB7] rounded-lg h-10 p-2 ml-[-50px] w-14 flex justify-center items-center relative">
+                <img src={cart} alt="Panier" className="w-7 absolute" />
+                <Dropdown trigger="hover" >
+                <DropdownItem >
+                    <Cart />
+                </DropdownItem>
+                </Dropdown>
             </div>
         </div>
     );
