@@ -108,6 +108,9 @@ export default function UpdateArticle() {
 
     useEffect(() => {
         if (article) {
+            console.log('====================================');
+            console.log(article);
+            console.log('====================================');
             setForm ({
                 title: article.title,
                 description: article.description,
@@ -190,12 +193,17 @@ export default function UpdateArticle() {
                     formData.append("categoriesName", form.categoryName);
                     formData.append("subCategoriesName", form.subCategoriesName);
                     formData.append("recommanded", form.recommanded);
+                    formData.append("pictures", article.pictures);
 
                     if (form.photo) {
                         for (let i = 0; i < form.photo.length; i++) {
                             formData.append("photo", form.photo[i]);
                         }
                     }
+
+                    console.log('====================================');
+                    console.log(form);
+                    console.log('====================================');
 
                     const response = await axios.put("http://localhost:8000/UpdateArticle", formData);
 
