@@ -8,7 +8,7 @@ import User from "../Widgets/User";
 import { Dropdown } from "rsuite";
 import DropdownItem from "rsuite/esm/Dropdown/DropdownItem";
 import Loader from "./Loader";
-import Cart from "../../Views/Users/Cart"
+import Cart from "../../Components/User/Cart"
 
 export default function Navbar() {
 
@@ -103,7 +103,7 @@ export default function Navbar() {
             <div className="bg-[#4FBEB7] rounded-lg h-10 p-2 ml-[-50px] w-14 flex justify-center items-center relative">
                 <img src={cart} alt="Panier" className="w-7 absolute" />
                 <Dropdown trigger="hover" >
-                <DropdownItem >
+                <DropdownItem as="a" href="http://localhost:3000/cart">
                     <Cart />
                 </DropdownItem>
                 </Dropdown>
