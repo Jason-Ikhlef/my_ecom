@@ -9,7 +9,7 @@ import {
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Loader from "../Components/Widgets/Loader";
+import Loader from "../../Components/Widgets/Loader";
 
 
 export default function HomePage(params) {
