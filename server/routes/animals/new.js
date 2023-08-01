@@ -22,14 +22,14 @@ router.post("/NewCategory", async (req, res) => {
             name: animals
         });
 
-        if (animal.length === 0) {
+        if (animal === null) {
             animal = new animalsCollection({
                 name: animals
             });
             
             try {
                 await animal.save();
-                animal = await animalsCollection.find({
+                animal = await animalsCollection.findOne({
                     name: animals
                 });
                 console.log('animal category saved');
@@ -46,12 +46,18 @@ router.post("/NewCategory", async (req, res) => {
 
         let flag = false;
 
-        animal.categories.forEach(element => {
-            if (element.name === category) {
-                idCat = animal.categories.indexOf(element);
-                flag = true;
-            }
-        });
+        console.log(animal);
+
+        if (animal.categories.length > 0) {
+
+            animal.categories.forEach(element => {
+                if (element.name === category) {
+                    idCat = animal.categories.indexOf(element);
+                    flag = true;
+                }
+            });
+        }
+
 
         if (!flag) {
             try {
