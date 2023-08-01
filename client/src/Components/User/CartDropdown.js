@@ -72,7 +72,7 @@ const CartDropDown = () => {
                 <div className='text-center'>
                     <button className='bg-[#4FBEB7] p-2'>Commander</button>    
                 </div>
-            </div> : null}
+            </div> : <p>Panier Vide</p>}
         </div>
     )
 };
