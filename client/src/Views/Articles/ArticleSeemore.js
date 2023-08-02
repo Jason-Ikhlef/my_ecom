@@ -9,7 +9,6 @@ import User from "../../Components/Widgets/User";
 import Loader from "../../Components/Widgets/Loader";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
-// import Footer from "../Components/Widgets/Footer";
 
 export default function ArticleSeeMore() {
     const [id, setId] = useState("");
@@ -192,7 +191,8 @@ export default function ArticleSeeMore() {
                         <div className="flex my-4 ml-5 gap-8 w-full mx-auto">
                             <img
                                 src={checked}
-                                className="w-[20px] h-auto"></img>
+                                className="w-[20px] h-auto"
+                                alt="Checkmark"></img>
                             <p>
                                 Livraison à domicile en Belgique (gratuit) et en
                                 France
@@ -201,19 +201,22 @@ export default function ArticleSeeMore() {
                         <div className="flex my-4 ml-5 gap-8 w-full mx-auto">
                             <img
                                 src={checked}
-                                className="w-[20px] h-auto"></img>
+                                className="w-[20px] h-auto"
+                                alt="Checkmark"></img>
                             <p>Délai court</p>
                         </div>
                         <div className="flex my-4 ml-5 gap-8 w-full mx-auto">
                             <img
                                 src={checked}
-                                className="w-[20px] h-auto"></img>
+                                className="w-[20px] h-auto"
+                                alt="Checkmark"></img>
                             <p>2 ans de garantie d’usine</p>
                         </div>
                         <div className="flex my-4 ml-5 gap-8 w-full mx-auto">
                             <img
                                 src={checked}
-                                className="w-[20px] h-auto"></img>
+                                className="w-[20px] h-auto"
+                                alt="Checkmark"></img>
                             <p>
                                 Besoin de conseils ? Visitez notre jardinerie à
                                 Mouscron

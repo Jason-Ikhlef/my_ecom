@@ -37,7 +37,7 @@ function App() {
         <Route path='/cart' Component={Cart} />
         {/* <Route path='/articles/seatch/:name' Component={UpdateUser} /> */}
       </Routes>
-      {/* <Footer /> */}
+      <Footer />
     </Router>
   );
 }
