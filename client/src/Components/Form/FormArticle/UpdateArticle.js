@@ -292,7 +292,7 @@ export default function UpdateArticle({ idArticle }) {
     }
 
     axios
-      .put("http://localhost:8000/UpdateArticle", formData)
+    .put("http://localhost:8000/UpdateArticle", formData)
       .then(response => {
         if (response.data === "success") {
           toast.success("Article modifié !");

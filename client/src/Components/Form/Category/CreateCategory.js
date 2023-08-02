@@ -72,63 +72,71 @@ export default function CreateCategory() {
     };
 
     const handleAnimals = (animal) => {
-        if (animal === "Aucun") {
-            setDropdownAnimals("Animal");
-            setForm((prevForm) => ({
-                ...prevForm,
-                animals: null,
-                category: null,
-                subCategory: null
-            }));
-            setSelectedAnimal(null);
-        } else {
-            setDropdownAnimals(animal.name);
-            setForm((prevForm) => ({
-                ...prevForm,
-                animals: animal.name,
-                category: null,
-                subCategory: null
-            }));
-            setSelectedAnimal(animal._id);
-        }
+    if (animal === "Aucun") {
+        setDropdownAnimals("Animal");
+        setForm((prevForm) => ({
+            ...prevForm,
+            animals: null,
+            category: null,
+            subCategory: null
+        }));
+        setSelectedAnimal(null);
+        setAnimalIndex(null);
+        setSelectedCat(null); // Réinitialiser la valeur de la catégorie sélectionnée
+        setCatIndex(null); // Réinitialiser l'index de la catégorie sélectionnée
+    } else {
+        setDropdownAnimals(animal.name);
+        setForm((prevForm) => ({
+            ...prevForm,
+            animals: animal.name,
+            category: null,
+            subCategory: null
+        }));
+        setSelectedAnimal(animal._id);
+        setAnimalIndex(null);
+        setSelectedCat(null);
+        setCatIndex(null);
+    }
 
-        setSelectedCat(null)
-    };
+    setSelectedCat(null)
+};
 
-    const handleCat = (cat) => {
-        if (cat === "Aucun") {
-            setDropdownCat("Aucun")
-            setForm((prevForm) => ({
-                ...prevForm,
-                category: null,
-                subCategory: null
-            }))
-            setSelectedCat(null)
-        } else {
-            setDropdownCat(cat.name);
-            setForm((prevForm) => ({
-                ...prevForm,
-                category: cat.name,
-            }));
-            setSelectedCat(cat._id);
-        }
-    };
+const handleCat = (cat) => {
+    if (cat === "Aucun") {
+        setDropdownCat("Aucun")
+        setForm((prevForm) => ({
+            ...prevForm,
+            category: null,
+            subCategory: null
+        }))
+        setSelectedCat(null);
+        setCatIndex(null);
+    } else {
+        setDropdownCat(cat.name);
+        setForm((prevForm) => ({
+            ...prevForm,
+            category: cat.name,
+        }));
+        setSelectedCat(cat._id);
+        setCatIndex(null);
+    }
+};
 
-    const handleSubCat = (subCat) => {
-        if (subCat === "Aucun") {
-            setDropdownSubCat("Aucun");
-            setForm((prevForm) => ({
-                ...prevForm,
-                subCategory: null
-            }))
-        } else {
-            setDropdownSubCat(subCat.name);
-            setForm((prevForm) => ({
-                ...prevForm,
-                subCategory: subCat.name,
-            }));
-        }
-    };
+const handleSubCat = (subCat) => {
+    if (subCat === "Aucun") {
+        setDropdownSubCat("Aucun");
+        setForm((prevForm) => ({
+            ...prevForm,
+            subCategory: null
+        }))
+    } else {
+        setDropdownSubCat(subCat.name);
+        setForm((prevForm) => ({
+            ...prevForm,
+            subCategory: subCat.name,
+        }));
+    }
+};
 
     const handleClick = (e) => {
         e.preventDefault();
