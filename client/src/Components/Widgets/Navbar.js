@@ -44,9 +44,9 @@ export default function Navbar() {
             <div className="navbar_categories flex w-1/2 justify-between items-center">
                 {categories ? (
                     categories.map((category) => (
-                        <Dropdown className="flex items-center" title={category.name}>
+                        <Dropdown className="flex items-center" title={category.name} trigger="hover">
                             {category.categories.map((subcategory) => (
-                                <Dropdown title={subcategory.name}>
+                                <Dropdown title={subcategory.name} trigger="hover">
                                     {subcategory.subCategories.map((subsubcategory) => (
                                         <DropdownItem className="text-black">
                                             {subsubcategory.name}
