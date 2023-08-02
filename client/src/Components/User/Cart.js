@@ -33,7 +33,7 @@ const Cart = () => {
     .post('http://localhost:8000/newOrder', {cart, totalPrice}, {withCredentials: true})
     .then(response => {
       setCart([])
-      console.log(response);
+      setTotalPrice(0)
     })
     .catch(err => {
       console.error(err)

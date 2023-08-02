@@ -30,7 +30,7 @@ router.post("/newOrder", async(req, res) => {
     .findById(userId)
     .then(user => {
 
-        user.old_orders.push({cart, totalPrice})
+        user.old_orders.push({cart, totalPrice, date: new Date()})
         user.cart = []
         user.markModified('cart');
         user.markModified('old_orders');
