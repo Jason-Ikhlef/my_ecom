@@ -31,7 +31,7 @@ code {
   border: 10px solid #ffffff;
 }
 
-/* .rs-dropdown-toggle,
+.rs-dropdown-toggle,
 .rs-dropdown-menu,
 .rs-dropdown-toggle:hover
 {
@@ -42,7 +42,7 @@ code {
 .rs-dropdown-item:hover {
   background-color: #4FBEB7;
   color: #000;
-} */
+}
 
 .lds-roller {
   display: inline-block;

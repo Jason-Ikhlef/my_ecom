@@ -64,22 +64,19 @@ export default function ArticleSeeMore() {
 
     async function addToCart() {
         await axios
-            .post(
-                "http://localhost:8000/addToCart",
-                {
-                    articleId: article._id,
-                    quantity: Number(articleQuantity),
-                    name: article.title,
-                    price: article.price,
-                },
-                { withCredentials: true }
-            )
-            .then((response) => {
-                console.log(response);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        .post('http://localhost:8000/addToCart', {
+            articleId: article._id,
+            quantity: Number(articleQuantity),
+            img: article.pictures[0],
+            name: article.title,
+            price: article.price
+        }, {withCredentials: true})
+        .then(response => {
+            console.log(response);
+        })
+        .catch(err => {
+            console.log(err);
+        })
     }
 
     if (!article) {

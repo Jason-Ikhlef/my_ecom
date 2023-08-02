@@ -3,19 +3,11 @@ const router = express.Router();
 
 const { userCollection, googleCollection, facebookCollection } = require("../../../mongo");
 
-router.post("/addToCart", async(req, res) => {
+router.post("/getOldOrders", async(req, res) => {
 
     const userId = req.session.user.id
     const auth = req.session.user.auth
     
-    const {
-        articleId,
-        quantity,
-        img,
-        name,
-        price
-    } = req.body;
-
     switch(auth) {
 
         case 'petheaven': {
@@ -36,14 +28,7 @@ router.post("/addToCart", async(req, res) => {
     .findById(userId)
     .then(user => {
 
-        const articleExists = user.cart.find(item => item.articleId === articleId)
-
-        articleExists ? articleExists.quantity += quantity : user.cart.push({ articleId, name, price, quantity, img })
-
-        user.markModified('cart');
-        user.save()
-        req.session.user.cart = user.cart
-        res.status(200).json(user.cart)
+        res.status(200).json(user.old_orders)
     })
     .catch(err => {
         console.error(err)

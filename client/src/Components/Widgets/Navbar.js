@@ -3,11 +3,12 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/LogoImage.png";
 import profilPicture from "../../assets/user-line.svg";
-import Cart from "../../assets/Cart.png";
+import cart from "../../assets/Cart.png";
 import User from "../Widgets/User";
 import { Dropdown } from "rsuite";
 import DropdownItem from "rsuite/esm/Dropdown/DropdownItem";
 import Loader from "./Loader";
+import CartDropDown from "../User/CartDropdown";
 
 export default function Navbar() {
 
@@ -59,49 +60,60 @@ export default function Navbar() {
                     <Loader />
                 )}
             </div>
-                {
-                currentUser ? (
-                <div className="flex items-center justify-center gap-8  h-10 mr-[-50px]">
-                    <Link to="/profil" className="text-xl flex bg-[#4FBEB7] p-2 rounded-lg">
-                        <img src={profilPicture} alt="Profil" className="w-8" />
-                        Profil
-                    </Link>
+            {
+            currentUser ? (
+            <div className="flex items-center justify-center gap-8  h-10 mr-[-50px]">
+                <Link to="/profil" className="text-xl flex bg-[#4FBEB7] p-2 rounded-lg">
+                    <img src={profilPicture} alt="Profil" className="w-8" />
+                    Profil
+                </Link>
+                <div>
+                    {currentUser.admin
+                    ?
                     <div>
-                        {currentUser.admin
-                        ?
-                        <div>
-                            <Dropdown title='Gestion admin'>
-                                <DropdownItem as='a' href="http://localhost:3000/admin/articles">
-                                    Gestion des articles
-                                </DropdownItem>
-                                <DropdownItem as='a' href="http://localhost:3000/admin/categories">
-                                    Gestion des categories
-                                </DropdownItem>
-                                <DropdownItem as='a' href="http://localhost:3000/admin/users">
-                                    Gestion des utilisateurs
-                                </DropdownItem>
-                                
-                            </Dropdown>
-                        </div>
-                        :
-                        null
-                        }
+                        <Dropdown title='Gestion admin'>
+                            <DropdownItem as='a' href="http://localhost:3000/admin/articles">
+                                Gestion des articles
+                            </DropdownItem>
+                            <DropdownItem as='a' href="http://localhost:3000/admin/categories">
+                                Gestion des categories
+                            </DropdownItem>
+                            <DropdownItem as='a' href="http://localhost:3000/admin/users">
+                                Gestion des utilisateurs
+                            </DropdownItem>
+                            
+                        </Dropdown>
                     </div>
-                </div>     
-                ) : (
-                    <div className="flex flex-col items-center">
-                        <div className="bg-[#4FBEB7] rounded-xl px-2">
-                            <Link to="/login" className="flex py-2">
-                                <img src={profilPicture} alt="Profil" className="w-8" />
-                                Se connecter
-                            </Link>
-                        </div>
+                    :
+                    null
+                    }
+                </div>
+            </div>     
+            ) : (
+                <div className="flex flex-col items-center">
+                    <div className="bg-[#4FBEB7] rounded-xl px-2">
+                        <Link to="/login" className="flex py-2">
+                            <img src={profilPicture} alt="Profil" className="w-8" />
+                            Se connecter
+                        </Link>
                     </div>
-                )
-                }
-            <div className="bg-[#4FBEB7] rounded-lg h-10 p-2 ml-[-50px] w-14 flex justify-center items-center">
-                <img src={Cart} alt="Panier" className="w-7" />
-            </div>
+                </div>
+            )
+            }
+            {
+                currentUser ? 
+                <div className="bg-[#4FBEB7] rounded-lg h-10 p-2 ml-[-50px] w-14 flex justify-center items-center relative">
+                    <Dropdown trigger="hover" placement="bottomEnd" icon={<img src={cart} alt="Panier" />}>
+                        <DropdownItem>
+                            <CartDropDown />
+                        </DropdownItem>
+                    </Dropdown>
+                </div> : null 
+            }
         </div>
     );
 }
+
+
+// Commander
+// Onglet View Historique
