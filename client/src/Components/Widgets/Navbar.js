@@ -16,12 +16,12 @@ export default function Navbar() {
     const [categories, setCategories] = useState();
     const location = useLocation();
 
+
     useEffect(() => {
         const fetchAnimals = async () => {
             try {
                 const response = await axios.get('http://localhost:8000/categories');
                 setCategories(response.data);
-                console.log(categories);
             } catch (error) {
                 console.error(error);
             }
@@ -46,12 +46,12 @@ export default function Navbar() {
             </div>
             <div className="navbar_categories flex w-1/2 justify-between items-center">
                 {categories ? (
-                    categories.map((category) => (
-                        <Dropdown className="flex items-center" title={category.name} trigger="hover">
-                            {category.categories.map((subcategory) => (
-                                <Dropdown title={subcategory.name} trigger="hover">
-                                    {subcategory.subCategories.map((subsubcategory) => (
-                                        <DropdownItem className="text-black">
+                    categories.map((category, indexOne) => (
+                        <Dropdown key={indexOne} className="flex items-center" title={category.name} trigger="hover">
+                            {category.categories.map((subcategory, indexTwo) => (
+                                <Dropdown key={indexTwo} title={subcategory.name} trigger="hover">
+                                    {subcategory.subCategories.map((subsubcategory, indexThree) => (
+                                        <DropdownItem key={indexThree} className="text-black">
                                             {subsubcategory.name}
                                         </DropdownItem>
                                     ))}
