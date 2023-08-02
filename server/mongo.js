@@ -47,6 +47,10 @@ const googleSchema = new mongoose.Schema({
         type: Array,
         default: []
     },
+    old_orders: {
+        type: Array,
+        default: []
+    },
     admin: {
         type: Boolean,
         default: false

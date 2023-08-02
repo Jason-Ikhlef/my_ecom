@@ -14,6 +14,7 @@ import AdminUser from './Views/Admin/User';
 import AdminArticles from './Views/Admin/Articles';
 import AdminCategories from './Views/Admin/Categories';
 import Footer from './Components/Widgets/Footer';
+import Cart from './Components/User/Cart';
 
 
 function App() {
@@ -33,9 +34,10 @@ function App() {
         <Route path='/admin/articles' Component={AdminArticles} />
         <Route path='/admin/categories' Component={AdminCategories} />
         <Route path='/articles/seatch/:name' Component={UpdateUser} />
+        <Route path='/cart' Component={Cart} />
         {/* <Route path='/articles/seatch/:name' Component={UpdateUser} /> */}
       </Routes>
-      {/* <Footer /> */}
+      <Footer />
     </Router>
   );
 }

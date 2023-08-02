@@ -7,7 +7,7 @@ import { Dropdown } from "rsuite";
 import DropdownItem from "rsuite/esm/Dropdown/DropdownItem";
 import Loader from '../../Widgets/Loader';
 
-export default function UpdateArticle() {
+export default function UpdateArticle({ idArticle }) {
 
     const [id, setId] = useState('');
     const [article, setArticle] = useState(null);
@@ -50,6 +50,7 @@ export default function UpdateArticle() {
     }, [location])
 
     useEffect(() => {
+
         async function fetchArticles() {
 
             await axios
@@ -453,9 +454,8 @@ export default function UpdateArticle() {
                                 )
                                 )}
                             </div>
-                            :
-                            <div className="mt-10"></div>
-                    }
+                        </div>
+                    )} 
                     <label htmlFor="recommanded">Recommander l'article :</label>
                     <input onChange={handleChange} type="checkbox" name="recommanded" checked={recommanded} />
                     <button type="submit" className='border my-5'>Mettre à jour l'article</button>
