@@ -51,6 +51,19 @@ const Cart = () => {
     })
   }
 
+  const clearCart = async () => {
+
+    await axios
+    .get('http://localhost:8000/clearCart', {withCredentials: true})
+    .then(response => {
+      setCart(response.data)
+      setTotalPrice(0)
+    })
+    .catch(err => {
+      console.error(err)
+    })
+  }
+
 if(userLoading) {
     return <Loader/>
 }
@@ -89,7 +102,7 @@ if(userLoading) {
                 <p className="p-2">A venir</p>
               </div>
               <button
-                onClick={buyOnClick}
+                onClick={newOrder}
                 className="bg-[#4FBEB7] w-3/4 p-2 mx-auto "
               >
                 Paiement
@@ -110,7 +123,7 @@ if(userLoading) {
               </div>
             </div>
             <div className="border w-full mx-auto p-4">
-              <button className="w-full p-2 bg-[#4FBEB7]">Vider le panier</button>
+              <button onClick={clearCart} className="w-full p-2 bg-[#4FBEB7]">Vider le panier</button>
             </div>
           </div>
       </div>
