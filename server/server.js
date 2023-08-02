@@ -90,6 +90,9 @@ app.use('/', DeleteUser);
 const AddCart = require('./routes/users/cart/new');
 app.use('/', AddCart);
 
+const deleteFromCart = require('./routes/users/cart/delete');
+app.use('/', deleteFromCart);
+
 // CATEGORIES
 
 const NewCategory = require('./routes/animals/new');
