@@ -43,7 +43,7 @@ export default function UpdateArticle({ idArticle }) {
         };
 
         fetchArticle();
-    }, [id]);
+    }, [idArticle]);
 
     useEffect(() => {
         const fetchAnimals = async () => {
