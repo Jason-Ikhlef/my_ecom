@@ -18,18 +18,18 @@ router.post("/NewCategory", async (req, res) => {
     let animal, group, series, idCat = null;
 
     if (animals !== '') {
-        animal = await animalsCollection.find({
+        animal = await animalsCollection.findOne({
             name: animals
         });
 
-        if (animal.length === 0) {
+        if (animal === null) {
             animal = new animalsCollection({
                 name: animals
             });
             
             try {
                 await animal.save();
-                animal = await animalsCollection.find({
+                animal = await animalsCollection.findOne({
                     name: animals
                 });
                 console.log('animal category saved');
@@ -45,13 +45,19 @@ router.post("/NewCategory", async (req, res) => {
     if (category !== '') {
 
         let flag = false;
-        
-        animal[0].categories.forEach(element => {
-            if (element.name === category) {
-                idCat = animal[0].categories.indexOf(element);
-                flag = true;
-            }
-        });
+
+        console.log(animal);
+
+        if (animal.categories.length > 0) {
+
+            animal.categories.forEach(element => {
+                if (element.name === category) {
+                    idCat = animal.categories.indexOf(element);
+                    flag = true;
+                }
+            });
+        }
+
 
         if (!flag) {
             try {
@@ -61,7 +67,7 @@ router.post("/NewCategory", async (req, res) => {
                 })
 
                 await group.save()
-                animal[0].categories.push(group);
+                animal.categories.push(group);
 
                 console.log('category saved');
 
@@ -76,11 +82,11 @@ router.post("/NewCategory", async (req, res) => {
 
         flag = false;
 
-        if (!idCat) {
-            idCat = (animal[0].categories.length)-1;
+        if (idCat === null) {
+            idCat = (animal.categories.length)-1;
         }
 
-        animal[0].categories[idCat].subCategories.forEach(element => {
+        animal.categories[idCat].subCategories.forEach(element => {
             if (element.name === subCategory) {
                 flag = true;
             }
@@ -94,7 +100,7 @@ router.post("/NewCategory", async (req, res) => {
 
             try {
                 await series.save();
-                animal[0].categories[idCat].subCategories.push(series);
+                animal.categories[idCat].subCategories.push(series);
                 console.log('subcategory saved');
             } catch (e) {
                 // voir pour envoyer des messages plus clairs en fonction des erreurs

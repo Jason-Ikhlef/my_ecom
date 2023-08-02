@@ -12,11 +12,17 @@ export default function UserProfilPage ()
 
     const { currentUser, userLoading } = User()
     const [update, setUpdate] = useState(false)
+    const [isWatchingHistory, setHistory] = useState(false)
 
     if (userLoading) {
 
         return <p>Loading...</p>
     
+    }
+
+    const handleClick = (e) => 
+    {
+        setHistory(true);
     }
 
     const deleteOnClick = async (e) => 
@@ -51,9 +57,12 @@ export default function UserProfilPage ()
                         <p className="text-center">Role: {currentUser.admin ? 'administrateur' : 'Utilisateur'}  </p>
                     </div>
                 </div>
-                <div className="flex">
+                <div className="flex flex-wrap">
                     <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={(e) => {setUpdate(true)}}>
                         Modifier
+                    </p>
+                    <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={handleClick}>
+                        Voir Historique
                     </p>
                     <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={LogOut}>
                         Se déconnecter
@@ -70,7 +79,15 @@ export default function UserProfilPage ()
             </div>
             :
             <ReadUser />
-        }
+            }
+            {
+                isWatchingHistory ? 
+                <div className="w-3/4 mx-auto text-center">
+                    <p onClick={(e) => {setHistory(false)}} className="cursor-pointer">X</p>
+                    <p>Bha ouais c'est Greg</p>
+                </div> :
+                null
+            }
         </div>
     )
 }
