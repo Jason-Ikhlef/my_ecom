@@ -11,6 +11,7 @@ router.post("/addToCart", async(req, res) => {
     const {
         articleId,
         quantity,
+        img,
         name,
         price
     } = req.body;
@@ -37,7 +38,7 @@ router.post("/addToCart", async(req, res) => {
 
         const articleExists = user.cart.find(item => item.articleId === articleId)
 
-        articleExists ? articleExists.quantity += quantity : user.cart.push({ articleId, name, price, quantity })
+        articleExists ? articleExists.quantity += quantity : user.cart.push({ articleId, name, price, quantity, img })
 
         user.markModified('cart');
         user.save()
