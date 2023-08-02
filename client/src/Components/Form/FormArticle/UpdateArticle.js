@@ -246,13 +246,14 @@ export default function UpdateArticle({ idArticle }) {
 
             const button = document.createElement("button");
             button.textContent = "X";
+            button.classList.add("z-10", "absolute", "ml-2", "font-bold")
             button.addEventListener("click", deleteImg);
             button.value = img;
 
             const imgElement = document.createElement("img");
             imgElement.src = URL.createObjectURL(src[i]);
             imgElement.alt = "imgProduct";
-            imgElement.classList.add("w-[50px]", "h-[50px]");
+            imgElement.classList.add("w-[75px]", "h-[75px]" , "relative","m-3");
 
             newDiv.appendChild(button);
             newDiv.appendChild(imgElement);
@@ -328,14 +329,15 @@ export default function UpdateArticle({ idArticle }) {
           <ToastContainer />
           
           <h1 className='text-center my-5'>Mettre à jour l'article</h1>
+          <h2 className='text-center my-5 underline'>Les informations soulignées peuvent être modifiées</h2>
           <div className='w-full mx-auto flex flex-col'>
             <form onSubmit={submit} className='flex flex-wrap justify-center gap-8'>
-                <div className='border w-1/3'>
+                <div className='border rounded-t-2xl w-2/5'>
                     <input
                       type="text"
                       id="title"
                       name="title"
-                      className='bg-[#4FBEB7] text-center text-white p-2 rounded-t-2xl w-full'
+                      className='bg-[#4FBEB7] text-center text-white p-2 rounded-t-2xl w-full underline'
                       value={form.title}
                       onChange={handleChange}
                       required
@@ -344,11 +346,11 @@ export default function UpdateArticle({ idArticle }) {
                     <img src={`http://localhost:8000/storage/${article.pictures[0]}`} className='w-[300px] h-[300px] mx-auto mt-8' alt='img product'></img>
                     <div className='flex justify-evenly'>
                         {article.pictures.length > 0 ? (
-                            <div className="flex p-4 justify-evenly w-3/4">
+                            <div className="flex p-4 justify-evenly w-3/4 test">
                             {article.pictures.map((img) => (
                                 <div key={img} className="border cursor-pointer">
-                                <button onClick={deleteImg} value={img} className='z-10 absolute ml-2 font-bold'>X</button>
-                                <img src={`http://localhost:8000/storage/${img}`} alt="imgProduct" className="w-[75px] h-[75px] relative m-3" />
+                                    <button onClick={deleteImg} value={img} className='z-10 absolute ml-2 font-bold'>X</button>
+                                    <img src={`http://localhost:8000/storage/${img}`} alt="imgProduct" className="w-[75px] h-[75px] relative m-3" />
                                 </div>
                             ))}
                             </div>
@@ -371,8 +373,9 @@ export default function UpdateArticle({ idArticle }) {
                         </div>
                     </div>
                 </div>
-                <div className='w-1/3 flex flex-col border p-2'>
-                    <label htmlFor="description">Description de l'article</label>
+                <div className='w-1/3 flex flex-col border p-4'>
+                    
+                    <label htmlFor="description" className='underline'>Description de l'article</label>
                     <input
                         type="text"
                         id="description"
@@ -382,17 +385,22 @@ export default function UpdateArticle({ idArticle }) {
                         required
                         placeholder="Description de l'article"
                     />
-                    <label htmlFor="price">Prix de l'article</label>
-                    <input
-                        type="number"
-                        id="price"
-                        name="price"
-                        value={form.price}
-                        onChange={handleChange}
-                        required
-                        placeholder="Prix de l'article"
-                    />
-                    <label htmlFor="caracteristics">Caractéristiques de l'article</label>
+                    <hr className='my-2'></hr>
+                    <div className='w-full flex justify-center'>
+                        <label htmlFor="price" className='underline'>Prix de l'article</label>
+                        <input
+                            type="number"
+                            id="price"
+                            name="price"
+                            className='text-center'
+                            value={form.price}
+                            onChange={handleChange}
+                            required
+                            placeholder="Prix de l'article"
+                        />
+                    </div>
+                    <hr className='my-2'></hr>
+                    <label htmlFor="caracteristics" className='underline'>Caractéristiques de l'article</label>
                     <input
                         type="text"
                         id="caracteristics"
@@ -402,23 +410,29 @@ export default function UpdateArticle({ idArticle }) {
                         required
                         placeholder="Caractéristiques de l'article"
                     />
-                    <label htmlFor="stock">Stock (nombre)</label>
-                    <input
-                        type="number"
-                        id="stock"
-                        name="stock"
-                        value={form.stock}
-                        onChange={handleChange}
-                        required
-                        placeholder="Stock (nombre)"
-                    />
+                    <hr className='my-2'></hr>
+                    <div className='w-full flex justify-center'>
+                        <label htmlFor="stock" className='underline'>Stock (nombre)</label>
+                        <input
+                            type="number"
+                            id="stock"
+                            name="stock"
+                            className='text-center'
+                            value={form.stock}
+                            onChange={handleChange}
+                            required
+                            placeholder="Stock (nombre)"
+                        />
+                    </div>
+                    <hr className='my-2'></hr>
                     <p>Catégories actuelle :</p>
                     <div className='p-2 flex justify-evenly'>
                         <p>Animal : {article.animalsName}</p>
                         <p>Categorie : {article.categoriesName}</p>
                         <p>Sous-catégorie : {article.subCategoriesName}</p>
                     </div>
-                    <p>Pour changer de catégorie, choisir ici :</p>
+                    <hr className='my-2'></hr>
+                    <p className='underline'> Pour changer de catégorie, choisir ici :</p>
                     <div className='p-2 flex justify-evenly'>
                         <Dropdown title={dropdownAnimals} trigger="hover">
                         <DropdownItem onSelect={() => handleAnimals("Aucun")}>
@@ -469,11 +483,14 @@ export default function UpdateArticle({ idArticle }) {
                         </Dropdown>
                         )}
                     </div>
-                    <label htmlFor="recommanded">Recommander l'article :</label>
-                    <input onChange={handleChange} type="checkbox" name="recommanded" checked={recommanded} />
+                    <hr className='my-2'></hr>
+                    <div className='flex justify-evenly'>                    
+                        <label htmlFor="recommanded" className='underline'>Recommander l'article :</label>
+                        <input onChange={handleChange} type="checkbox" name="recommanded" checked={recommanded} />
+                    </div>
                 </div>
-            </form>
             <button type="submit" className='border my-5 w-3/4 mx-auto'>Mettre à jour l'article</button>
+            </form>
           </div>
         </div>
       );      
