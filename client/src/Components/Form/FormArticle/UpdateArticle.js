@@ -45,9 +45,13 @@ export default function UpdateArticle({ idArticle }) {
 
     useEffect(() => {
 
-        location.state === null ? setId(window.location.href.split('/')[5]) : setId(location.state.id);
+      if (idArticle) {
+        setId(idArticle);
+      } else {
+        setId(window.location.href.split('/')[5]);
+      }
 
-    }, [location])
+    }, [idArticle, location])
 
     useEffect(() => {
 
@@ -86,7 +90,6 @@ export default function UpdateArticle({ idArticle }) {
             setRecommanded(article.recommanded);
         }
     }, [article])
-
     useEffect(() => {
         async function fetchAnimals() {
 
@@ -439,7 +442,7 @@ export default function UpdateArticle({ idArticle }) {
                   </Dropdown>
                 )}
               </div>
-              {article.pictures.length > 1 ? (
+              {article.pictures.length > 0 ? (
                 <div className="flex p-4 justify-evenly test">
                   {article.pictures.map((img) => (
                     <div key={img} className="border cursor-pointer">

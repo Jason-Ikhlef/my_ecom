@@ -24,8 +24,6 @@ export default function HomePage(params) {
         fetchArticles();
     }, []);
 
-    console.log(articles);
-
     var settings = {
         dots: true,
         autoplay: true,

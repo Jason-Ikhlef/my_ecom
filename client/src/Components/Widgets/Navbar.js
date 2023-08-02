@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link,useLocation } from "react-router-dom";
 import Logo from "../../assets/LogoImage.png";
 import profilPicture from "../../assets/user-line.svg";
 import cart from "../../assets/Cart.png";
@@ -13,7 +13,9 @@ import CartDropDown from "../User/CartDropdown";
 export default function Navbar() {
 
     const { currentUser, userLoading } = User();
-    const [categories, setCategories] = useState(null);
+    const [categories, setCategories] = useState();
+    const location = useLocation();
+
 
     useEffect(() => {
         const fetchAnimals = async () => {
@@ -31,6 +33,8 @@ export default function Navbar() {
     if (userLoading) {
         return <p>Loading...</p>
     }
+
+    const isOnCartPage = location.pathname === '/cart'
 
     return (
         <div className="flex bg-[#C1E1C1] p-2 justify-evenly items-center gap-8">
@@ -100,7 +104,7 @@ export default function Navbar() {
             )
             }
             {
-                currentUser ? 
+               currentUser && !isOnCartPage ?
                 <div className="bg-[#4FBEB7] rounded-lg h-10 p-2 ml-[-50px] w-14 flex justify-center items-center relative">
                     <Dropdown trigger="hover" placement="bottomEnd" icon={<img src={cart} alt="Panier" />}>
                         <DropdownItem>

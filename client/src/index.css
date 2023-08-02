@@ -39,6 +39,11 @@ code {
   color: #000;
 }
 
+.rs-btn:focus, .rs-btn:hover 
+{
+  background-color: #4FBEB7;
+}
+
 .rs-dropdown-item:hover {
   background-color: #4FBEB7;
   color: #000;
