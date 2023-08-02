@@ -124,26 +124,3 @@ export default function Navbar() {
         </div>
     );
 }
-
-
-// Commander
-// Onglet View Historique
-
-// {currentUser && !isOnCartPage ? (
-//     <div className="bg-[#4FBEB7] rounded-lg h-10 p-2 ml-[-50px] w-14 flex justify-center items-center relative" onMouseEnter={toggleDropdown} onMouseLeave={toggleDropdown}>
-//         <button className="dropdown-trigger">
-//             <div
-//             className="cart-icon h-6 w-6 bg-center bg-no-repeat bg-contain cursor-pointer "
-//             style={{ backgroundImage: `url(${cart})` }}
-//             alt="Panier"
-//             />
-//         </button>
-//         {isDropdownVisible && (
-//             <div className="dropdown-menu mt-1 py-2 bg-white rounded-lg shadow-lg absolute top-9 right-0">
-//                 <div className="dropdown-content">
-//                     <CartDropDown />
-//                 </div>
-//             </div>
-//         )}
-//     </div>
-// ) : null}
