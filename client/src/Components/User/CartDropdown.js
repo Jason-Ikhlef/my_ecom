@@ -63,47 +63,43 @@ const CartDropDown = () => {
 
     return (
         <div>
-  {cart && cart.length !== 0 ? (
-    <div className='flex flex-col border-8 h-[425px] overflow-auto'>
-      <div className='flex gap-4 mb-2 p-2'>
-        <p className='text-xl'>Mon panier, </p>
-        <p className='text-xl'>{totalQuantity} articles</p>
-      </div>
-      <div className='h-[200px] overflow-auto'>
-        {cart.map((item, index) => (
-          <div key={index} className='bg-white p-2 border-b'>
-            <div className='flex justify-evenly'>
-              <img src={`http://localhost:8000/storage/${item.img}`} alt='img articles' className='w-[100px] h-[100px]' />
-              <div className='flex flex-col w-1/3'>
-                <p>{item.price} €</p>
-                <p className='whitespace-normal text-[12px]'>{item.name}</p>
-                <p>Qté : {item.quantity}</p>
-                <img src={bin} className='w-[20px] h-[20px] self-end z-10' alt='delete bin' onClick={() => deleteArticle(item.articleId, item.price, item.quantity)} />
-              </div>
+        {cart && cart.length !== 0 ? (
+            <div className='flex flex-col border-8 h-[425px] bg-white justify-around'>
+                <div className='flex gap-4 mb-2 p-2'>
+                    <p className='text-xl'>Mon panier, </p>
+                    <p className='text-xl'>{totalQuantity} articles</p>
+                </div>
+                <div className='h-[200px] overflow-auto'>
+                    {cart.map((item, index) => (
+                    <div key={index} className='bg-white p-2 border-b'>
+                        <div className='flex justify-evenly'>
+                        <img src={`http://localhost:8000/storage/${item.img}`} alt='img articles' className='w-[100px] h-[100px]' />
+                        <div className='flex flex-col w-1/3'>
+                            <p>{item.price} €</p>
+                            <p className='whitespace-normal text-[12px]'>{item.name}</p>
+                            <p>Qté : {item.quantity}</p>
+                            <img src={bin} className='w-[20px] h-[20px] self-end z-10' alt='delete bin' onClick={() => deleteArticle(item.articleId, item.price, item.quantity)} />
+                        </div>
+                        </div>
+                    </div>
+                    ))}
+                </div>
+                <div className='bg-gray-200 p-2 text-center'>
+                    <p>prix total : {totalPrice.toFixed(2)} €</p>
+                </div>
+                <div className='bg-gray-300 p-2 text-center flex justify-between'>
+                    <a href='http://localhost:3000/cart'>
+                    <button className='bg-white p-2'>Voir panier</button>
+                    </a>
+                    <button className='bg-[#C1E1C1] p-2' onClick={clearCart}>Supprimer panier</button>
+                </div>
             </div>
-          </div>
-        ))}
-      </div>
-      <div className='bg-gray-200 p-2 text-center'>
-        <p>prix total : {totalPrice.toFixed(2)} €</p>
-      </div>
-      <div className='bg-gray-300 p-2 text-center flex justify-between'>
-        <a href='http://localhost:3000/cart'>
-          <button className='bg-white p-2'>Voir panier</button>
-        </a>
-        <button className='bg-[#C1E1C1] p-2' onClick={clearCart}>Supprimer panier</button>
-      </div>
-    </div>
-  ) : (
-    <p>Panier Vide</p>
-  )}
-</div>
-
+        ) : (
+            <p>Panier Vide</p>
+        )}
+        </div>
     )
 };
- 
+
 export default CartDropDown;
-/*
-     {currentUser && currentUser.cart.length !== 0 ? 
-     <div className='flex flex-col border-8 h-[425px]  bg-white justify-around '>
- */
+
