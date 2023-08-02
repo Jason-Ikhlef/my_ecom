@@ -3,6 +3,7 @@ import axios from "axios";
 import { Link,useLocation } from "react-router-dom";
 import Logo from "../../assets/LogoImage.png";
 import profilPicture from "../../assets/user-line.svg";
+import cart from "../../assets/cart.svg"
 import User from "../Widgets/User";
 import { Dropdown } from "rsuite";
 import DropdownItem from "rsuite/esm/Dropdown/DropdownItem";
@@ -104,7 +105,15 @@ export default function Navbar() {
             }
             {
                currentUser && !isOnCartPage ?
-                <div className="bg-[#4FBEB7] rounded-lg h-10 p-2 ml-[-50px] w-14 flex justify-center items-center relative">
+                <div className="bg-[#4FBEB7] rounded-lg h-10 p-2 ml-[-50px] w-14 flex justify-center items-center relative cartImg">
+                    <div className="dropdown-title">
+                      <img
+                        src={cart}
+                        alt="Icône du chariot"
+                        width="24"
+                        height="24"
+                      />
+                    </div>
                     <Dropdown trigger="hover" placement="bottomEnd">
                         <DropdownItem>
                             <CartDropDown />
@@ -119,3 +128,22 @@ export default function Navbar() {
 
 // Commander
 // Onglet View Historique
+
+// {currentUser && !isOnCartPage ? (
+//     <div className="bg-[#4FBEB7] rounded-lg h-10 p-2 ml-[-50px] w-14 flex justify-center items-center relative" onMouseEnter={toggleDropdown} onMouseLeave={toggleDropdown}>
+//         <button className="dropdown-trigger">
+//             <div
+//             className="cart-icon h-6 w-6 bg-center bg-no-repeat bg-contain cursor-pointer "
+//             style={{ backgroundImage: `url(${cart})` }}
+//             alt="Panier"
+//             />
+//         </button>
+//         {isDropdownVisible && (
+//             <div className="dropdown-menu mt-1 py-2 bg-white rounded-lg shadow-lg absolute top-9 right-0">
+//                 <div className="dropdown-content">
+//                     <CartDropDown />
+//                 </div>
+//             </div>
+//         )}
+//     </div>
+// ) : null}
