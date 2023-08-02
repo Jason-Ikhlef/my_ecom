@@ -23,10 +23,9 @@ const CartDropDown = () => {
             setTotalPrice(price)
             setTotalQuantity(quantity)
             setCart(currentUser.cart)
-
             if (totalQuantity > 99) setTotalQuantity("99+")
         }
-    },[currentUser, userLoading, totalQuantity])
+    },[currentUser, userLoading])
 
     const deleteArticle = async (articleId, price, quantity) => {
 
@@ -34,7 +33,10 @@ const CartDropDown = () => {
         .post('http://localhost:8000/removeFromCart', {articleId}, {withCredentials: true})
         .then(response => {
           const newPrice = totalPrice - (quantity * price)
+          const newQuantity = totalQuantity - quantity
           setTotalPrice(newPrice)
+          if (newQuantity > 99) setTotalQuantity('99+')
+          else setTotalQuantity(newQuantity)
           setCart(response.data)
         })
         .catch(err => {
