@@ -44,9 +44,17 @@ const CartDropDown = () => {
         })
       }
 
-    const deleteCartOnClick = () => {
-        console.log('Je vous ai bien eu Mr Perrier');
-    }
+      const clearCart = async () => {
+
+        await axios
+        .get('http://localhost:8000/clearCart', {withCredentials: true})
+        .then(response => {
+          setCart(response.data)
+        })
+        .catch(err => {
+          console.error(err)
+        })
+      }
 
     if(userLoading){
         return <Loader/>
@@ -76,13 +84,13 @@ const CartDropDown = () => {
                 ))
                 }
                 <div className='bg-gray-200 p-2 text-center'>
-                    <p>prix total : {totalPrice} €</p>
+                    <p>prix total : {totalPrice.toFixed(2)} €</p>
                 </div>
                 <div className='bg-gray-300 p-2 text-center flex justify-between'>
                     <a href='http://localhost:3000/cart'>
                         <button className='bg-white p-2'>Voir panier</button>
                     </a>
-                    <button className='bg-[#C1E1C1] p-2' onClick={deleteCartOnClick}>Supprimer panier</button>
+                    <button className='bg-[#C1E1C1] p-2' onClick={clearCart}>Supprimer panier</button>
                 </div>
                 <div className='text-center'>
                     <button className='bg-[#4FBEB7] p-2'>Commander</button>    
