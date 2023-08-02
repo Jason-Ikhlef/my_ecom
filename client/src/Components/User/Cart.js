@@ -27,8 +27,17 @@ const Cart = () => {
       }
   },[currentUser, userLoading])
 
-  const buyOnClick = () => {
-    console.log('bravo MONSIEUR PERRIER !!');
+  const newOrder = async () => {
+    
+    await axios
+    .post('http://localhost:8000/newOrder', {cart, totalPrice}, {withCredentials: true})
+    .then(response => {
+      setCart([])
+      console.log(response);
+    })
+    .catch(err => {
+      console.error(err)
+    })
   }
 
   const deleteArticle = async (articleId, price, quantity) => {
@@ -85,7 +94,7 @@ if(userLoading) {
             <p className='text-2xl'>Livraison</p>
             <p className='p-2'>A venir</p>
           </div>
-          <button onClick={buyOnClick} className='bg-[#4FBEB7] w-3/4 p-2 mx-auto '>Paiement</button>
+          <button onClick={newOrder} className='bg-[#4FBEB7] w-3/4 p-2 mx-auto '>Paiement</button>
           <p className='px-4 text-2xl'>Nous acceptons :</p>
           <div className='flex justify-evenly mb-4'>
             <img src={visa} alt='icon visa' className='w-[50px] h-[50px]'></img>

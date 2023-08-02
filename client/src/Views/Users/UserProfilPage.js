@@ -12,7 +12,7 @@ export default function UserProfilPage ()
 
     const { currentUser, userLoading } = User()
     const [update, setUpdate] = useState(false)
-    const [isWatchingHistory, setHistory] = useState(false)
+    const [isWatchingHistory, setIsWatchingHistory] = useState(false)
 
     if (userLoading) {
 
@@ -22,7 +22,7 @@ export default function UserProfilPage ()
 
     const handleClick = (e) => 
     {
-        setHistory(true);
+        setIsWatchingHistory(true);
     }
 
     const deleteOnClick = async (e) => 
@@ -83,7 +83,7 @@ export default function UserProfilPage ()
             {
                 isWatchingHistory ? 
                 <div className="w-3/4 mx-auto text-center">
-                    <p onClick={(e) => {setHistory(false)}} className="cursor-pointer">X</p>
+                    <p onClick={() => {setIsWatchingHistory(false)}} className="cursor-pointer">X</p>
                     <p>Bha ouais c'est Greg</p>
                 </div> :
                 null

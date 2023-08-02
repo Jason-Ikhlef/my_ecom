@@ -8,7 +8,7 @@ router.post("/newOrder", async(req, res) => {
     const userId = req.session.user.id
     const auth = req.session.user.auth
 
-    const { order } = req.body
+    const { cart, totalPrice } = req.body
     
     switch(auth) {
 
@@ -30,7 +30,7 @@ router.post("/newOrder", async(req, res) => {
     .findById(userId)
     .then(user => {
 
-        user.old_orders.push(order)
+        user.old_orders.push({cart, totalPrice})
         user.cart = []
         user.markModified('cart');
         user.markModified('old_orders');
