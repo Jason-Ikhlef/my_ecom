@@ -106,7 +106,7 @@ export default function Navbar() {
             {
                currentUser && !isOnCartPage ?
                 <div className="bg-[#4FBEB7] rounded-lg h-10 p-2 ml-[-50px] w-14 flex justify-center items-center relative">
-                    <Dropdown trigger="hover" placement="bottomEnd" icon={<img src={cart} alt="Panier" />}>
+                    <Dropdown trigger="hover" placement="bottomEnd" className="test">
                         <DropdownItem>
                             <CartDropDown />
                         </DropdownItem>
