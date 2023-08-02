@@ -3,7 +3,6 @@ import axios from "axios";
 import { Link,useLocation } from "react-router-dom";
 import Logo from "../../assets/LogoImage.png";
 import profilPicture from "../../assets/user-line.svg";
-import cart from "../../assets/Cart.png";
 import User from "../Widgets/User";
 import { Dropdown } from "rsuite";
 import DropdownItem from "rsuite/esm/Dropdown/DropdownItem";

@@ -1,14 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useLocation } from "react-router-dom";
 
 export default function Footer() {
     let location = useLocation();
-
-    useEffect(() => {
-        window.location.pathname.includes("/articles/")
-            ? console.log("C'est un article")
-            : console.log("C'est pas un article");
-    }, [location]);
 
     return (
         <>
