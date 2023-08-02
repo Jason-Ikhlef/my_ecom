@@ -106,14 +106,6 @@ export default function Navbar() {
             {
                currentUser && !isOnCartPage ?
                 <div className="bg-[#4FBEB7] rounded-lg h-10 p-2 ml-[-50px] w-14 flex justify-center items-center relative cartImg">
-                    <div className="dropdown-title">
-                      <img
-                        src={cart}
-                        alt="Icône du chariot"
-                        width="24"
-                        height="24"
-                      />
-                    </div>
                     <Dropdown trigger="hover" placement="bottomEnd">
                         <DropdownItem>
                             <CartDropDown />
