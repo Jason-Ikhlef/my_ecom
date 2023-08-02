@@ -69,6 +69,7 @@ const CartDropDown = () => {
                     <p className='text-xl'>Mon panier, </p>
                     <p className='text-xl'>{totalQuantity} articles</p>
                 </div>
+                <div className='h-[200px] overflow-auto'>
                 {cart.map((item, index) => (
                 <div key={index} className="bg-white p-2 border-b">
                     <div className='flex justify-evenly'>
@@ -80,9 +81,9 @@ const CartDropDown = () => {
                             <img src={bin} className='w-[20px] h-[20px] self-end z-10' alt='delete bin' onClick={() => deleteArticle(item.articleId, item.price, item.quantity)}></img>
                         </div>
                     </div>
+                    ))
+                    }
                 </div>
-                ))
-                }
                 <div className='bg-gray-200 p-2 text-center'>
                     <p>prix total : {totalPrice.toFixed(2)} €</p>
                 </div>
@@ -92,12 +93,13 @@ const CartDropDown = () => {
                     </a>
                     <button className='bg-[#C1E1C1] p-2' onClick={clearCart}>Supprimer panier</button>
                 </div>
-                <div className='text-center'>
-                    <button className='bg-[#4FBEB7] p-2'>Commander</button>    
-                </div>
             </div> : <p>Panier Vide</p>}
         </div>
     )
 };
  
 export default CartDropDown;
+/*
+     {currentUser && currentUser.cart.length !== 0 ? 
+     <div className='flex flex-col border-8 h-[425px]  bg-white justify-around '>
+ */

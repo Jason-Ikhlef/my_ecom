@@ -86,7 +86,6 @@ export default function UpdateArticle({ idArticle }) {
             setRecommanded(article.recommanded);
         }
     }, [article])
-
     useEffect(() => {
         async function fetchAnimals() {
 
