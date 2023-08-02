@@ -24,73 +24,8 @@ export default function UpdateArticle() {
     const [dropdownAnimals, setDropdownAnimals] = useState("Animaux")
     const [dropdownCat, setDropdownCat] = useState("Categorie")
     const [dropdownSubCat, setDropdownSubCat] = useState("Sous-categorie")
-   
+
     const location = useLocation()
-
-    useEffect(() => {
-
-        location.state === null ? setId(window.location.href.split('/')[5]) : setId(location.state.id);
-
-    },[location])
-
-    useEffect(() => {
-        const fetchArticle = async () => {
-            try {
-                const response = await axios.get(`http://localhost:8000/article/${id}`, { withCredentials: true });
-                setArticle(response.data)
-                setImg(response.data.pictures)
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        fetchArticle();
-    }, [id]);
-
-    useEffect(() => {
-        const fetchAnimals = async () => {
-            try {
-                const response = await axios.get('http://localhost:8000/categories');
-                setAnimals(response.data)
-
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        fetchAnimals();
-    }, []);
-
-    useEffect(() => {
-        if (selectedAnimal) {
-            const getAnimalIndex = async () => {
-    
-                animals.forEach(element => {
-                    if (element._id === selectedAnimal) {
-                        setAnimalIndex(animals.indexOf(element));
-                    }
-                });
-            }
-            getAnimalIndex();
-        }
-    }, [animalIndex, animals, selectedAnimal]);
-
-    useEffect(() => {
-        if (selectedCat) {
-            const getCatIndex = async () => {
-    
-                animals[animalIndex].categories.forEach(element => {
-
-                    if (element._id === selectedCat) {
-                        setCatIndex(animals[animalIndex].categories.indexOf(element));
-                    }
-                });
-            }
-
-            getCatIndex();
-        }
-    }, [animalIndex, animals, catIndex, selectedCat]);
-
 
     const [form, setForm] = useState({
         title: '',
@@ -109,8 +44,29 @@ export default function UpdateArticle() {
     });
 
     useEffect(() => {
+
+        location.state === null ? setId(window.location.href.split('/')[5]) : setId(location.state.id);
+
+    }, [location])
+
+    useEffect(() => {
+        async function fetchArticles() {
+
+            await axios
+                .get(`http://localhost:8000/article/${id}`)
+                .then(res => {
+                    setArticle(res.data)
+                    setImg(res.data.pictures)
+                })
+                .catch(err => console.error(err));
+        };
+
+        fetchArticles();
+    }, [id])
+
+    useEffect(() => {
         if (article) {
-            setForm ({
+            setForm({
                 title: article.title,
                 description: article.description,
                 price: article.price,
@@ -128,8 +84,53 @@ export default function UpdateArticle() {
 
             setRecommanded(article.recommanded);
         }
-    },[article])
-    
+    }, [article])
+
+    useEffect(() => {
+        async function fetchAnimals() {
+
+            await axios
+                .get('http://localhost:8000/categories')
+                .then(res => {
+                    setAnimals(res.data)
+                })
+                .catch(err => console.error(err));
+        };
+
+        fetchAnimals();
+
+    }, [])
+
+    useEffect(() => {
+        if (selectedAnimal) {
+            const getAnimalIndex = async () => {
+
+                animals.forEach(element => {
+                    if (element._id === selectedAnimal) {
+                        setAnimalIndex(animals.indexOf(element));
+                    }
+                });
+            }
+            getAnimalIndex();
+        }
+    }, [animalIndex, animals, selectedAnimal]);
+
+    useEffect(() => {
+        if (selectedCat) {
+            const getCatIndex = async () => {
+
+                animals[animalIndex].categories.forEach(element => {
+
+                    if (element._id === selectedCat) {
+                        setCatIndex(animals[animalIndex].categories.indexOf(element));
+                    }
+                });
+            }
+
+            getCatIndex();
+        }
+    }, [animalIndex, animals, catIndex, selectedCat]);
+
     const handleChange = (e) => {
         const { name, value, files } = e.target;
         if (name === 'photo') {
@@ -138,43 +139,87 @@ export default function UpdateArticle() {
 
             e.target.value = '';
         } else if (name === "recommanded") {
-            setForm({...form, [name]: !form.recommanded})
+            setForm({ ...form, [name]: !form.recommanded })
             setRecommanded(!recommanded);
-        }  else {
+        } else {
             setForm({ ...form, [name]: value });
         }
     };
 
     const handleAnimals = (animal) => {
-        setDropdownAnimals(animal.name);
-        setForm((prevForm) => ({
-          ...prevForm,
-          animal: animal._id,
-          animalName: animal.name
-        }));
-        setSelectedAnimal(animal._id);
-      };
-      
-      const handleCat = (cat) => {
-        setDropdownCat(cat.name);
-        setForm((prevForm) => ({
-          ...prevForm,
-          category: cat._id,
-          categoryName: cat.name
-        }));
-        setSelectedCat(cat._id);
-      };
-      
-      const handleSubCat = (subCat) => {
-        setDropdownSubCat(subCat.name);
-        setForm((prevForm) => ({
-          ...prevForm,
-          subCategory: subCat._id,
-          subCategoriesName: subCat.name
-        }));
-      };
+        if (animal === "Aucun") {
+            setDropdownAnimals("Aucun");
+            setForm((prevForm) => ({
+                ...prevForm,
+                animal: null,
+                animalName: null,
+                category: null,
+                categoryName: null,
+                subCategory: null,
+                subCategoriesName: null
+            }));
+            setSelectedAnimal(null);
+            setSelectedCat(null)
+        } else {
+            setDropdownAnimals(animal.name);
+            setForm((prevForm) => ({
+                ...prevForm,
+                animal: animal._id,
+                animalName: animal.name,
+                category: null,
+                categoryName: null,
+                subCategory: null,
+                subCategoriesName: null
+            }));
+            setSelectedAnimal(animal._id);
+            setSelectedCat(null)
+        }
+    };
 
-      const deleteImg = (e) => {
+    const handleCat = (cat) => {
+        if (cat === "Aucun") {
+
+            setDropdownCat("Aucun");
+            setForm((prevForm) => ({
+                ...prevForm,
+                category: null,
+                categoryName: null,
+                subCategory: null,
+                subCategoriesName: null
+            }));
+            setSelectedCat(null);
+        } else {
+            setDropdownCat(cat.name);
+            setForm((prevForm) => ({
+                ...prevForm,
+                category: cat._id,
+                categoryName: cat.name,
+                subCategory: null,
+                subCategoriesName: null
+            }));
+            setSelectedCat(cat._id);
+        }
+    };
+
+    const handleSubCat = (subCat) => {
+        if (subCat === "Aucun") {
+            setDropdownSubCat("Aucun");
+            setForm((prevForm) => ({
+                ...prevForm,
+                subCategory: null,
+                subCategoriesName: null
+            }));
+        } else {
+            setDropdownSubCat(subCat.name);
+            setForm((prevForm) => ({
+                ...prevForm,
+                subCategory: subCat._id,
+                subCategoriesName: subCat.name
+            }));
+        }
+    };
+
+    const deleteImg = (e) => {
         e.preventDefault();
 
         let tempArray = [];
@@ -187,80 +232,87 @@ export default function UpdateArticle() {
         setImg(tempArray);
 
         e.target.parentNode.remove()
-      }
+    }
 
-      function addThumbnail (src) {
+    function addThumbnail(src) {
         for (let i = 0; i < src.length; i++) {
 
             const newDiv = document.createElement("div");
             newDiv.classList.add("border", "cursor-pointer");
-          
+
             const button = document.createElement("button");
             button.textContent = "X";
             button.addEventListener("click", deleteImg);
             button.value = img;
-          
+
             const imgElement = document.createElement("img");
             imgElement.src = URL.createObjectURL(src[i]);
             imgElement.alt = "imgProduct";
             imgElement.classList.add("w-[50px]", "h-[50px]");
-          
+
             newDiv.appendChild(button);
             newDiv.appendChild(imgElement);
-          
+
             const ref = document.querySelector(".test");
-    
+
             ref.appendChild(newDiv);
         }
-      } 
+    }
 
-    const submit = async (e) => {
+    const submit = (e) => {
         e.preventDefault();
-        try {
-            if (form.title.length < 3) {
-                toast.error("Le titre doit faire plus de 3 caractères");
-            } else {
-                try {
-                    const formData = new FormData();
-                    formData.append("title", form.title);
-                    formData.append("description", form.description);
-                    formData.append("price", form.price);
-                    formData.append("caracteristics", form.caracteristics);
-                    formData.append("id", id);
-                    formData.append("stock", form.stock);
-                    formData.append("animal", form.animal);
-                    formData.append("category", form.category);
-                    formData.append("subCategory", form.subCategory);
-                    formData.append("animalsName", form.animalName);
-                    formData.append("categoriesName", form.categoryName);
-                    formData.append("subCategoriesName", form.subCategoriesName);
-                    formData.append("recommanded", form.recommanded);
-                    formData.append("pictures", img);
-
-                    if (form.photo) {
-                        for (let i = 0; i < form.photo.length; i++) {
-                            formData.append("photo", form.photo[i]);
-                        }
-                    }
-
-                    const response = await axios.put("http://localhost:8000/UpdateArticle", formData);
-
-                    if (response.data === "success") {
-                        toast.success("Article modifié !");
-                        setTimeout(() => {
-                            window.location.href = `http://localhost:3000/articles/${id}`
-                        }, 1500);
-                    } else {
-                        toast.error("Une erreur est survenue");
-                    }
-                } catch (error) {
-                    console.error("Error submitting form:", error);
-                    toast.error("Une erreur est survenue lors de la modification de votre article");
-                }
-            }
-        } catch (e) {
-            console.log(e);
+        if (form.title.length < 3) {
+            toast.error("Le titre doit faire plus de 3 caractères");
+            return;
         }
+
+        const formData = new FormData();
+        formData.append("title", form.title);
+        formData.append("description", form.description);
+        formData.append("price", form.price);
+        formData.append("caracteristics", form.caracteristics);
+        formData.append("id", id);
+        formData.append("stock", form.stock);
+        formData.append("recommanded", form.recommanded);
+        formData.append("pictures", img);
+
+        if (form.animal === null || form.category === null || form.subCategory === null) {
+            formData.append("animal", article.animals);
+            formData.append("category", article.categories);
+            formData.append("subCategory", article.subCategories);
+            formData.append("animalsName", article.animalsName);
+            formData.append("categoriesName", article.categoriesName);
+            formData.append("subCategoriesName", article.subCategoriesName);
+        } else {
+            formData.append("animal", form.animal);
+            formData.append("category", form.category);
+            formData.append("subCategory", form.subCategory);
+            formData.append("animalsName", form.animalName);
+            formData.append("categoriesName", form.categoryName);
+            formData.append("subCategoriesName", form.subCategoriesName);
+        }
+
+        if (form.photo) {
+            for (let i = 0; i < form.photo.length; i++) {
+                formData.append("photo", form.photo[i]);
+            }
+        }
+
+        axios.put("http://localhost:8000/UpdateArticle", formData)
+            .then(response => {
+                if (response.data === "success") {
+                    toast.success("Article modifié !");
+                    setTimeout(() => {
+                        window.location.href = `http://localhost:3000/articles/${id}`;
+                    }, 1500);
+                } else {
+                    toast.error("Une erreur est survenue");
+                }
+            })
+            .catch(error => {
+                console.error("Error submitting form:", error);
+                toast.error("Une erreur est survenue lors de la modification de votre article");
+            });
     };
 
     if (!article) {
@@ -338,56 +390,74 @@ export default function UpdateArticle() {
                     <div>
                         <p>Pour changer de catégorie, choisir ici :</p>
                         <Dropdown title={dropdownAnimals}>
+                            <DropdownItem onSelect={() => handleAnimals("Aucun")}>
+                                Aucun
+                            </DropdownItem>
                             {animals.map((animal) => (
                                 <DropdownItem key={animal._id} onSelect={() => handleAnimals(animal)}>
                                     {animal.name}
                                 </DropdownItem>
                             ))}
                         </Dropdown>
+
+                        {selectedAnimal !== null && animalIndex !== null ? (
+
+                            <Dropdown title={dropdownCat}>
+                                <DropdownItem onSelect={() => handleCat("Aucun")}>
+                                    Aucun
+                                </DropdownItem>
+                                {animals[animalIndex].categories.map((animal) => (
+                                    <DropdownItem key={animal._id} onSelect={() => handleCat(animal)}>
+                                        {animal.name}
+                                    </DropdownItem>
+                                ))}
+                            </Dropdown>
+
+                        ) : (
+                            <Dropdown title="Categorie">
+                                <DropdownItem >
+                                    Choississez un animal
+                                </DropdownItem>
+                            </Dropdown>
+                        )}
+                        {selectedCat !== null && catIndex !== null ? (
+
+                            <Dropdown title={dropdownSubCat}>
+                                <DropdownItem onSelect={() => handleSubCat("Aucun")}>
+                                    Aucun
+                                </DropdownItem>
+                                {animals[animalIndex].categories[catIndex].subCategories.map((animal) => (
+                                    <DropdownItem key={animal._id} onSelect={() => handleSubCat(animal)}>
+                                        {animal.name}
+                                    </DropdownItem>
+                                ))}
+                            </Dropdown>
+
+                        ) : (
+                            <Dropdown title="Sous-catégorie">
+                                <DropdownItem >
+                                    Choississez une catégorie
+                                </DropdownItem>
+                            </Dropdown>
+                        )}
                     </div>
-                    {selectedAnimal !== null && animalIndex !== null && (
-                        <div>
-                            <div>
-                                <Dropdown title={dropdownCat}>
-                                    {animals[animalIndex].categories.map((animal) => (
-                                        <DropdownItem key={animal._id} onSelect={() => handleCat(animal)}>
-                                            {animal.name}
-                                        </DropdownItem>
-                                    ))}
-                                </Dropdown>
+                    {
+                        article.pictures.length > 1
+                            ?
+                            <div className="flex p-4 justify-evenly test">
+                                {article.pictures.map((img) => (
+                                    <div key={img} className="border cursor-pointer">
+                                        <button onClick={deleteImg} value={img}>X</button>
+                                        <img src={`http://localhost:8000/storage/${img}`} alt="imgProduct" className="w-[50px] h-[50px]"></img>
+                                    </div>
+                                )
+                                )}
                             </div>
-                        </div>
-                    )}
-                    {selectedCat !== null && catIndex !== null && (
-                        <div>
-                            <div>
-                                <Dropdown title={dropdownSubCat}>
-                                    {animals[animalIndex].categories[catIndex].subCategories.map((animal) => (
-                                        <DropdownItem key={animal._id} onSelect={() => handleSubCat(animal)}>
-                                            {animal.name}
-                                        </DropdownItem>
-                                    ))}
-                                </Dropdown>
-                            </div>
-                        </div>
-                    )}
-                                    {
-                    article.pictures.length > 1
-                    ?
-                    <div className="flex p-4 justify-evenly test">
-                    {article.pictures.map((img) => (
-                        <div key={img} className="border cursor-pointer">
-                            <button onClick={deleteImg} value={img}>X</button>
-                            <img src={`http://localhost:8000/storage/${img}`} alt="imgProduct" className="w-[50px] h-[50px]"></img>
-                        </div>
-                    )
-                    )}
-                    </div>
-                    :
-                    <div className="mt-10"></div>
-                }
+                            :
+                            <div className="mt-10"></div>
+                    }
                     <label htmlFor="recommanded">Recommander l'article :</label>
-                    <input onChange={handleChange} type="checkbox" name="recommanded" checked={recommanded}/>
+                    <input onChange={handleChange} type="checkbox" name="recommanded" checked={recommanded} />
                     <button type="submit" className='border my-5'>Mettre à jour l'article</button>
                 </form>
             </div>
