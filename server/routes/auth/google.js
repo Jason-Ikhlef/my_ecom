@@ -19,14 +19,14 @@ router.post('/createGoogle', async (req, res) => {
 
     if (user) {
         
-        req.session.user = { id: user._id, email: user.email, admin: user.admin, cart: user.cart, auth: 'google' }
+        req.session.user = { id: user._id, email: user.email, admin: user.admin, cart: user.cart, old_orders: user.old_orders, auth: 'google' }
         res.status(200).json("success")
     } else {
 
         await googleCollection
         .create(data)
         .then(response => {
-            req.session.user = { id: response._id, email: response.email, admin: response.admin, cart: response.cart, auth: 'google' }
+            req.session.user = { id: response._id, email: response.email, admin: response.admin, cart: response.cart, old_orders: response.old_orders, auth: 'google' }
             res.status(200).json("success")
         })
         .catch(err => {
