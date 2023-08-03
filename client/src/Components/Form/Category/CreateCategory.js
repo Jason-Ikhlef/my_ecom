@@ -81,9 +81,6 @@ export default function CreateCategory() {
             subCategory: null
         }));
         setSelectedAnimal(null);
-        setAnimalIndex(null);
-        setSelectedCat(null); // Réinitialiser la valeur de la catégorie sélectionnée
-        setCatIndex(null); // Réinitialiser l'index de la catégorie sélectionnée
     } else {
         setDropdownAnimals(animal.name);
         setForm((prevForm) => ({
@@ -93,12 +90,14 @@ export default function CreateCategory() {
             subCategory: null
         }));
         setSelectedAnimal(animal._id);
-        setAnimalIndex(null);
-        setSelectedCat(null);
-        setCatIndex(null);
     }
 
-    setSelectedCat(null)
+    setSelectedCat(null);
+    setAnimalIndex(null);
+    setSelectedCat(null);
+    setCatIndex(null);
+    setDropdownCat("Categorie")
+    setDropdownSubCat("Sous-categorie")
 };
 
 const handleCat = (cat) => {
@@ -110,7 +109,6 @@ const handleCat = (cat) => {
             subCategory: null
         }))
         setSelectedCat(null);
-        setCatIndex(null);
     } else {
         setDropdownCat(cat.name);
         setForm((prevForm) => ({
@@ -118,8 +116,9 @@ const handleCat = (cat) => {
             category: cat.name,
         }));
         setSelectedCat(cat._id);
-        setCatIndex(null);
     }
+    setCatIndex(null);
+    setDropdownSubCat("Sous-categorie")
 };
 
 const handleSubCat = (subCat) => {
