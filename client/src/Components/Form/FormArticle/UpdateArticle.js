@@ -25,6 +25,8 @@ export default function UpdateArticle({ idArticle }) {
     const [dropdownCat, setDropdownCat] = useState("Categorie")
     const [dropdownSubCat, setDropdownSubCat] = useState("Sous-categorie")
 
+    const [photoArray, setPhotoArray] = useState([])
+
     const location = useLocation()
 
     const [form, setForm] = useState({
@@ -32,7 +34,6 @@ export default function UpdateArticle({ idArticle }) {
         description: '',
         price: '',
         caracteristics: '',
-        photo: null,
         stock: '',
         animal: '',
         category: '',
@@ -76,7 +77,6 @@ export default function UpdateArticle({ idArticle }) {
                 description: article.description,
                 price: article.price,
                 caracteristics: article.caracteristics,
-                photo: null,
                 stock: article.stock,
                 animal: article.animals,
                 category: article.categories,
@@ -139,8 +139,15 @@ export default function UpdateArticle({ idArticle }) {
     const handleChange = (e) => {
         const { name, value, files } = e.target;
         if (name === 'photo') {
-            setForm({ ...form, [name]: files });
             addThumbnail(files);
+
+            if (files.length > 1) {
+                                // [...files].forEach(file => setPhotoArray(oldArray => [...oldArray, file]));
+                [...files].forEach(file => photoArray.push(file));
+
+            } else {
+                photoArray.push(files[0])
+            }
 
         } else if (name === "recommanded") {
             setForm({ ...form, [name]: !form.recommanded })
@@ -233,7 +240,35 @@ export default function UpdateArticle({ idArticle }) {
             }
         });
 
-        setImg(tempArray);
+        // console.log('====================================');
+        // console.log(img);
+        // console.log('====================================');
+
+        // setImg(tempArray);
+
+        // console.log('LLLLLLLLLLLLLLLLLLLLLLL');
+        // console.log(img);
+        // console.log('LLLLLLLLLLLLLLLLLLLLLLL');
+
+        let tempArray2 = [];
+
+        photoArray.forEach(element => {
+            console.log(element);
+            if (element !== e.target.value) {
+                tempArray2.push(element);
+            }
+        });
+
+        console.log('====================================');
+        console.log(photoArray);
+        console.log('====================================');        
+
+        setPhotoArray(tempArray2);
+        setPhotoArray(tempArray2);
+
+        console.log('LLLLLLLLLLLLLLLLLLLLLLL');
+        console.log(photoArray);
+        console.log('LLLLLLLLLLLLLLLLLLLLLLL');
 
         e.target.parentNode.remove()
     }
@@ -248,7 +283,7 @@ export default function UpdateArticle({ idArticle }) {
             button.textContent = "X";
             button.classList.add("z-10", "absolute", "ml-2", "font-bold")
             button.addEventListener("click", deleteImg);
-            button.value = img;
+            button.value = src[i].name;
 
             const imgElement = document.createElement("img");
             imgElement.src = URL.createObjectURL(src[i]);
@@ -297,11 +332,15 @@ export default function UpdateArticle({ idArticle }) {
             formData.append("subCategoriesName", form.subCategoriesName);
         }
 
-        if (form.photo) {
-            for (let i = 0; i < form.photo.length; i++) {
-                formData.append("photo", form.photo[i]);
+        if (photoArray) {
+            for (let i = 0; i < photoArray.length; i++) {
+                formData.append("photo", photoArray[i]);
             }
         }
+
+        console.log('====================================');
+        console.log(photoArray);
+        console.log('====================================');
 
         axios.put("http://localhost:8000/UpdateArticle", formData)
             .then(response => {
