@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link,useLocation } from "react-router-dom";
 import Logo from "../../assets/LogoImage.png";
 import profilPicture from "../../assets/user-line.svg";
-import cart from "../../assets/Cart.png";
+import cart from "../../assets/cart.svg"
 import User from "../Widgets/User";
 import { Dropdown } from "rsuite";
 import DropdownItem from "rsuite/esm/Dropdown/DropdownItem";
@@ -105,8 +105,8 @@ export default function Navbar() {
             }
             {
                currentUser && !isOnCartPage ?
-                <div className="bg-[#4FBEB7] rounded-lg h-10 p-2 ml-[-50px] w-14 flex justify-center items-center relative">
-                    <Dropdown trigger="hover" placement="bottomEnd" icon={<img src={cart} alt="Panier" />}>
+                <div className="bg-[#4FBEB7] rounded-lg h-10 p-2 ml-[-50px] w-14 flex justify-center items-center relative cartImg">
+                    <Dropdown trigger="hover" placement="bottomEnd">
                         <DropdownItem>
                             <CartDropDown />
                         </DropdownItem>
@@ -116,7 +116,3 @@ export default function Navbar() {
         </div>
     );
 }
-
-
-// Commander
-// Onglet View Historique
