@@ -96,6 +96,10 @@ export default function ArticleSeeMore() {
             }
             articleExists ? articleExists.quantity += element.quantity : cart.push(element)
             localStorage.setItem('cart', JSON.stringify(cart));
+            toast.success("Article ajouté au panier")
+            setTimeout(() => {
+                window.location.reload()
+            }, 2000);
         }
     }
 

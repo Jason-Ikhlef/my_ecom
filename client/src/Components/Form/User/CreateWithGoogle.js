@@ -36,11 +36,14 @@ export default function CreateWithGoogle() {
     }, [user]);
 
     async function SendToDatabase() {
+
+        const storage = JSON.parse(localStorage.getItem('cart')) || []
         await axios
-            .post("http://localhost:8000/createGoogle", profile, {
+            .post("http://localhost:8000/createGoogle", { storage, profile } , {
                 withCredentials: true,
             })
             .then((res) => {
+                if (storage.length > 0) localStorage.removeItem("cart")
                 toast.success("Bienvenue !");
                 setTimeout(() => {
                     window.location.href = "http://localhost:3000";

@@ -24,9 +24,11 @@ export default function CreateWithFacebook() {
           }
         
         async function SendToDatabase() {
+            const storage = JSON.parse(localStorage.getItem('cart')) || []
             await axios
-                .post('http://localhost:8000/createFacebook', data, {withCredentials : true})
+                .post('http://localhost:8000/createFacebook', {storage, data}, {withCredentials : true})
                 .then(res => {
+                    if (storage.length > 0) localStorage.removeItem("cart")
                     toast.success('Bienvenue !')
                     setTimeout(() => {
                         window.location.href = 'http://localhost:3000'
