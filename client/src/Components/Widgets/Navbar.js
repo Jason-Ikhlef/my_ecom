@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link,useLocation } from "react-router-dom";
 import Logo from "../../assets/LogoImage.png";
 import profilPicture from "../../assets/user-line.svg";
-import cart from "../../assets/Cart.png";
+import cart from "../../assets/cart.svg"
 import User from "../Widgets/User";
 import { Dropdown } from "rsuite";
 import DropdownItem from "rsuite/esm/Dropdown/DropdownItem";
@@ -14,13 +14,14 @@ export default function Navbar() {
 
     const { currentUser, userLoading } = User();
     const [categories, setCategories] = useState();
+    const location = useLocation();
+
 
     useEffect(() => {
         const fetchAnimals = async () => {
             try {
                 const response = await axios.get('http://localhost:8000/categories');
                 setCategories(response.data);
-                console.log(categories);
             } catch (error) {
                 console.error(error);
             }
@@ -33,6 +34,8 @@ export default function Navbar() {
         return <p>Loading...</p>
     }
 
+    const isOnCartPage = location.pathname === '/cart'
+
     return (
         <div className="flex bg-[#C1E1C1] p-2 justify-evenly items-center gap-8">
             <div className="flex items-center justify-between w-[200px]">
@@ -43,12 +46,12 @@ export default function Navbar() {
             </div>
             <div className="navbar_categories flex w-1/2 justify-between items-center">
                 {categories ? (
-                    categories.map((category) => (
-                        <Dropdown className="flex items-center" title={category.name} trigger="hover">
-                            {category.categories.map((subcategory) => (
-                                <Dropdown title={subcategory.name} trigger="hover">
-                                    {subcategory.subCategories.map((subsubcategory) => (
-                                        <DropdownItem className="text-black">
+                    categories.map((category, indexOne) => (
+                        <Dropdown key={indexOne} className="flex items-center" title={category.name} trigger="hover">
+                            {category.categories.map((subcategory, indexTwo) => (
+                                <Dropdown key={indexTwo} title={subcategory.name} trigger="hover">
+                                    {subcategory.subCategories.map((subsubcategory, indexThree) => (
+                                        <DropdownItem key={indexThree} className="text-black">
                                             {subsubcategory.name}
                                         </DropdownItem>
                                     ))}
@@ -101,9 +104,9 @@ export default function Navbar() {
             )
             }
             {
-                currentUser ? 
-                <div className="bg-[#4FBEB7] rounded-lg h-10 p-2 ml-[-50px] w-14 flex justify-center items-center relative">
-                    <Dropdown trigger="hover" placement="bottomEnd" icon={<img src={cart} alt="Panier" />}>
+               currentUser && !isOnCartPage ?
+                <div className="bg-[#4FBEB7] rounded-lg h-10 p-2 ml-[-50px] w-14 flex justify-center items-center relative cartImg">
+                    <Dropdown trigger="hover" placement="bottomEnd">
                         <DropdownItem>
                             <CartDropDown />
                         </DropdownItem>
@@ -113,7 +116,3 @@ export default function Navbar() {
         </div>
     );
 }
-
-
-// Commander
-// Onglet View Historique

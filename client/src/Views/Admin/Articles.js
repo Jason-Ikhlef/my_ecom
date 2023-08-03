@@ -27,22 +27,15 @@ export default function AdminCategories ()
 
     const handleClick = (e) => 
     {
-        if(e.target.id === 'create')
+        if(e.target.name === 'create')
         {
             setState("create");
             setIsEditing()
-            console.log(state);
-            console.log(isEditing);
-            console.log(isCreating);
         }
-        else if (e.target.id === 'update')
+        else if (e.target.name === 'update')
         {
-            setIsEditing(e.target.className);
+            setIsEditing(e.target.value);
             setState("update");
-        }
-        else if (e.target.id === 'delete')
-        {
-            setState("delete");
         }
     }
 
@@ -61,7 +54,7 @@ export default function AdminCategories ()
 
         <div>
             <div className="flex w-3/4 justify-center mx-auto mt-8">
-                <button onClick={handleClick} id="create" className="mb-4">Créer un article</button>
+                <button onClick={handleClick} name="create" className="mb-4">Créer un article</button>
             </div>
             {
                 state === 'create' ?
@@ -75,11 +68,10 @@ export default function AdminCategories ()
                     articles.map((article) => (
                         <div className="flex bg-[#4FBEB7] p-2 justify-between rounded-3xl">
                             <div className="flex gap-8">
-                                <input type="hidden" id={article._id}></input>   
                                 <p>{article.title}</p>
                                 <p>{article.state ? 'En stock' : 'Victime de son succès'}</p>
                             </div>
-                            <button onClick={handleClick} id="update" className={article._id} >Modifier l'article</button>
+                            <button onClick={handleClick} name="update" value={article._id} >Modifier l'article</button>
                         </div>
                     )) : 
                     <UpdateArticle idArticle={isEditing}/> 

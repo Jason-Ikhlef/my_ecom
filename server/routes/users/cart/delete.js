@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { userCollection, googleCollection, facebookCollection } = require("../../../mongo");
 
-router.delete("/removeFromCart", async(req, res) => {
+router.post("/removeFromCart", async(req, res) => {
 
     const userId = req.session.user.id
     const auth = req.session.user.auth

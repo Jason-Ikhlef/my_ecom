@@ -72,7 +72,10 @@ export default function ArticleSeeMore() {
             price: article.price
         }, {withCredentials: true})
         .then(response => {
-            console.log(response);
+            toast.success("Article ajouté au panier")
+            setTimeout(() => {
+                window.location.reload()
+            }, 2000);
         })
         .catch(err => {
             console.log(err);
