@@ -65,22 +65,38 @@ export default function ArticleSeeMore() {
     }, [id]);
 
     async function addToCart() {
-        await axios.post('http://localhost:8000/addToCart', {
-            articleId: article._id,
-            quantity: Number(articleQuantity),
-            img: article.pictures[0],
-            name: article.title,
-            price: article.price
-        }, {withCredentials: true})
-        .then(response => {
-            toast.success("Article ajouté au panier")
-            setTimeout(() => {
-                window.location.reload()
-            }, 2000);
-        })
-        .catch(err => {
-            console.log(err);
-        })
+
+        if (currentUser) {
+            await axios.post('http://localhost:8000/addToCart', {
+                articleId: article._id,
+                quantity: Number(articleQuantity),
+                img: article.pictures[0],
+                name: article.title,
+                price: article.price
+            }, {withCredentials: true})
+            .then(response => {
+                toast.success("Article ajouté au panier")
+                setTimeout(() => {
+                    window.location.reload()
+                }, 2000);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        } else {
+
+            const cart = JSON.parse(localStorage.getItem('cart')) || []
+            const articleExists = cart.find(item => item.articleId === article._id)
+            const element = {
+                articleId: article._id,
+                quantity: Number(articleQuantity),
+                img: article.pictures[0],
+                name: article.title,
+                price: article.price
+            }
+            articleExists ? articleExists.quantity += element.quantity : cart.push(element)
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
     }
 
     if (!article) {
