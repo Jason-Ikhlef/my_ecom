@@ -33,7 +33,8 @@ const Cart = () => {
   }, [currentUser, userLoading]);
 
   const newOrder = async () => {
-    await axios
+    if (currentUser) {
+      await axios
       .post(
         "http://localhost:8000/newOrder",
         { cart, totalPrice },
@@ -46,6 +47,10 @@ const Cart = () => {
       .catch((err) => {
         console.error(err);
       });
+    } else {
+      // pop up qui demande si l'utilisateur non connecté veut se connecter, s'inscrire ou procéder au paiement sans se co
+    }
+    
   };
 
   const deleteArticle = async (articleId, price, quantity) => {
