@@ -95,7 +95,7 @@ if(userLoading) {
               <hr></hr>
               <div className="flex justify-between mx-4">
                 <p className="text-2xl">Sous-total</p>
-                <p className="p-2">{totalPrice} €</p>
+                <p className="p-2">{totalPrice.toFixed(2)} €</p>
               </div>
               <div className="flex justify-between mx-4">
                 <p className="text-2xl">Livraison</p>
