@@ -16,6 +16,8 @@ export default function ArticleSeeMore() {
     const [articleQuantity, setArticleQuantity] = useState(1);
     const [img, setImg] = useState("");
 
+    const disabledBtnProps = {};
+
     const { currentUser, userLoading } = User();
 
     const location = useLocation();
@@ -64,19 +66,23 @@ export default function ArticleSeeMore() {
 
     async function addToCart() {
         await axios
-        .post('http://localhost:8000/addToCart', {
-            articleId: article._id,
-            quantity: Number(articleQuantity),
-            img: article.pictures[0],
-            name: article.title,
-            price: article.price
-        }, {withCredentials: true})
-        .then(response => {
-            console.log(response);
-        })
-        .catch(err => {
-            console.log(err);
-        })
+            .post(
+                "http://localhost:8000/addToCart",
+                {
+                    articleId: article._id,
+                    quantity: Number(articleQuantity),
+                    img: article.pictures[0],
+                    name: article.title,
+                    price: article.price,
+                },
+                { withCredentials: true }
+            )
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
     if (!article) {
@@ -87,27 +93,32 @@ export default function ArticleSeeMore() {
         return <Loader />;
     }
 
+    if (article.stock === 0) {
+        disabledBtnProps.disabled = true;
+    }
+
     return (
         <div className="flex flex-col">
             <div className="flex flex-col lg:flex-row w-3/4 mx-auto justify-evenly mt-10">
                 <div className="flex flex-col w-full lg:w-2/5">
                     <div className="bg-[#C1E1C1] border rounded-xl">
+                        {article.stock === 0 ? (
+                            <div className="fixed w-[30%] h-[44.5%] rounded-xl flex justify-center items-center bg-gray-200/75">
+                                <h1 className="text-red-600 text-7xl -rotate-45">
+                                    Rupture de stock
+                                </h1>
+                            </div>
+                        ) : (
+                            <></>
+                        )}
                         <ToastContainer />
                         <p className="text-center text-white mb-6 p-2 bg-[#4FBEB7] rounded-t-xl">
                             {article.title}
                         </p>
                         <img
                             src={`http://localhost:8000/storage/${img}`}
-                            className="w-[300px] h-[300px] mx-auto"
+                            className="w-[300px] h-[300px] mx-auto my-10"
                             alt="article img"></img>
-                        <p className="text-center my-10">
-                            {article.description}
-                        </p>
-                        <div className="flex justify-around pb-5">
-                            <p>Stock : {article.stock}</p>
-                            <p>{article.price} €</p>
-                            <p>{article.caracteristique}</p>
-                        </div>
                         {currentUser && currentUser.admin ? (
                             <div className="flex pb-5">
                                 <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7]">
@@ -173,16 +184,23 @@ export default function ArticleSeeMore() {
                     <hr className="mx-5"></hr>
                     <div className="flex my-4 justify-evenly w-full mx-auto">
                         <input
+                            {...disabledBtnProps}
                             onChange={(e) => setArticleQuantity(e.target.value)}
                             type="number"
                             id="nbArticles"
                             name="nbArticles"
                             defaultValue={1}
                             className="w-1/3 p-2 rounded-xl"
-                            max="100"></input>
+                            max={article.stock}></input>
                         <button
+                            {...disabledBtnProps}
                             onClick={addToCart}
-                            className="bg-[#4FBEB7] w-1/3 p-2 rounded-xl">
+                            id="addToCartButton"
+                            className={
+                                (disabledBtnProps.disabled === true
+                                    ? "bg-gray-200"
+                                    : "bg-[#4FBEB7]") + " w-1/3 p-2 rounded-xl"
+                            }>
                             Commander
                         </button>
                     </div>
