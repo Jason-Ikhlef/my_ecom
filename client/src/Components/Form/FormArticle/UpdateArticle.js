@@ -90,6 +90,7 @@ export default function UpdateArticle({ idArticle }) {
             setRecommanded(article.recommanded);
         }
     }, [article])
+
     useEffect(() => {
         async function fetchAnimals() {
 
@@ -141,7 +142,6 @@ export default function UpdateArticle({ idArticle }) {
             setForm({ ...form, [name]: files });
             addThumbnail(files);
 
-            e.target.value = '';
         } else if (name === "recommanded") {
             setForm({ ...form, [name]: !form.recommanded })
             setRecommanded(!recommanded);
