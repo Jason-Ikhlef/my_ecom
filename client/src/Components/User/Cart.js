@@ -12,6 +12,7 @@ const Cart = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [cart, setCart] = useState(null);
   const [easyPost, setEasyPost] = useState(null);
+  const [selectedOffer, setSelectedOffer] = useState('Priority')
 
   useEffect(() => {
     if (currentUser && !userLoading) {
@@ -39,6 +40,7 @@ const Cart = () => {
       .then((response) => {
         console.log(response.data);
         setEasyPost(response.data);
+        setSelectedOffer(response.data[0])
       })
       .catch((err) => {
         console.log(err);
@@ -113,8 +115,16 @@ const Cart = () => {
       localStorage.removeItem("cart");
     }
   };
+  
+  const selectOffer = (offer) => {
+    easyPost.map((item) => {
+      if(item.service === offer){
+        setSelectedOffer(item)
+      }
+    })
+  }
 
-  if (userLoading) {
+  if (userLoading || !easyPost) {
     return <Loader />;
   }
 
@@ -154,13 +164,32 @@ const Cart = () => {
               <p className="p-4 text-2xl">Total</p>
               <hr></hr>
               <div className="flex justify-between mx-4">
-                <p className="text-2xl">Sous-total</p>
+                <p className="text-2xl">Frais de port</p>
+                <p className="p-2">{selectedOffer.rate} €</p>
+              </div>
+              <div className="flex justify-between mx-4">
+                <p className="text-2xl">Panier</p>
                 <p className="p-2">{totalPrice.toFixed(2)} €</p>
               </div>
               <div className="flex justify-between mx-4">
-                <p className="text-2xl">Livraison</p>
-                <p className="p-2">A venir</p>
+                <p className="text-2xl">Sous-total</p>
+                <p className="p-2">{(Number(totalPrice.toFixed(2)) + Number(selectedOffer.rate)).toFixed(2)} €</p>
               </div>
+              <div className="flex justify-between mx-4">
+                <p className="text-lg">Livraison</p>
+                <p className="p-2 text-sm">{selectedOffer.delivery_days} jours</p>
+              </div>
+              {easyPost && (
+                <div className="border w-full">
+                  <select className="w-full" onChange={(e) => selectOffer(e.target.value)}>
+                  {
+                    easyPost.map(item =>
+                      <option className="border" key={item.id} >{item.service}</option>   
+                    )
+                  }
+                  </select>
+                </div>
+              )}
               <button
                 onClick={newOrder}
                 className="bg-[#4FBEB7] w-3/4 p-2 mx-auto "
