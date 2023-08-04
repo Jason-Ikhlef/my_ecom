@@ -134,11 +134,6 @@ const articleSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    state: {
-        type: Boolean,
-        default: true,
-        required: true
-    },
     recommanded: {
         type: Boolean,
         default: false,

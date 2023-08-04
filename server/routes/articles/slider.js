@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
 
-const { articleCollection } = require("../../mongo");
+const { mainArticleCollection } = require("../../mongo");
 
 router.get("/slider", (req, res) => {
-    articleCollection.aggregate([
-        { $match: { recommanded: true } },
+    mainArticleCollection.aggregate([
+        { $match: { $and: [ { recommanded: true }, { stock: { $gt: 0 } } ] } },
         { $sample: { size: 5 } }
     ])
     .then(articles => {
+        console.log(articles);
         res.json(articles);
     })
     .catch(error => {
