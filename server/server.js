@@ -132,6 +132,11 @@ app.use('/', AddGoogle);
 const AddFacebook = require('./routes/auth/facebook');
 app.use('/', AddFacebook);
 
+// EASYPOST
+
+const ShippingCost = require('./routes/easypost/get');
+app.use('/', ShippingCost);
+
 app.listen(PORT, () => {
     console.log("Utilisation du port " + PORT);
 });
