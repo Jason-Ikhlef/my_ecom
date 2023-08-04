@@ -124,11 +124,13 @@ export default function Navbar() {
             ) : (
                 <div className="flex flex-col items-center">
                     <div className="bg-[#4FBEB7] rounded-xl px-2">
-                        <Link to="/login" className="flex py-2">
+                        <Link
+                            to="/login"
+                            className="text-sm flex bg-[#4FBEB7] py-2 rounded-lg">
                             <img
                                 src={profilPicture}
                                 alt="Profil"
-                                className="w-8"
+                                className="w-5"
                             />
                             Se connecter
                         </Link>
