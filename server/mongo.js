@@ -143,6 +143,10 @@ const articleSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
         required: true
+    },
+    weight: {
+        type: Number,
+        required: true
     }
 })
 

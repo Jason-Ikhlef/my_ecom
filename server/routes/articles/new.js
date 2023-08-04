@@ -20,7 +20,8 @@ router.put("/AddArticle", storage.upload.array('photo'), async (req, res) => {
         categoriesName,
         subCategoriesName,
         recommanded,
-        property
+        property,
+        weight
     } = req.body;
 
     const picturesNames = req.files.map(file => file.filename);
@@ -43,8 +44,9 @@ router.put("/AddArticle", storage.upload.array('photo'), async (req, res) => {
         categoriesName: categoriesName,
         subCategoriesName: subCategoriesName,
         recommanded: recommanded,
+        weight: weight,
     }
-    
+
     console.log(obj);
 
     try {
