@@ -32,7 +32,8 @@ export default function CreateArticle() {
         animalName: '',
         categoryName: '',
         subCategoriesName: '',
-        recommanded: false
+        recommanded: false,
+        property: ''
     });
 
     useEffect(() => {
@@ -139,6 +140,7 @@ export default function CreateArticle() {
                     formData.append("categoriesName", form.categoryName);
                     formData.append("subCategoriesName", form.subCategoriesName);
                     formData.append("recommanded", form.recommanded);
+                    formData.append("property", form.property);
 
                     if (form.photo) {
                         for (let i = 0; i < form.photo.length; i++) {
@@ -148,7 +150,7 @@ export default function CreateArticle() {
 
                     console.log(form);
 
-                    const response = await axios.put("http://localhost:8000/AddArticle");
+                    const response = await axios.put("http://localhost:8000/AddArticle", formData);
 
                     if (response.data === "success") {
                         toast.success("Nouvel article ajouté !");
@@ -185,7 +187,7 @@ export default function CreateArticle() {
                         name="title"
                         value={form.title}
                         onChange={handleChange}
-                        
+                        required
                         placeholder="Titre de l'article"
                     />
                     <label htmlFor="description">Description de l'article</label>
@@ -195,7 +197,7 @@ export default function CreateArticle() {
                         name="description"
                         value={form.description}
                         onChange={handleChange}
-                        
+                        required
                         placeholder="Description de l'article"
                     />
                     <label htmlFor="price">Prix de l'article</label>
@@ -205,7 +207,7 @@ export default function CreateArticle() {
                         name="price"
                         value={form.price}
                         onChange={handleChange}
-                        
+                        required
                         placeholder="Prix de l'article"
                     />
                     <label htmlFor="caracteristics">Caractéristiques de l'article</label>
@@ -215,7 +217,7 @@ export default function CreateArticle() {
                         name="caracteristics"
                         value={form.caracteristics}
                         onChange={handleChange}
-                        
+                        required
                         placeholder="Caractéristiques de l'article"
                     />
                     <label htmlFor="stock">Stock (nombre)</label>
@@ -225,8 +227,18 @@ export default function CreateArticle() {
                         name="stock"
                         value={form.stock}
                         onChange={handleChange}
-                        
+                        required
                         placeholder="Stock (nombre)"
+                    />
+                    <label htmlFor="property">Attribut</label>
+                    <input
+                        type="property"
+                        id="property"
+                        name="property"
+                        value={form.properties}
+                        onChange={handleChange}
+                        required
+                        placeholder="Couleur, poids, taille..."
                     />
                     <label htmlFor="photo">Photo de l'article</label>
                     <input
