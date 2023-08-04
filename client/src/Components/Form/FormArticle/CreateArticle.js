@@ -148,7 +148,7 @@ export default function CreateArticle() {
 
                     console.log(form);
 
-                    const response = await axios.put("http://localhost:8000/AddArticle", formData);
+                    const response = await axios.put("http://localhost:8000/AddArticle");
 
                     if (response.data === "success") {
                         toast.success("Nouvel article ajouté !");
@@ -185,7 +185,7 @@ export default function CreateArticle() {
                         name="title"
                         value={form.title}
                         onChange={handleChange}
-                        required
+                        
                         placeholder="Titre de l'article"
                     />
                     <label htmlFor="description">Description de l'article</label>
@@ -195,7 +195,7 @@ export default function CreateArticle() {
                         name="description"
                         value={form.description}
                         onChange={handleChange}
-                        required
+                        
                         placeholder="Description de l'article"
                     />
                     <label htmlFor="price">Prix de l'article</label>
@@ -205,7 +205,7 @@ export default function CreateArticle() {
                         name="price"
                         value={form.price}
                         onChange={handleChange}
-                        required
+                        
                         placeholder="Prix de l'article"
                     />
                     <label htmlFor="caracteristics">Caractéristiques de l'article</label>
@@ -215,7 +215,7 @@ export default function CreateArticle() {
                         name="caracteristics"
                         value={form.caracteristics}
                         onChange={handleChange}
-                        required
+                        
                         placeholder="Caractéristiques de l'article"
                     />
                     <label htmlFor="stock">Stock (nombre)</label>
@@ -225,7 +225,7 @@ export default function CreateArticle() {
                         name="stock"
                         value={form.stock}
                         onChange={handleChange}
-                        required
+                        
                         placeholder="Stock (nombre)"
                     />
                     <label htmlFor="photo">Photo de l'article</label>

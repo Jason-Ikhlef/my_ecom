@@ -146,6 +146,14 @@ const articleSchema = new mongoose.Schema({
     }
 })
 
+const mainArticleSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    article: []
+})
+
 const subCategoriesSchema = new mongoose.Schema({
     name: {
         type: String
@@ -170,6 +178,7 @@ const animalsSchema = new mongoose.Schema({
 const userCollection = mongoose.model("user", userSchema)
 const googleCollection = mongoose.model("google", googleSchema)
 const facebookCollection = mongoose.model("facebook" , facebookSchema)
+const mainArticleCollection = mongoose.model("mainArticle", mainArticleSchema)
 const articleCollection = mongoose.model("article", articleSchema)
 const animalsCollection = mongoose.model("animals", animalsSchema)
 const categoriesCollection = mongoose.model("categories", categoriesSchema)
@@ -183,6 +192,7 @@ const collection = {
     animalsCollection,
     categoriesCollection,
     subCategoriesCollection,
+    mainArticleCollection
 }
 
 module.exports = collection
