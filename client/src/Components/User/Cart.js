@@ -6,13 +6,16 @@ import bin from "../../assets/delete-bin-line.svg";
 import mastercard from "../../assets/mastercard-6.svg";
 import paypal from "../../assets/paypal-3.svg";
 import visa from "../../assets/visa-4.svg";
+import Shipping from "../Widgets/Shipping";
 
 const Cart = () => {
   const { currentUser, userLoading } = User();
+  const { currentShipping, shippingLoading } = Shipping();
   const [totalPrice, setTotalPrice] = useState(0);
   const [cart, setCart] = useState(null);
   const [easyPost, setEasyPost] = useState(null);
   const [selectedOffer, setSelectedOffer] = useState('Priority')
+  const [totallySprice, setTotallySprice] = useState(0)
 
   useEffect(() => {
     if (currentUser && !userLoading) {
@@ -35,6 +38,7 @@ const Cart = () => {
   }, [currentUser, userLoading]);
 
   useEffect(() => {
+    if (!totallySprice) {
     axios
       .get("http://localhost:8000/getShippingCost")
       .then((response) => {
@@ -45,7 +49,10 @@ const Cart = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+    }
+
+      setTotallySprice((((Number(selectedOffer.rate) * Number(currentShipping)) / 100) + (Number(selectedOffer.rate))).toFixed(2))
+  }, [selectedOffer, currentShipping]);
 
   const newOrder = async () => {
     if (currentUser) {
@@ -124,10 +131,10 @@ const Cart = () => {
     })
   }
 
-  if (userLoading || !easyPost) {
+  if (userLoading || !easyPost || shippingLoading) {
     return <Loader />;
   }
-
+  
   return (
     <>
       {cart && (
@@ -165,7 +172,9 @@ const Cart = () => {
               <hr></hr>
               <div className="flex justify-between mx-4">
                 <p className="text-2xl">Frais de port</p>
-                <p className="p-2">{selectedOffer.rate} €</p>
+                <p className="p-2">{
+                  totallySprice
+                } €</p>
               </div>
               <div className="flex justify-between mx-4">
                 <p className="text-2xl">Panier</p>
@@ -173,7 +182,7 @@ const Cart = () => {
               </div>
               <div className="flex justify-between mx-4">
                 <p className="text-2xl">Sous-total</p>
-                <p className="p-2">{(Number(totalPrice.toFixed(2)) + Number(selectedOffer.rate)).toFixed(2)} €</p>
+                <p className="p-2">{(Number(totallySprice) + Number(totalPrice)).toFixed(2)} €</p>
               </div>
               <div className="flex justify-between mx-4">
                 <p className="text-lg">Livraison</p>

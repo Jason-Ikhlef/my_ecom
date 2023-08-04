@@ -166,6 +166,12 @@ const animalsSchema = new mongoose.Schema({
     categories: [categoriesSchema]
 });
 
+const appSchema = new mongoose.Schema({
+    shipping: {
+        type: Number,
+        default : 0
+    },
+});
 
 const userCollection = mongoose.model("user", userSchema)
 const googleCollection = mongoose.model("google", googleSchema)
@@ -174,6 +180,7 @@ const articleCollection = mongoose.model("article", articleSchema)
 const animalsCollection = mongoose.model("animals", animalsSchema)
 const categoriesCollection = mongoose.model("categories", categoriesSchema)
 const subCategoriesCollection = mongoose.model("subCategories", subCategoriesSchema)
+const appCollection = mongoose.model("app", appSchema)
 
 const collection = {
     userCollection,
@@ -183,6 +190,7 @@ const collection = {
     animalsCollection,
     categoriesCollection,
     subCategoriesCollection,
+    appCollection
 }
 
 module.exports = collection
