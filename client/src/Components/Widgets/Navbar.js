@@ -80,7 +80,7 @@ export default function Navbar() {
                     <Loader />
                 )}
             </div>
-            {currentUser && !isOnCartPage ? (
+            {!isOnCartPage ? (
                 <div className="bg-[#4FBEB7] rounded-lg h-9 p-2 mr-[-100px] w-13 flex justify-center items-center relative cartImg">
                     <Dropdown trigger="hover" placement="bottomEnd">
                         <DropdownItem>
