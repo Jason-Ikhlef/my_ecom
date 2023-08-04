@@ -6,6 +6,7 @@ import bin from "../../assets/delete-bin-line.svg";
 import mastercard from "../../assets/mastercard-6.svg";
 import paypal from "../../assets/paypal-3.svg";
 import visa from "../../assets/visa-4.svg";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
 
@@ -94,13 +95,20 @@ if(userLoading) {
               <p className="p-4 text-2xl">Total</p>
               <hr></hr>
               <div className="flex justify-between mx-4">
+                <p className="text-2xl">Livraison</p>
+                <p className="p-2">A venir</p>
+              </div>
+              <div className="flex justify-between mx-4">
                 <p className="text-2xl">Sous-total</p>
                 <p className="p-2">{totalPrice.toFixed(2)} €</p>
               </div>
               <div className="flex justify-between mx-4">
-                <p className="text-2xl">Livraison</p>
-                <p className="p-2">A venir</p>
-              </div>
+                <p className="text-2xl">avec prime</p>
+                <p className="p-2">{totalPrice.toFixed(2)-5} €</p>
+                </div>
+              <div id="subbutton" className="w-full p-2 bg-[#4FBEB7]">
+              <Link to="http://localhost:3000/SubPage"><div>DEFILE STP</div></Link> 
+                </div>
               <button
                 onClick={newOrder}
                 className="bg-[#4FBEB7] w-3/4 p-2 mx-auto "

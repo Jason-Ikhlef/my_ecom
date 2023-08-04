@@ -9,6 +9,7 @@ export default function Footer() {
             {location.pathname === "/articles" ||
             window.location.pathname.includes("/articles/") ||
             location.pathname === "/admin/articles" ||
+            location.pathname === "/SubPage" ||
             location.pathname === "/cart" ? (
                 <div className="bg-[#4FBEB7] p-4 flex mt-5 w-full justify-evenly static bottom-0">
                     <div className="flex flex-col">
