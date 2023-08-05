@@ -11,6 +11,8 @@ export default function UpdateArticle({ idArticle }) {
 
     const [id, setId] = useState('');
     const [article, setArticle] = useState(null);
+    const [parentArticle, setParentArticle] = useState(null);
+
     const [recommanded, setRecommanded] = useState(true)
     const [img, setImg] = useState('');
 
@@ -24,6 +26,7 @@ export default function UpdateArticle({ idArticle }) {
     const [dropdownAnimals, setDropdownAnimals] = useState("Animaux")
     const [dropdownCat, setDropdownCat] = useState("Categorie")
     const [dropdownSubCat, setDropdownSubCat] = useState("Sous-categorie")
+    const [dropDownName, setDropDownName] = useState(null);
 
     const location = useLocation()
 
@@ -45,25 +48,28 @@ export default function UpdateArticle({ idArticle }) {
 
     useEffect(() => {
 
-      if (idArticle) {
-        setId(idArticle);
-      } else {
-        setId(window.location.href.split('/')[5]);
-      }
+        if (idArticle) {
+            setId(idArticle);
+        } else {
+            setId(window.location.href.split('/')[5]);
+        }
 
     }, [idArticle, location])
 
     useEffect(() => {
 
         async function fetchArticles() {
-
-            await axios
-                .get(`http://localhost:8000/article/${id}`)
-                .then(res => {
-                    setArticle(res.data)
-                    setImg(res.data.pictures)
-                })
-                .catch(err => console.error(err));
+            if(!article) {
+                await axios
+                    .get(`http://localhost:8000/article/${id}`)
+                    .then(res => {
+                        setParentArticle(res.data);
+                        setDropDownName(res.data.articles[0].property)
+                        setArticle(res.data.articles[0])
+                        setImg(res.data.articles[0].pictures[0])
+                    })
+                    .catch(err => console.error(err));
+            }
         };
 
         fetchArticles();
@@ -149,6 +155,20 @@ export default function UpdateArticle({ idArticle }) {
             setForm({ ...form, [name]: value });
         }
     };
+
+    const handleArticle = async (article) => {
+
+        try {
+            setId(article._id);
+            setArticle(article);
+            setImg(article.pictures[0]);
+            setDropDownName(article.property);
+
+        } catch (error) {
+            console.log(error);
+            toast.error("Une erreur est survenue");
+        }
+    }
 
     const handleAnimals = (animal) => {
         if (animal === "Aucun") {
@@ -487,6 +507,15 @@ export default function UpdateArticle({ idArticle }) {
                     <div className='flex justify-evenly'>                    
                         <label htmlFor="recommanded" className='underline'>Recommander l'article :</label>
                         <input onChange={handleChange} type="checkbox" name="recommanded" checked={recommanded} />
+                    </div>
+                    <div>
+                        <Dropdown title={dropDownName}>
+                            {parentArticle.articles.map((article) => (
+                                <DropdownItem key={article._id} onSelect={() => handleArticle(article)}>
+                                    {article.property}
+                                </DropdownItem>
+                            ))}
+                        </Dropdown>
                     </div>
                 </div>
             <button type="submit" className='border my-5 w-3/4 mx-auto'>Mettre à jour l'article</button>

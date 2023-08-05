@@ -49,6 +49,7 @@ router.put("/UpdateArticle", storage.upload.array('photo'), async (req, res) => 
     };
 
     try {
+
         await articleCollection.updateOne({
             _id: id
         }, 
