@@ -21,12 +21,29 @@ router.put("/AddArticle", storage.upload.array('photo'), async (req, res) => {
         subCategoriesName,
         recommanded,
         property,
-        weight
+        weight,
+        groupName,
+        pictures
     } = req.body;
+
+    console.log(pictures !== null)
 
     const picturesNames = req.files.map(file => file.filename);
 
-    let groupName = "Article group " + title;
+    if (pictures.length !== null) {
+        const picturesArray = pictures.split(/\s*,\s*/)
+        console.log(picturesArray);
+        picturesNames.forEach(element => {
+            picturesArray.push(element);
+        });
+    }
+
+    console.log(picturesArray);
+
+    if (groupName === null) {
+        groupName = "Article group " + title;
+    }
+
 
     let obj = {
         title: title,
@@ -46,29 +63,29 @@ router.put("/AddArticle", storage.upload.array('photo'), async (req, res) => {
         property: property
     }
 
-    try {
-        let group = await mainArticleCollection.findOne({ name: groupName });
+//     try {
+//         let group = await mainArticleCollection.findOne({ name: groupName });
 
-        if (group === null) {
-            group = new mainArticleCollection({
-                name: groupName,
-                articles: []
-            });
-            group = await group.save();
-        }
+//         if (group === null) {
+//             group = new mainArticleCollection({
+//                 name: groupName,
+//                 articles: []
+//             });
+//             group = await group.save();
+//         }
 
-        const article = new articleCollection(obj);
-        await article.save();
+//         const article = new articleCollection(obj);
+//         await article.save();
 
-        group.articles.push(article._id);
-        await group.save();
+//         group.articles.push(article._id);
+//         await group.save();
 
-        res.json("success");
+//         res.json("success");
 
-    } catch (e) {
-        console.log(e);
-        res.json("fail");
-    }
+//     } catch (e) {
+//         console.log(e);
+//         res.json("fail");
+//     }
 });
 
 module.exports = router
