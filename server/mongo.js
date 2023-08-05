@@ -142,6 +142,10 @@ const articleSchema = new mongoose.Schema({
     weight: {
         type: Number,
         required: true
+    },
+    property: {
+        type: String,
+        required: true
     }
 })
 
@@ -150,7 +154,11 @@ const mainArticleSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    article: []
+    articles: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'article',
+        required: true
+    }],
 })
 
 const subCategoriesSchema = new mongoose.Schema({

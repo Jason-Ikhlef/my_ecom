@@ -120,50 +120,42 @@ export default function SimpleSlider() {
             </div>
             <div className="flex w-full lg:w-3/4 mx-auto justify-center flex-wrap gap-8 rounded-xl">
                 {articles.map((article) => (
-                    article.article.map((item, key) => (
-                        key === 0 ? (
-                            <>
-                                {Object.keys(item).map(propertyKey => (
-                                    <div
-                                        key={item[propertyKey]._id}
-                                        className={
-                                            "w-3/4 lg:w-1/6 border rounded-xl " +
-                                            (item[propertyKey].stock === 0 ? "opacity-50" : "")
-                                        }>
-                                        <Link
-                                            className="w-3/4 mx-auto"
-                                            to={`/articles/${item[propertyKey]._id}`}
-                                            state={{ id: item[propertyKey]._id }}>
-                                            <p className="text-center text-white mb-6 p-2 bg-[#4FBEB7] rounded-t-xl">
-                                                {item[propertyKey].title}
-                                            </p>
-                                            {item[propertyKey].stock === 0 ? (
-                                                <div className="absolute bg-red-600 text-white w-[12.45%] mt-[-24px] flex justify-center items-center text-center">
-                                                    <h1
-                                                        id="outOfStock"
-                                                        className="text-lg font-bold">
-                                                        Rupture de stock
-                                                    </h1>
-                                                </div>
-                                            ) : (
-                                                <></>
-                                            )}
-                                            <img
-                                                src={`http://localhost:8000/storage/${item[propertyKey].pictures[0]}`}
-                                                className="w-[200px] h-[200px] mx-auto"
-                                                alt="article img"></img>
-                                            <p className="text-center my-6 h-16">
-                                                {item[propertyKey].description}
-                                            </p>
-                                            <div className="text-center">
-                                                <p>{item[propertyKey].price} €</p>
-                                            </div>
-                                        </Link>
-                                    </div>
-                                ))}
-                            </>
-                        ) : null
-                    ))
+                    <div
+                        key={article._id}
+                        className={
+                            "w-3/4 lg:w-1/6 border rounded-xl " +
+                            (article.stock === 0 ? "opacity-50" : "")
+                        }>
+                        <Link
+                            className="w-3/4 mx-auto"
+                            to={`/articles/${article._id}`}
+                            state={{ id: article._id }}>
+                            <p className="text-center text-white mb-6 p-2 bg-[#4FBEB7] rounded-t-xl">
+                                {article.title}
+                            </p>
+                            {article.stock === 0 ? (
+                                <div className="absolute bg-red-600 text-white w-[12.45%] mt-[-24px] flex justify-center items-center text-center">
+                                    <h1
+                                        id="outOfStock"
+                                        className="text-lg font-bold">
+                                        Rupture de stock
+                                    </h1>
+                                </div>
+                            ) : (
+                                null
+                            )}
+                            <img
+                                src={`http://localhost:8000/storage/${article.pictures[0]}`}
+                                className="w-[200px] h-[200px] mx-auto"
+                                alt="article img"></img>
+                            <p className="text-center my-6 h-16">
+                                {article.description}
+                            </p>
+                            <div className="text-center">
+                                <p>{article.price} €</p>
+                            </div>
+                        </Link>
+                    </div>
                 ))}
             </div>
         </div>

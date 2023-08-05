@@ -64,16 +64,16 @@ export default function AdminCategories ()
                 :
                 <div className="flex flex-col w-3/4 mx-auto gap-8">
                 {
-                    !isEditing ?
-                    articles.map((article) => (
-                        <div className="flex bg-[#4FBEB7] p-2 justify-between rounded-3xl">
-                            <div className="flex gap-8">
-                                <p>{article.title}</p>
-                                <p>{article.state ? 'En stock' : 'Victime de son succès'}</p>
-                            </div>
-                            <button onClick={handleClick} name="update" value={article._id} >Modifier l'article</button>
-                        </div>
-                    )) : 
+                    // !isEditing ?
+                    // articles.map((article) => (
+                    //     <div className="flex bg-[#4FBEB7] p-2 justify-between rounded-3xl">
+                    //         <div className="flex gap-8">
+                    //             <p>{article.title}</p>
+                    //             <p>{article.state ? 'En stock' : 'Victime de son succès'}</p>
+                    //         </div>
+                    //         <button onClick={handleClick} name="update" value={article._id} >Modifier l'article</button>
+                    //     </div>
+                    // )) : 
                     <UpdateArticle idArticle={isEditing}/> 
                     }
                 </div>  

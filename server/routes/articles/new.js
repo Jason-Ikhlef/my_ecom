@@ -28,9 +28,7 @@ router.put("/AddArticle", storage.upload.array('photo'), async (req, res) => {
 
     let groupName = "Article group " + title;
 
-    let obj = {};
-
-    obj[property] = {
+    let obj = {
         title: title,
         description: description,
         price: price,
@@ -45,29 +43,32 @@ router.put("/AddArticle", storage.upload.array('photo'), async (req, res) => {
         subCategoriesName: subCategoriesName,
         recommanded: recommanded,
         weight: weight,
+        property: property
     }
 
     try {
-        let group = await mainArticleCollection.findOne({name: groupName});
+        let group = await mainArticleCollection.findOne({ name: groupName });
 
         if (group === null) {
-            
             group = new mainArticleCollection({
                 name: groupName,
-                article: []
+                articles: []
             });
-            group = await mainArticleCollection.create(group);
+            group = await group.save();
         }
 
-        group.article.push(obj);
-        group.save()
+        const article = new articleCollection(obj);
+        await article.save();
+
+        group.articles.push(article._id);
+        await group.save();
+
+        res.json("success");
 
     } catch (e) {
-        // voir pour envoyer des messages plus clairs en fonction des erreurs
         console.log(e);
         res.json("fail");
     }
-
 });
 
 module.exports = router
