@@ -21,13 +21,15 @@ export default function ReadUser ()
 
     const handleClick = async (e) => {
         e.preventDefault();
+        const storage = JSON.parse(localStorage.getItem('cart')) || []
 
         try 
         {
-            const response = await axios.post("http://localhost:8000/login", form, { withCredentials: true });
+            const response = await axios.post("http://localhost:8000/login", { form, storage }, { withCredentials: true });
     
             if (response.data === "success") 
             {
+                if (storage.length > 0) localStorage.removeItem("cart")
                 toast.success("Bienvenue !");
                 setTimeout(() => {
                     window.location.href = 'http://localhost:3000'

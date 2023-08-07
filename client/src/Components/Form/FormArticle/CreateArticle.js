@@ -32,7 +32,9 @@ export default function CreateArticle() {
         animalName: '',
         categoryName: '',
         subCategoriesName: '',
-        recommanded: false
+        recommanded: false,
+        property: '',
+        weight: '',
     });
 
     useEffect(() => {
@@ -139,6 +141,8 @@ export default function CreateArticle() {
                     formData.append("categoriesName", form.categoryName);
                     formData.append("subCategoriesName", form.subCategoriesName);
                     formData.append("recommanded", form.recommanded);
+                    formData.append("property", form.property);
+                    formData.append("weight", form.weight);
 
                     if (form.photo) {
                         for (let i = 0; i < form.photo.length; i++) {
@@ -227,6 +231,26 @@ export default function CreateArticle() {
                         onChange={handleChange}
                         required
                         placeholder="Stock (nombre)"
+                    />
+                    <label htmlFor="property">Attribut</label>
+                    <input
+                        type="text"
+                        id="property"
+                        name="property"
+                        value={form.properties}
+                        onChange={handleChange}
+                        required
+                        placeholder="Couleur, poids, taille..."
+                    />
+                    <label htmlFor="weight">Poids en gramme</label>
+                    <input
+                        type="number"
+                        id="weight"
+                        name="weight"
+                        value={form.weight}
+                        onChange={handleChange}
+                        required
+                        placeholder="Poids de l'article"
                     />
                     <label htmlFor="photo">Photo de l'article</label>
                     <input

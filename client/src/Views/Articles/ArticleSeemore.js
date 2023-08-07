@@ -9,12 +9,16 @@ import User from "../../Components/Widgets/User";
 import Loader from "../../Components/Widgets/Loader";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
+import { Dropdown } from "rsuite";
+import DropdownItem from "rsuite/esm/Dropdown/DropdownItem";
 
 export default function ArticleSeeMore() {
     const [id, setId] = useState("");
     const [article, setArticle] = useState(null);
+    const [parentArticle, setParentArticle] = useState(null);
     const [articleQuantity, setArticleQuantity] = useState(1);
     const [img, setImg] = useState("");
+    const [dropDownName, setDropDownName] = useState(null);
 
     const disabledBtnProps = {};
 
@@ -27,6 +31,24 @@ export default function ArticleSeeMore() {
             ? setId(window.location.href.split("/")[4])
             : setId(location.state.id);
     }, [location]);
+
+    useEffect(() => {
+        const fetchArticle = async () => {
+            try {
+                const response = await axios.get(
+                    `http://localhost:8000/article/${id}`
+                );
+                setParentArticle(response.data);
+                setArticle(response.data.articles[0]);
+                setImg(response.data.articles[0].pictures[0]);
+                setDropDownName(response.data.articles[0].property)
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchArticle();
+    }, [id]);
 
     const deleteOnClick = async (e) => {
         try {
@@ -47,40 +69,55 @@ export default function ArticleSeeMore() {
         }
     };
 
-    useEffect(() => {
-        const fetchArticle = async () => {
-            try {
-                const response = await axios.get(
-                    `http://localhost:8000/article/${id}`
-                );
-                setArticle(response.data);
-                setImg(response.data.pictures[0]);
-                console.log(response.data.pictures.length);
-            } catch (error) {
-                console.error(error);
-            }
-        };
+    const handleChange = async (article) => {
 
-        fetchArticle();
-    }, [id]);
+        try {
+            setArticle(article);
+            setImg(article.pictures[0]);
+            setDropDownName(article.property);
+        } catch (error) {
+            console.log(error);
+            toast.error("Une erreur est survenue");
+        }
+    }
 
     async function addToCart() {
-        await axios.post('http://localhost:8000/addToCart', {
-            articleId: article._id,
-            quantity: Number(articleQuantity),
-            img: article.pictures[0],
-            name: article.title,
-            price: article.price
-        }, {withCredentials: true})
-        .then(response => {
+
+        if (currentUser) {
+            await axios.post('http://localhost:8000/addToCart', {
+                articleId: article._id,
+                quantity: Number(articleQuantity),
+                img: article.pictures[0],
+                name: article.title,
+                price: article.price
+            }, {withCredentials: true})
+            .then(response => {
+                toast.success("Article ajouté au panier")
+                setTimeout(() => {
+                    window.location.reload()
+                }, 2000);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        } else {
+
+            const cart = JSON.parse(localStorage.getItem('cart')) || []
+            const articleExists = cart.find(item => item.articleId === article._id)
+            const element = {
+                articleId: article._id,
+                quantity: Number(articleQuantity),
+                img: article.pictures[0],
+                name: article.title,
+                price: article.price
+            }
+            articleExists ? articleExists.quantity += element.quantity : cart.push(element)
+            localStorage.setItem('cart', JSON.stringify(cart));
             toast.success("Article ajouté au panier")
             setTimeout(() => {
                 window.location.reload()
             }, 2000);
-        })
-        .catch(err => {
-            console.log(err);
-        })
+        }
     }
 
     if (!article) {
@@ -201,6 +238,16 @@ export default function ArticleSeeMore() {
                             }>
                             Commander
                         </button>
+                    </div>
+
+                    <div>
+                        <Dropdown title={dropDownName}>
+                            {parentArticle.articles.map((article) => (
+                                <DropdownItem key={article._id} onSelect={() => handleChange(article)}>
+                                    {article.property}
+                                </DropdownItem>
+                            ))}
+                        </Dropdown>
                     </div>
                     <hr className="mx-5"></hr>
                     <div className="flex flex-col gap-4">
