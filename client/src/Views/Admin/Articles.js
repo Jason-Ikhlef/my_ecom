@@ -12,7 +12,6 @@ export default function AdminCategories ()
     const [state, setState] = useState('');
     const [articles, setArticles] = useState([])
     const [isEditing, setIsEditing] = useState(false)
-    const [isCreating, setIsCreating] = useState(false)
     const { currentShipping, shippingLoading } = Shipping();
     const [newShipping, setNewShipping] = useState(null)
 
@@ -100,7 +99,7 @@ export default function AdminCategories ()
                         <div className="flex bg-[#4FBEB7] p-2 justify-between rounded-3xl">
                             <div className="flex gap-8">
                                 <p>{article.title}</p>
-                                <p>{article.state ? 'En stock' : 'Victime de son succès'}</p>
+                                <p>{article.stock > 0 ? 'En stock' : 'Victime de son succès'}</p>
                             </div>
                             <button onClick={handleClick} name="update" value={article._id} >Modifier l'article</button>
                         </div>
