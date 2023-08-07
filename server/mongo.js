@@ -146,6 +146,10 @@ const articleSchema = new mongoose.Schema({
     property: {
         type: String,
         required: true
+    },
+    reduction: {
+        type: Number,
+        default: 0
     }
 })
 

@@ -21,7 +21,8 @@ router.put("/UpdateArticle", storage.upload.array('photo'), async (req, res) => 
         subCategoriesName,
         recommanded: recommanded,
         pictures,
-        weight
+        weight,
+        reduction
     } = req.body;
 
     
@@ -56,9 +57,10 @@ router.put("/UpdateArticle", storage.upload.array('photo'), async (req, res) => 
         categoriesName,
         subCategoriesName,
         recommanded,
-        weight
+        weight,
+        reduction
     };
-
+    
     try {
 
         await articleCollection.updateOne({

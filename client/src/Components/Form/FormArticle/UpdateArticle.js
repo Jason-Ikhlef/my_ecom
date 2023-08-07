@@ -47,7 +47,8 @@ export default function UpdateArticle({ idArticle }) {
         subCategoriesName: '',
         recommanded: false,
         weight: '',
-        property: ''  
+        property: '',
+        reduction: ''  
     });
 
     useEffect(() => {
@@ -89,7 +90,8 @@ export default function UpdateArticle({ idArticle }) {
                 categoryName: article.categoriesName,
                 subCategoriesName: article.subCategoriesName,
                 recommanded: article.recommanded,
-                weight: article.weight
+                weight: article.weight,
+                reduction: article.reduction
             })
 
             setRecommanded(article.recommanded);
@@ -311,6 +313,7 @@ export default function UpdateArticle({ idArticle }) {
         formData.append("pictures", img);
         formData.append("groupName", parentArticle.name);
         formData.append("weight", form.weight);
+        formData.append("reduction", form.reduction);
 
         if (isNew) {
             formData.append("property", form.property)
@@ -452,6 +455,17 @@ export default function UpdateArticle({ idArticle }) {
                             onChange={handleChange}
                             required
                             placeholder="Prix de l'article"
+                        />
+                        <label htmlFor="price" className='underline'>Appliquer un pourcentage de réduction</label>
+                        <input
+                            type="number"
+                            id="reduction"
+                            name="reduction"
+                            className='text-center'
+                            value={form.reduction}
+                            onChange={handleChange}
+                            required
+                            placeholder="Appliquer un pourcentage de réduction"
                         />
                     </div>
                     <hr className='my-2'></hr>
