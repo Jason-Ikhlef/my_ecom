@@ -61,9 +61,9 @@ export default function UserProfilPage ()
                     <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={(e) => {setUpdate(true)}}>
                         Modifier
                     </p>
-                    <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={handleClick}>
+                    <Link to="/history" className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={handleClick}>
                         Voir Historique
-                    </p>
+                    </Link>
                     <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={LogOut}>
                         Se déconnecter
                     </p>

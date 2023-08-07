@@ -16,6 +16,7 @@ import AdminCategories from './Views/Admin/Categories';
 import Footer from './Components/Widgets/Footer';
 import Cart from './Components/User/Cart';
 import SubPage from './Views/App/SubPage';
+import History from './Views/Users/History';
 
 
 
@@ -40,6 +41,7 @@ function App() {
         <Route path='/cart' Component={Cart} />
         {/* <Route path='/articles/seatch/:name' Component={UpdateUser} /> */}
         <Route path='/subpage' Component={SubPage} />
+        <Route path='/history' Component={History} />
       </Routes>
       <Footer />
     </Router>
