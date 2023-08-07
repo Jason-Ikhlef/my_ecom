@@ -59,8 +59,6 @@ router.put("/UpdateArticle", storage.upload.array('photo'), async (req, res) => 
         weight
     };
 
-    console.log(data);
-
     try {
 
         await articleCollection.updateOne({
