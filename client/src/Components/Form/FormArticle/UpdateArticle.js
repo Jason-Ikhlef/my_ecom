@@ -68,7 +68,7 @@ export default function UpdateArticle({ idArticle }) {
                         setParentArticle(res.data);
                         setDropDownName(res.data.articles[0].property);
                         setArticle(res.data.articles[0]);
-                        setImg(res.data.articles[0].pictures[0]);
+                        setImg(res.data.articles[0].pictures);
                     })
                     .catch(err => console.error(err));
             }
@@ -252,6 +252,8 @@ export default function UpdateArticle({ idArticle }) {
             }
         });
 
+        setImg(tempArray)
+
         let tempArray2 = [];
 
         photoArray.forEach(element => {
@@ -261,7 +263,6 @@ export default function UpdateArticle({ idArticle }) {
             }
         });     
 
-        setPhotoArray(tempArray2);
         setPhotoArray(tempArray2);
 
         e.target.parentNode.remove()
