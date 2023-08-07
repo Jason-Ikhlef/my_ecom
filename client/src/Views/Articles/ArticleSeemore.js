@@ -13,7 +13,8 @@ import { Dropdown } from "rsuite";
 import DropdownItem from "rsuite/esm/Dropdown/DropdownItem";
 
 export default function ArticleSeeMore() {
-    const [id, setId] = useState("");
+    const [id, setId] = useState(null);
+    const [deleteId, setDeleteId] = useState(null)
     const [article, setArticle] = useState(null);
     const [parentArticle, setParentArticle] = useState(null);
     const [articleQuantity, setArticleQuantity] = useState(1);
@@ -33,40 +34,37 @@ export default function ArticleSeeMore() {
     }, [location]);
 
     useEffect(() => {
-        const fetchArticle = async () => {
-            try {
-                const response = await axios.get(
-                    `http://localhost:8000/article/${id}`
-                );
-                setParentArticle(response.data);
-                setArticle(response.data.articles[0]);
-                setImg(response.data.articles[0].pictures[0]);
-                setDropDownName(response.data.articles[0].property)
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        fetchArticle();
-    }, [id]);
+        axios
+            .get(`http://localhost:8000/article/${id}`)
+            .then(res => {
+                setParentArticle(res.data);
+                setDropDownName(res.data.articles[0].property);
+                setArticle(res.data.articles[0]);
+                setImg(res.data.articles[0].pictures[0]);
+                setDeleteId(id);
+            })
+            .catch(err => console.error(err));
+    }, [id])
 
     const deleteOnClick = async (e) => {
-        try {
-            const response = await axios.delete(
-                `http://localhost:8000/DeleteArticle/${id}`
-            );
-            if (response.data === "success") {
-                toast.success("Article supprimé !");
-                setTimeout(() => {
-                    window.location.href = "http://localhost:3000/articles";
-                }, 1500);
-            } else {
+
+        axios
+            .delete(
+                `http://localhost:8000/DeleteArticle/${deleteId}`)
+            .then(res => {
+                if (res.data === "success") {
+                    toast.success("Article supprimé !");
+                    setTimeout(() => {
+                        window.location.href = "http://localhost:3000/articles";
+                    }, 1500);
+                } else {
+                    toast.error("Une erreur est survenue");
+                }
+            })
+            .catch(err => {
+                console.log(err);
                 toast.error("Une erreur est survenue");
-            }
-        } catch (error) {
-            console.log(error);
-            toast.error("Une erreur est survenue");
-        }
+            });
     };
 
     const handleChange = async (article) => {
@@ -75,6 +73,7 @@ export default function ArticleSeeMore() {
             setArticle(article);
             setImg(article.pictures[0]);
             setDropDownName(article.property);
+            setDeleteId(article._id)
         } catch (error) {
             console.log(error);
             toast.error("Une erreur est survenue");
