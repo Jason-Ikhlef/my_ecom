@@ -6,6 +6,7 @@ import axios from "axios";
 import User from "../../Components/Widgets/User";
 import ReadUser from "../../Components/Form/User/ReadUser";
 import UpdateUser from "../../Components/Form/User/UpdateUser";
+import Loader from "../../Components/Widgets/Loader";
 
 export default function UserProfilPage ()
 {
@@ -16,7 +17,7 @@ export default function UserProfilPage ()
 
     if (userLoading) {
 
-        return <p>Loading...</p>
+        return <Loader />
     
     }
 
