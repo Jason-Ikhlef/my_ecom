@@ -206,7 +206,7 @@ const collection = {
     animalsCollection,
     categoriesCollection,
     subCategoriesCollection,
-    mainArticleCollection
+    mainArticleCollection,
     appCollection
 }
 
