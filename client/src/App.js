@@ -15,6 +15,9 @@ import AdminArticles from './Views/Admin/Articles';
 import AdminCategories from './Views/Admin/Categories';
 import Footer from './Components/Widgets/Footer';
 import Cart from './Components/User/Cart';
+import SubPage from './Views/App/SubPage';
+
+
 
 
 function App() {
@@ -36,6 +39,7 @@ function App() {
         <Route path='/articles/seatch/:name' Component={UpdateUser} />
         <Route path='/cart' Component={Cart} />
         {/* <Route path='/articles/seatch/:name' Component={UpdateUser} /> */}
+        <Route path='/subpage' Component={SubPage} />
       </Routes>
       <Footer />
     </Router>

@@ -71,6 +71,11 @@ export default function UserProfilPage ()
                         Supprimer
                     </p>
                 </div>
+                <div>
+                    <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer">
+                    <Link to="http://localhost:3000/SubPage">S'abonner</Link> 
+                    </p>
+                </div>
                 {
                     update ? 
                     <UpdateUser /> : 

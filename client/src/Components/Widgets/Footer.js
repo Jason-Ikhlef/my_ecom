@@ -7,7 +7,12 @@ export default function Footer() {
     return (
         <>
             {location.pathname === "/articles" ||
+            window.location.pathname.includes("/articles/") ||
+            location.pathname === "/admin/articles" ||
+            location.pathname === "/SubPage" ||
+            location.pathname === "/cart" ? (
             location.pathname === "/admin/articles" ? (
+
                 <div className="bg-[#4FBEB7] p-4 flex mt-5 w-full justify-evenly static bottom-0">
                     <div>
                         <p>Conditions générales d'utilisation</p>
