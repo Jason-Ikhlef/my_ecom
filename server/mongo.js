@@ -134,16 +134,31 @@ const articleSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    state: {
-        type: Boolean,
-        default: true,
-        required: true
-    },
     recommanded: {
         type: Boolean,
         default: false,
         required: true
+    },
+    weight: {
+        type: Number,
+        required: true
+    },
+    property: {
+        type: String,
+        required: true
     }
+})
+
+const mainArticleSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    articles: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'article',
+        required: true
+    }],
 })
 
 const subCategoriesSchema = new mongoose.Schema({
@@ -176,6 +191,7 @@ const appSchema = new mongoose.Schema({
 const userCollection = mongoose.model("user", userSchema)
 const googleCollection = mongoose.model("google", googleSchema)
 const facebookCollection = mongoose.model("facebook" , facebookSchema)
+const mainArticleCollection = mongoose.model("mainArticle", mainArticleSchema)
 const articleCollection = mongoose.model("article", articleSchema)
 const animalsCollection = mongoose.model("animals", animalsSchema)
 const categoriesCollection = mongoose.model("categories", categoriesSchema)
@@ -190,6 +206,7 @@ const collection = {
     animalsCollection,
     categoriesCollection,
     subCategoriesCollection,
+    mainArticleCollection
     appCollection
 }
 

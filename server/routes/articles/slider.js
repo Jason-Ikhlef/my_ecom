@@ -5,7 +5,7 @@ const { articleCollection } = require("../../mongo");
 
 router.get("/slider", (req, res) => {
     articleCollection.aggregate([
-        { $match: { recommanded: true } },
+        { $match: { $and: [ { recommanded: true }, { stock: { $gt: 0 } } ] } },
         { $sample: { size: 5 } }
     ])
     .then(articles => {

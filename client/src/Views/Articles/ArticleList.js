@@ -142,7 +142,7 @@ export default function SimpleSlider() {
                                     </h1>
                                 </div>
                             ) : (
-                                <></>
+                                null
                             )}
                             <img
                                 src={`http://localhost:8000/storage/${article.pictures[0]}`}
@@ -152,11 +152,7 @@ export default function SimpleSlider() {
                                 {article.description}
                             </p>
                             <div className="text-center">
-                                {/* pour etat : article.state */}
                                 <p>{article.price} €</p>
-                                {/* <p>{article.animalsName}</p>
-  <p>{article.categoriesName}</p>
-  <p>{article.subCategoriesName}</p> */}
                             </div>
                         </Link>
                     </div>
