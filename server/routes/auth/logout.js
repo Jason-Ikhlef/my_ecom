@@ -7,7 +7,6 @@ router.get('/logout',  (req, res) => {
 
       req.session.destroy();
       res.status(200).json({message: 'Logout with success !'});
-      console.log('deco');
 
     } else {
 

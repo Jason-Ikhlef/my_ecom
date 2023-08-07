@@ -11,6 +11,9 @@ export default function UpdateArticle({ idArticle }) {
 
     const [id, setId] = useState('');
     const [article, setArticle] = useState(null);
+    const [parentArticle, setParentArticle] = useState(null);
+    const [isNew, setIsNew] = useState(false);
+
     const [recommanded, setRecommanded] = useState(true)
     const [img, setImg] = useState('');
 
@@ -24,6 +27,9 @@ export default function UpdateArticle({ idArticle }) {
     const [dropdownAnimals, setDropdownAnimals] = useState("Animaux")
     const [dropdownCat, setDropdownCat] = useState("Categorie")
     const [dropdownSubCat, setDropdownSubCat] = useState("Sous-categorie")
+    const [dropDownName, setDropDownName] = useState(null);
+
+    const [photoArray, setPhotoArray] = useState([]);
 
     const location = useLocation()
 
@@ -32,7 +38,6 @@ export default function UpdateArticle({ idArticle }) {
         description: '',
         price: '',
         caracteristics: '',
-        photo: null,
         stock: '',
         animal: '',
         category: '',
@@ -41,33 +46,33 @@ export default function UpdateArticle({ idArticle }) {
         categoryName: '',
         subCategoriesName: '',
         recommanded: false,
+        weight: '',
+        property: ''  
     });
 
     useEffect(() => {
 
-      if (idArticle) {
-        setId(idArticle);
-      } else {
-        setId(window.location.href.split('/')[5]);
-      }
+        if (idArticle) {
+            setId(idArticle);
+        } else {
+            setId(window.location.href.split('/')[5]);
+        }
 
     }, [idArticle, location])
 
     useEffect(() => {
-
-        async function fetchArticles() {
-
-            await axios
-                .get(`http://localhost:8000/article/${id}`)
-                .then(res => {
-                    setArticle(res.data)
-                    setImg(res.data.pictures)
-                })
-                .catch(err => console.error(err));
-        };
-
-        fetchArticles();
-    }, [id])
+            if(!article) {
+                axios
+                    .get(`http://localhost:8000/article/${id}`)
+                    .then(res => {
+                        setParentArticle(res.data);
+                        setDropDownName(res.data.articles[0].property);
+                        setArticle(res.data.articles[0]);
+                        setImg(res.data.articles[0].pictures);
+                    })
+                    .catch(err => console.error(err));
+            }
+    }, [article, id])
 
     useEffect(() => {
         if (article) {
@@ -76,7 +81,6 @@ export default function UpdateArticle({ idArticle }) {
                 description: article.description,
                 price: article.price,
                 caracteristics: article.caracteristics,
-                photo: null,
                 stock: article.stock,
                 animal: article.animals,
                 category: article.categories,
@@ -84,7 +88,8 @@ export default function UpdateArticle({ idArticle }) {
                 animalName: article.animalsName,
                 categoryName: article.categoriesName,
                 subCategoriesName: article.subCategoriesName,
-                recommanded: article.recommanded
+                recommanded: article.recommanded,
+                weight: article.weight
             })
 
             setRecommanded(article.recommanded);
@@ -92,19 +97,13 @@ export default function UpdateArticle({ idArticle }) {
     }, [article])
 
     useEffect(() => {
-        async function fetchAnimals() {
-
-            await axios
-                .get('http://localhost:8000/categories')
-                .then(res => {
-                    setAnimals(res.data)
-                })
-                .catch(err => console.error(err));
-        };
-
-        fetchAnimals();
-
-    }, [])
+        axios
+          .get('http://localhost:8000/categories')
+          .then(res => {
+            setAnimals(res.data);
+          })
+          .catch(err => console.error(err));
+    }, []);
 
     useEffect(() => {
         if (selectedAnimal) {
@@ -139,8 +138,14 @@ export default function UpdateArticle({ idArticle }) {
     const handleChange = (e) => {
         const { name, value, files } = e.target;
         if (name === 'photo') {
-            setForm({ ...form, [name]: files });
             addThumbnail(files);
+
+            if (files.length > 1) {
+                [...files].forEach(file => photoArray.push(file));
+
+            } else {
+                photoArray.push(files[0])
+            }
 
         } else if (name === "recommanded") {
             setForm({ ...form, [name]: !form.recommanded })
@@ -149,6 +154,20 @@ export default function UpdateArticle({ idArticle }) {
             setForm({ ...form, [name]: value });
         }
     };
+
+    const handleArticle = async (article) => {
+
+        try {
+            setId(article._id);
+            setArticle(article);
+            setImg(article.pictures[0]);
+            setDropDownName(article.property);
+
+        } catch (error) {
+            console.log(error);
+            toast.error("Une erreur est survenue");
+        }
+    }
 
     const handleAnimals = (animal) => {
         if (animal === "Aucun") {
@@ -233,7 +252,17 @@ export default function UpdateArticle({ idArticle }) {
             }
         });
 
-        setImg(tempArray);
+        setImg(tempArray)
+
+        let tempArray2 = [];
+
+        photoArray.forEach(element => {
+            if (element.name !== e.target.value) {
+                tempArray2.push(element);
+            }
+        });     
+
+        setPhotoArray(tempArray2);
 
         e.target.parentNode.remove()
     }
@@ -248,7 +277,7 @@ export default function UpdateArticle({ idArticle }) {
             button.textContent = "X";
             button.classList.add("z-10", "absolute", "ml-2", "font-bold")
             button.addEventListener("click", deleteImg);
-            button.value = img;
+            button.value = src[i].name;
 
             const imgElement = document.createElement("img");
             imgElement.src = URL.createObjectURL(src[i]);
@@ -280,6 +309,12 @@ export default function UpdateArticle({ idArticle }) {
         formData.append("stock", form.stock);
         formData.append("recommanded", form.recommanded);
         formData.append("pictures", img);
+        formData.append("groupName", parentArticle.name);
+        formData.append("weight", form.weight);
+
+        if (isNew) {
+            formData.append("property", form.property)
+        }
 
         if (form.animal === null || form.category === null || form.subCategory === null) {
             formData.append("animal", article.animals);
@@ -297,16 +332,18 @@ export default function UpdateArticle({ idArticle }) {
             formData.append("subCategoriesName", form.subCategoriesName);
         }
 
-        if (form.photo) {
-            for (let i = 0; i < form.photo.length; i++) {
-                formData.append("photo", form.photo[i]);
+        if (photoArray) {
+            for (let i = 0; i < photoArray.length; i++) {
+                formData.append("photo", photoArray[i]);
             }
         }
 
-        axios.put("http://localhost:8000/UpdateArticle", formData)
+        if (isNew) {
+
+            axios.put("http://localhost:8000/AddArticle", formData)
             .then(response => {
                 if (response.data === "success") {
-                    toast.success("Article modifié !");
+                    toast.success("Article créé !");
                     setTimeout(() => {
                         window.location.href = `http://localhost:3000/articles/${id}`;
                     }, 1500);
@@ -318,6 +355,24 @@ export default function UpdateArticle({ idArticle }) {
                 console.error("Error submitting form:", error);
                 toast.error("Une erreur est survenue lors de la modification de votre article");
             });
+        } else {
+
+            axios.put("http://localhost:8000/UpdateArticle", formData)
+                .then(response => {
+                    if (response.data === "success") {
+                        toast.success("Article modifié !");
+                        setTimeout(() => {
+                            window.location.href = `http://localhost:3000/articles/${id}`;
+                        }, 1500);
+                    } else {
+                        toast.error("Une erreur est survenue");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error submitting form:", error);
+                    toast.error("Une erreur est survenue lors de la modification de votre article");
+                });
+        }
     };
 
     if (!article) {
@@ -487,6 +542,45 @@ export default function UpdateArticle({ idArticle }) {
                     <div className='flex justify-evenly'>                    
                         <label htmlFor="recommanded" className='underline'>Recommander l'article :</label>
                         <input onChange={handleChange} type="checkbox" name="recommanded" checked={recommanded} />
+                    </div>
+                    <div className='w-full flex justify-center'>
+                        <label htmlFor="weight" className='underline'>Poids de l'article</label>
+                        <input
+                            type="number"
+                            id="weight"
+                            name="weight"
+                            className='text-center'
+                            value={form.weight}
+                            onChange={handleChange}
+                            required
+                            placeholder="Poids de l'article"
+                        />
+                    </div>
+                    <div>
+                        {!isNew ? (
+                            <>
+                                <Dropdown title={dropDownName}>
+                                    {parentArticle.articles.map((article) => (
+                                        <DropdownItem key={article._id} onSelect={() => handleArticle(article)}>
+                                            {article.property}
+                                        </DropdownItem>
+                                    ))}
+                                </Dropdown><div onClick={() => setIsNew(true)}>Nouvel attribut</div>
+                            </>
+                        ) : (
+                            <>
+                                <label htmlFor="property" className='underline'>Nouvel attribut :</label>
+                                <input
+                                    type="text"
+                                    id="property"
+                                    name="property"
+                                    value={form.property}
+                                    onChange={handleChange}
+                                    required
+                                    placeholder="Nouvel attribut (poids, couleur, taille...)"
+                                />
+                            </>
+                        )}
                     </div>
                 </div>
             <button type="submit" className='border my-5 w-3/4 mx-auto'>Mettre à jour l'article</button>

@@ -9,12 +9,17 @@ import User from "../../Components/Widgets/User";
 import Loader from "../../Components/Widgets/Loader";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
+import { Dropdown } from "rsuite";
+import DropdownItem from "rsuite/esm/Dropdown/DropdownItem";
 
 export default function ArticleSeeMore() {
-    const [id, setId] = useState("");
+    const [id, setId] = useState(null);
+    const [deleteId, setDeleteId] = useState(null)
     const [article, setArticle] = useState(null);
+    const [parentArticle, setParentArticle] = useState(null);
     const [articleQuantity, setArticleQuantity] = useState(1);
     const [img, setImg] = useState("");
+    const [dropDownName, setDropDownName] = useState(null);
 
     const disabledBtnProps = {};
 
@@ -28,59 +33,90 @@ export default function ArticleSeeMore() {
             : setId(location.state.id);
     }, [location]);
 
+    useEffect(() => {
+        axios
+            .get(`http://localhost:8000/article/${id}`)
+            .then(res => {
+                setParentArticle(res.data);
+                setDropDownName(res.data.articles[0].property);
+                setArticle(res.data.articles[0]);
+                setImg(res.data.articles[0].pictures[0]);
+                setDeleteId(id);
+            })
+            .catch(err => console.error(err));
+    }, [id])
+
     const deleteOnClick = async (e) => {
-        try {
-            const response = await axios.delete(
-                `http://localhost:8000/DeleteArticle/${id}`
-            );
-            if (response.data === "success") {
-                toast.success("Article supprimé !");
-                setTimeout(() => {
-                    window.location.href = "http://localhost:3000/articles";
-                }, 1500);
-            } else {
+
+        axios
+            .delete(
+                `http://localhost:8000/DeleteArticle/${deleteId}`)
+            .then(res => {
+                if (res.data === "success") {
+                    toast.success("Article supprimé !");
+                    setTimeout(() => {
+                        window.location.href = "http://localhost:3000/articles";
+                    }, 1500);
+                } else {
+                    toast.error("Une erreur est survenue");
+                }
+            })
+            .catch(err => {
+                console.log(err);
                 toast.error("Une erreur est survenue");
-            }
+            });
+    };
+
+    const handleChange = async (article) => {
+
+        try {
+            setArticle(article);
+            setImg(article.pictures[0]);
+            setDropDownName(article.property);
+            setDeleteId(article._id)
         } catch (error) {
             console.log(error);
             toast.error("Une erreur est survenue");
         }
-    };
-
-    useEffect(() => {
-        const fetchArticle = async () => {
-            try {
-                const response = await axios.get(
-                    `http://localhost:8000/article/${id}`
-                );
-                setArticle(response.data);
-                setImg(response.data.pictures[0]);
-                console.log(response.data.pictures.length);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        fetchArticle();
-    }, [id]);
+    }
 
     async function addToCart() {
-        await axios.post('http://localhost:8000/addToCart', {
-            articleId: article._id,
-            quantity: Number(articleQuantity),
-            img: article.pictures[0],
-            name: article.title,
-            price: article.price
-        }, {withCredentials: true})
-        .then(response => {
+
+        if (currentUser) {
+            await axios.post('http://localhost:8000/addToCart', {
+                articleId: article._id,
+                quantity: Number(articleQuantity),
+                img: article.pictures[0],
+                name: article.title,
+                price: article.price
+            }, {withCredentials: true})
+            .then(response => {
+                toast.success("Article ajouté au panier")
+                setTimeout(() => {
+                    window.location.reload()
+                }, 2000);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+        } else {
+
+            const cart = JSON.parse(localStorage.getItem('cart')) || []
+            const articleExists = cart.find(item => item.articleId === article._id)
+            const element = {
+                articleId: article._id,
+                quantity: Number(articleQuantity),
+                img: article.pictures[0],
+                name: article.title,
+                price: article.price
+            }
+            articleExists ? articleExists.quantity += element.quantity : cart.push(element)
+            localStorage.setItem('cart', JSON.stringify(cart));
             toast.success("Article ajouté au panier")
             setTimeout(() => {
                 window.location.reload()
             }, 2000);
-        })
-        .catch(err => {
-            console.log(err);
-        })
+        }
     }
 
     if (!article) {
@@ -201,6 +237,16 @@ export default function ArticleSeeMore() {
                             }>
                             Commander
                         </button>
+                    </div>
+
+                    <div>
+                        <Dropdown title={dropDownName}>
+                            {parentArticle.articles.map((article) => (
+                                <DropdownItem key={article._id} onSelect={() => handleChange(article)}>
+                                    {article.property}
+                                </DropdownItem>
+                            ))}
+                        </Dropdown>
                     </div>
                     <hr className="mx-5"></hr>
                     <div className="flex flex-col gap-4">

@@ -20,15 +20,25 @@ router.put("/UpdateArticle", storage.upload.array('photo'), async (req, res) => 
         categoriesName,
         subCategoriesName,
         recommanded: recommanded,
-        pictures
+        pictures,
+        weight
     } = req.body;
 
+    
     const picturesNames = req.files.map(file => file.filename);
+    let picturesArray = [];
+    let finalArray = [];
 
     if (pictures.length > 0) {
-        const picturesArray = pictures.split(/\s*,\s*/)
+        picturesArray = pictures.split(/\s*,\s*/)
         picturesArray.forEach(element => {
-            picturesNames.push(element);
+            finalArray.push(element);
+        });
+    }
+
+    if (picturesNames.length > 0) {
+        picturesNames.forEach(element => {
+            finalArray.push(element);
         });
     }
 
@@ -37,7 +47,7 @@ router.put("/UpdateArticle", storage.upload.array('photo'), async (req, res) => 
         description: description,
         price: price,
         caracteristics: caracteristics,
-        pictures: picturesNames,
+        pictures: finalArray,
         stock,
         animal,
         category,
@@ -45,10 +55,12 @@ router.put("/UpdateArticle", storage.upload.array('photo'), async (req, res) => 
         animalsName,
         categoriesName,
         subCategoriesName,
-        recommanded
+        recommanded,
+        weight
     };
 
     try {
+
         await articleCollection.updateOne({
             _id: id
         }, 
