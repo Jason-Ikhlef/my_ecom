@@ -96,6 +96,11 @@ app.use('/', deleteFromCart);
 const clearCart = require('./routes/users/cart/clear');
 app.use('/', clearCart);
 
+// ORDERS
+
+const newOrder = require('./routes/users/old_orders/new');
+app.use('/', newOrder);
+
 // CATEGORIES
 
 const NewCategory = require('./routes/animals/new');
@@ -126,6 +131,17 @@ app.use('/', AddGoogle);
 
 const AddFacebook = require('./routes/auth/facebook');
 app.use('/', AddFacebook);
+
+// EASYPOST
+
+const ShippingCost = require('./routes/easypost/get');
+app.use('/', ShippingCost);
+
+const GetShipping = require('./routes/easypost/shipping');
+app.use('/', GetShipping);
+
+const setShipping = require('./routes/easypost/newShipping');
+app.use('/', setShipping);
 
 app.listen(PORT, () => {
     console.log("Utilisation du port " + PORT);

@@ -122,7 +122,10 @@ export default function SimpleSlider() {
                 {articles.map((article) => (
                     <div
                         key={article._id}
-                        className="w-3/4 lg:w-1/6 border rounded-xl">
+                        className={
+                            "w-3/4 lg:w-1/6 border rounded-xl " +
+                            (article.stock === 0 ? "opacity-50" : "")
+                        }>
                         <Link
                             className="w-3/4 mx-auto"
                             to={`/articles/${article._id}`}
@@ -130,6 +133,17 @@ export default function SimpleSlider() {
                             <p className="text-center text-white mb-6 p-2 bg-[#4FBEB7] rounded-t-xl">
                                 {article.title}
                             </p>
+                            {article.stock === 0 ? (
+                                <div className="absolute bg-red-600 text-white w-[12.45%] mt-[-24px] flex justify-center items-center text-center">
+                                    <h1
+                                        id="outOfStock"
+                                        className="text-lg font-bold">
+                                        Rupture de stock
+                                    </h1>
+                                </div>
+                            ) : (
+                                null
+                            )}
                             <img
                                 src={`http://localhost:8000/storage/${article.pictures[0]}`}
                                 className="w-[200px] h-[200px] mx-auto"
@@ -138,11 +152,7 @@ export default function SimpleSlider() {
                                 {article.description}
                             </p>
                             <div className="text-center">
-                                {/* pour etat : article.state */}
                                 <p>{article.price} €</p>
-                                {/* <p>{article.animalsName}</p>
-  <p>{article.categoriesName}</p>
-  <p>{article.subCategoriesName}</p> */}
                             </div>
                         </Link>
                     </div>

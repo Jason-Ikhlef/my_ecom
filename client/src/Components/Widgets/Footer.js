@@ -1,44 +1,40 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useLocation } from "react-router-dom";
 
 export default function Footer() {
     let location = useLocation();
 
-    useEffect(() => {
-        window.location.pathname.includes("/articles/")
-            ? console.log("C'est un article")
-            : console.log("C'est pas un article");
-    }, [location]);
-
     return (
         <>
             {location.pathname === "/articles" ||
-            window.location.pathname.includes("/articles/") ||
-            location.pathname === "/admin/articles" ||
-            location.pathname === "/cart" ? (
+            location.pathname === "/admin/articles" ? (
                 <div className="bg-[#4FBEB7] p-4 flex mt-5 w-full justify-evenly static bottom-0">
-                    <div className="flex flex-col">
-                        <p>Info 4</p>
-                        <p>Info 5</p>
-                        <p>Info 6</p>
+                    <div>
+                        <p>Conditions générales d'utilisation</p>
                     </div>
-                    <div className="flex flex-col">
-                        <p>Info 4</p>
-                        <p>Info 5</p>
-                        <p>Info 6</p>
+                    <div>
+                        <p>©2023 CopainFront</p>
+                    </div>
+                    <div>
+                        <p>Mentions légales</p>
+                    </div>
+                    <div>
+                        <p>Nous contactez</p>
                     </div>
                 </div>
             ) : (
                 <div className="bg-[#4FBEB7] p-4 flex mt-5 w-full justify-evenly fixed bottom-0">
-                    <div className="flex flex-col">
-                        <p>Info 1</p>
-                        <p>Info 2</p>
-                        <p>Info 3</p>
+                    <div>
+                        <p>Conditions générales d'utilisation</p>
                     </div>
-                    <div className="flex flex-col">
-                        <p>Info 1</p>
-                        <p>Info 2</p>
-                        <p>Info 3</p>
+                    <div>
+                        <p>©2023 CopainFront</p>
+                    </div>
+                    <div>
+                        <p>Mentions légales</p>
+                    </div>
+                    <div>
+                        <p>Nous contactez</p>
                     </div>
                 </div>
             )}

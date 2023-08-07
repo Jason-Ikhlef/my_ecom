@@ -4,7 +4,6 @@ const router = express.Router();
 const { categoriesCollection } = require("../../mongo");
 
 router.post("/showCategories", async (req, res) => {
-
     try {
         const animal = await categoriesCollection.findOne({
             _id: id

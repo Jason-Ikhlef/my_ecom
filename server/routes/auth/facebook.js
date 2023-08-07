@@ -9,7 +9,9 @@ router.post('/createFacebook', async (req, res) => {
 
     const {
         email,
-    } = await req.body;
+    } = await req.body.data;
+
+    const storage = await req.body.storage
 
     const data = {
         email: email
@@ -18,13 +20,19 @@ router.post('/createFacebook', async (req, res) => {
     await userExists(email)
 
     if (user) {
-        req.session.user = { id: user._id, email: user.email, admin : user.admin, cart: user.cart, auth: 'facebook' }
+        if (storage.length > 0) user.cart = storage
+        user.markModified('cart');
+        user.save()
+        req.session.user = { id: user._id, email: user.email, admin : user.admin, cart: user.cart, old_orders: user.old_orders, auth: 'facebook' }
         res.status(200).json("success")
     } else {
         await facebookCollection
         .create(data)
         .then(response => {
-            req.session.user = { id: response._id, email: response.email, admin : response.admin, cart: response.cart, auth: 'facebook' }
+            if (storage.length > 0) response.cart = storage
+            response.markModified('cart');
+            response.save()
+            req.session.user = { id: response._id, email: response.email, admin : response.admin, cart: response.cart, old_orders: response.old_orders, auth: 'facebook' }
             res.status(200).json("success")
         })
         .catch(err => {

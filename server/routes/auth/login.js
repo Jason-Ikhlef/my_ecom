@@ -9,7 +9,9 @@ router.post('/login', async (req, res) => {
     const {
         email,
         password
-    } = await req.body;
+    } = await req.body.form;
+
+    const storage = await req.body.storage
 
     const hash = crypto.createHash('sha1').update(JSON.stringify(password)).digest('hex')
 
@@ -20,7 +22,10 @@ router.post('/login', async (req, res) => {
     })
     .then(user => {
         if (user) {
-            req.session.user = { id: user._id, email: user.email, admin : user.admin, cart: user.cart, auth: 'petheaven' }
+            if (storage.length > 0) user.cart = storage
+            user.markModified('cart');
+            user.save()
+            req.session.user = { id: user._id, email: user.email, admin : user.admin, cart: user.cart, old_orders: user.old_orders, auth: 'petheaven' }
             res.status(200).json("success")
         } else {
             res.status(400).json("nom de compte ou mot de passe incorrect")
