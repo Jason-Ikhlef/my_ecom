@@ -7,7 +7,7 @@ const { mainArticleCollection, articleCollection } = require("../../mongo");
 
 router.put("/AddArticle", storage.upload.array('photo'), async (req, res) => {
 
-    const {
+    let {
         title,
         description,
         price,
@@ -26,21 +26,17 @@ router.put("/AddArticle", storage.upload.array('photo'), async (req, res) => {
         pictures
     } = req.body;
 
-    console.log(pictures !== null)
+    let picturesNames = req.files.map(file => file.filename);
 
-    const picturesNames = req.files.map(file => file.filename);
-
-    if (pictures.length !== null) {
-        const picturesArray = pictures.split(/\s*,\s*/)
-        console.log(picturesArray);
+    if (pictures && pictures.length > 0) {
+        let picturesArray = pictures.split(/\s*,\s*/)
         picturesNames.forEach(element => {
             picturesArray.push(element);
         });
+        picturesNames = picturesArray;
     }
 
-    console.log(picturesArray);
-
-    if (groupName === null) {
+    if (!groupName) {
         groupName = "Article group " + title;
     }
 
@@ -63,29 +59,29 @@ router.put("/AddArticle", storage.upload.array('photo'), async (req, res) => {
         property: property
     }
 
-//     try {
-//         let group = await mainArticleCollection.findOne({ name: groupName });
+    try {
+        let group = await mainArticleCollection.findOne({ name: groupName });
 
-//         if (group === null) {
-//             group = new mainArticleCollection({
-//                 name: groupName,
-//                 articles: []
-//             });
-//             group = await group.save();
-//         }
+        if (group === null) {
+            group = new mainArticleCollection({
+                name: groupName,
+                articles: []
+            });
+            group = await group.save();
+        }
 
-//         const article = new articleCollection(obj);
-//         await article.save();
+        const article = new articleCollection(obj);
+        await article.save();
 
-//         group.articles.push(article._id);
-//         await group.save();
+        group.articles.push(article._id);
+        await group.save();
 
-//         res.json("success");
+        res.json("success");
 
-//     } catch (e) {
-//         console.log(e);
-//         res.json("fail");
-//     }
+    } catch (e) {
+        console.log(e);
+        res.json("fail");
+    }
 });
 
 module.exports = router

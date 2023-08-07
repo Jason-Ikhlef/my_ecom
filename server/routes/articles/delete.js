@@ -10,7 +10,6 @@ router.delete("/DeleteArticle/:id", async (req, res) => {
 
     try {
         await articleCollection.deleteOne({_id: id});
-        console.log("ici");
         res.json("success");
     } catch (e) {
         // voir pour envoyer des messages plus clairs en fonction des erreurs

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { 
+const {
     animalsCollection,
     categoriesCollection,
     subCategoriesCollection
@@ -16,58 +16,63 @@ router.post("/DeleteCategory", async (req, res) => {
 
     let animal, group, series, idCat = null;
 
-    console.log(req.body);
-
     animal = await animalsCollection.findOne({
         name: animals
     });
 
-    if (category === '') {
+    if (category === null) {
         try {
-            await animal.deleteOne({ animal });
+            await animal.deleteOne({
+                animal
+            });
             console.log('Animal deleted');
+            return;
         } catch (e) {
             // voir pour envoyer des messages plus clairs en fonction des erreurs
             console.log(e);
             res.json("fail");
         }
-    }
 
-    if (category !== '') {
+    } else {
+
         animal.categories.forEach(element => {
             if (element.name === category) {
                 idCat = animal.categories.indexOf(element);
             }
         });
 
-        if (subCategory === '') {
+        if (subCategory === null) {
             try {
-                await animal.categories.remove({ _id: animal.categories[idCat]._id });
+                console.log(animal.categories[idCat]._id);
+                animal.categories.remove({
+                    _id: animal.categories[idCat]._id
+                });
                 animal.save();
                 console.log('Category deleted');
+                return
             } catch (e) {
                 // voir pour envoyer des messages plus clairs en fonction des erreurs
                 console.log(e);
                 res.json("fail");
             }
-        }
-    }
-
-    if (subCategory !== '') {
-        animal.categories[idCat].subCategories.forEach(async element => {
-            if (element.name === subCategory) {
-                console.log(element);
-                try {
-                    await animal.categories[idCat].subCategories.remove({ _id: element._id });
-                    animal.save();
-                    console.log('SubCategory deleted');
-                } catch (e) {
-                    // voir pour envoyer des messages plus clairs en fonction des erreurs
-                    console.log(e);
-                    res.json("fail");
+        } else {
+            animal.categories[idCat].subCategories.forEach(async element => {
+                if (element.name === subCategory) {
+                    console.log(element);
+                    try {
+                        await animal.categories[idCat].subCategories.remove({
+                            _id: element._id
+                        });
+                        animal.save();
+                        console.log('SubCategory deleted');
+                    } catch (e) {
+                        // voir pour envoyer des messages plus clairs en fonction des erreurs
+                        console.log(e);
+                        res.json("fail");
+                    }
                 }
-            }
-        })
+            })
+        }
     }
 });
 

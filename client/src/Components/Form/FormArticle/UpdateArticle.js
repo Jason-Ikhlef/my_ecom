@@ -61,10 +61,8 @@ export default function UpdateArticle({ idArticle }) {
     }, [idArticle, location])
 
     useEffect(() => {
-
-        async function fetchArticles() {
             if(!article) {
-                await axios
+                axios
                     .get(`http://localhost:8000/article/${id}`)
                     .then(res => {
                         setParentArticle(res.data);
@@ -74,9 +72,6 @@ export default function UpdateArticle({ idArticle }) {
                     })
                     .catch(err => console.error(err));
             }
-        };
-
-        fetchArticles();
     }, [article, id])
 
     useEffect(() => {
@@ -102,19 +97,13 @@ export default function UpdateArticle({ idArticle }) {
     }, [article])
 
     useEffect(() => {
-        async function fetchAnimals() {
-
-            await axios
-                .get('http://localhost:8000/categories')
-                .then(res => {
-                    setAnimals(res.data)
-                })
-                .catch(err => console.error(err));
-        };
-
-        fetchAnimals();
-
-    }, [])
+        axios
+          .get('http://localhost:8000/categories')
+          .then(res => {
+            setAnimals(res.data);
+          })
+          .catch(err => console.error(err));
+    }, []);
 
     useEffect(() => {
         if (selectedAnimal) {
@@ -152,7 +141,6 @@ export default function UpdateArticle({ idArticle }) {
             addThumbnail(files);
 
             if (files.length > 1) {
-                                // [...files].forEach(file => setPhotoArray(oldArray => [...oldArray, file]));
                 [...files].forEach(file => photoArray.push(file));
 
             } else {
@@ -264,16 +252,6 @@ export default function UpdateArticle({ idArticle }) {
             }
         });
 
-        // console.log('====================================');
-        // console.log(img);
-        // console.log('====================================');
-
-        // setImg(tempArray);
-
-        // console.log('LLLLLLLLLLLLLLLLLLLLLLL');
-        // console.log(img);
-        // console.log('LLLLLLLLLLLLLLLLLLLLLLL');
-
         let tempArray2 = [];
 
         photoArray.forEach(element => {
@@ -281,18 +259,10 @@ export default function UpdateArticle({ idArticle }) {
             if (element !== e.target.value) {
                 tempArray2.push(element);
             }
-        });
-
-        console.log('====================================');
-        console.log(photoArray);
-        console.log('====================================');        
+        });     
 
         setPhotoArray(tempArray2);
         setPhotoArray(tempArray2);
-
-        console.log('LLLLLLLLLLLLLLLLLLLLLLL');
-        console.log(photoArray);
-        console.log('LLLLLLLLLLLLLLLLLLLLLLL');
 
         e.target.parentNode.remove()
     }
