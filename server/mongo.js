@@ -28,15 +28,10 @@ const userSchema = new mongoose.Schema({
         default: []
     },
     data: {
-        type: Array,
-        default: [],
-        adresses: {
-            type: Array,
-            default: []
-        },
-        cards: {
-            type: Array,
-            default: []
+        type: Object,
+        default: {
+            addresses: [],
+            cards: []
         }
     },
     admin: {
@@ -117,15 +112,10 @@ const facebookSchema = new mongoose.Schema({
         default: []
     },
     data: {
-        type: Array,
-        default: [],
-        adresses: {
-            type: Array,
-            default: []
-        },
-        cards: {
-            type: Array,
-            default: []
+        type: Object,
+        default: {
+            addresses: [],
+            cards: []
         }
     },
     admin: {
