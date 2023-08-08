@@ -135,7 +135,7 @@ export default function ArticleSeeMore() {
 
     return (
         <div className="flex flex-col">
-            <div className="flex flex-col lg:flex-row w-3/4 mx-auto justify-evenly mt-10">
+            <div className="relative flex flex-col lg:flex-row w-3/4 mx-auto justify-evenly mt-10">
                 <div className="flex flex-col w-full lg:w-2/5">
                     <div className="bg-[#C1E1C1] border rounded-xl">
                         {article.stock === 0 ? (
@@ -146,8 +146,9 @@ export default function ArticleSeeMore() {
                             </div>
                         ) : (
                             <></>
-                        )}
+                            )}
                         <ToastContainer />
+                        <p className="absolute left-0 bg-red-500 font-bold text-white">-{article.reduction}%</p>
                         <p className="text-center text-white mb-6 p-2 bg-[#4FBEB7] rounded-t-xl">
                             {article.title}
                         </p>
@@ -197,7 +198,7 @@ export default function ArticleSeeMore() {
                     <p className="p-2 ml-5">Livraison</p>
                     <p className="p-2 ml-5">{article.price} €</p>
                     {article.reduction > 0 ? (
-                        <p className="p-2 ml-5">Prix avec promotion : {article.price - ((article.reduction * article.price) / 100)}€</p>
+                        <p className="p-2 ml-5 font-bold text-red-500">Prix avec promotion : {article.price - ((article.reduction * article.price) / 100)}€</p>
                     ) : null}
                     <div className="p-2 ml-5">
                         {article.stock === 0 ? (

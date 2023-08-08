@@ -151,9 +151,17 @@ export default function SimpleSlider() {
                             <p className="text-center my-6 h-16">
                                 {article.description}
                             </p>
-                            <div className="text-center">
-                                <p>{article.price} €</p>
-                            </div>
+                            {article.reduction === 0 ? (
+                                <div className="text-center">
+                                    <p>{article.price} €</p>
+                                </div>
+
+                            ) : (
+                                <div className="text-center">
+                                    <p>{article.price}€</p>
+                                    <p className="bg-red-500 font-bold text-white">-{article.reduction}%</p>
+                                </div>
+                            )}
                         </Link>
                     </div>
                 ))}
