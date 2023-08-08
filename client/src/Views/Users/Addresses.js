@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import User from "../../Components/Widgets/User";
 import Loader from "../../Components/Widgets/Loader";
 
 export default function Addresses() {
   const { currentUser, userLoading } = User();
-  const [isAddindAddress, setIsAddindAddress] = useState(null);
-  const [addresses, setAddresses] = useState(null);
+  const [isAddingAddress, setIsAddingAddress] = useState(null);
+  const [addresses, setAddresses] = useState([]);
 
   const [form, setForm] = useState({
     country: "",
@@ -14,6 +14,12 @@ export default function Addresses() {
     zipcode: Number(),
     address: "",
   });
+
+  useEffect(() => {
+    if (currentUser && addresses.length <= 0) {
+      setAddresses(currentUser.data.addresses);
+    }
+  }, [currentUser, addresses]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,24 +31,29 @@ export default function Addresses() {
   }
 
   const newAddress = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     await axios
-    .post('http://localhost:8000/newAddress', {form: form}, {withCredentials: true})
-    .then(response => {
-        console.log(response.data);
-    })
-    .catch(err => {
+      .post(
+        "http://localhost:8000/newAddress",
+        { form: form },
+        { withCredentials: true }
+      )
+      .then((response) => {
+        setAddresses(response.data)
+        setIsAddingAddress(null);
+      })
+      .catch((err) => {
         console.log(err);
-    })
-  }
+      });
+  };
 
   return (
     currentUser &&
-    (isAddindAddress ? (
+    (isAddingAddress ? (
       <>
         <p
           onClick={() => {
-            setIsAddindAddress(null);
+            setIsAddingAddress(null);
           }}
         >
           fromage
@@ -107,11 +118,20 @@ export default function Addresses() {
       <div>
         <p
           onClick={() => {
-            setIsAddindAddress(true);
+            setIsAddingAddress(true);
           }}
         >
-          fromage
+          fromton
         </p>
+        {addresses.length > 0 &&
+          addresses.map((item, index) => (
+            <div key={index}> {/* en cliquant sur la div / la card contenant les infos, ouvre de quoi la modifier */}
+              <p>{item.country}</p>
+              <p>{item.city}</p>
+              <p>{item.zipcode}</p>
+              <p>{item.address}</p>
+            </div>
+          ))}
       </div>
     ))
   );

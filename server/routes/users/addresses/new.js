@@ -36,6 +36,7 @@ router.post("/newAddress", async (req, res) => {
         user.markModified('data');
         user.save()
 
+        req.session.user.data.addresses = user.data.addresses
         res.status(200).json(user.data.addresses)
     })
     .catch(err => {
