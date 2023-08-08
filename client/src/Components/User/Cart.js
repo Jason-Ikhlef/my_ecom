@@ -166,9 +166,9 @@ const Cart = () => {
   {cart && (
     <div>
       {
-        !currentUser.subscribe.month && !currentUser.subscribe.year ? (
+        (currentUser && !currentUser.subscribe.month && !currentUser.subscribe.year) || !currentUser ? (
           <div id="subbutton" className="w-3/5 p-2 bg-[#4FBEB7]">
-              <Link to="http://localhost:3000/SubPage">DEFILE STRplaIT</Link>
+              <Link to="http://localhost:3000/SubPage">Découvre l'option Petheaven Premier</Link>
           </div>
         ) : (
           null
@@ -245,7 +245,7 @@ const Cart = () => {
             <p className="p-2">{totalPrice.toFixed(2)} €</p>
           </div>
           {
-            currentUser.subscribe.month || currentUser.subscribe.year ? (
+            currentUser && (currentUser.subscribe.month || currentUser.subscribe.year) ? (
             <div className="flex justify-between mx-4">
               <p className="text-2xl">Frais de port</p>
               <p className="p-2">0 €</p>
@@ -258,7 +258,7 @@ const Cart = () => {
             )
           }
           {
-            currentUser.subscribe.month || currentUser.subscribe.year ? (
+            currentUser && (currentUser.subscribe.month || currentUser.subscribe.year) ? (
             <div className="flex justify-between mx-4">
               <p className="text-2xl">Prix total</p>
               <p className="p-2">{totalPrice.toFixed(2)} €</p>
@@ -271,7 +271,7 @@ const Cart = () => {
             )
           }
           {
-            !currentUser.subscribe.month && !currentUser.subscribe.year 
+            (currentUser && (!currentUser.subscribe.month && !currentUser.subscribe.year)) || !currentUser 
             ?
             <div className="flex justify-between mx-4">
               <p className="text-2xl">Avec prime</p>

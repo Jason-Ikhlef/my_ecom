@@ -130,7 +130,7 @@ export default function SimpleSlider() {
                             className="w-3/4 mx-auto relative"
                             to={`/articles/${article._id}`}
                             state={{ id: article._id }}>
-                            <p className="text-center text-white mb-6 p-2 bg-[#4FBEB7] rounded-t-xl">
+                            <p className="text-center text-white mb-6 p-2 bg-[#4FBEB7] rounded-t-xl h-16 flex justify-center items-center">
                                 {article.title}
                             </p>
                             {

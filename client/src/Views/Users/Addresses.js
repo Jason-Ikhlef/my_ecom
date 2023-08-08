@@ -7,6 +7,7 @@ export default function Addresses() {
   const { currentUser, userLoading } = User();
   const [isAddingAddress, setIsAddingAddress] = useState(null);
   const [addresses, setAddresses] = useState([]);
+  const [isUpdatingAddress, setIsUpdatingAddress] = useState(null);
 
   const [form, setForm] = useState({
     country: "",
@@ -55,8 +56,9 @@ export default function Addresses() {
           onClick={() => {
             setIsAddingAddress(null);
           }}
+          className="text-center my-4"
         >
-          fromage
+          Voir vos adresses
         </p>
         <form
           onSubmit={newAddress}
@@ -120,18 +122,83 @@ export default function Addresses() {
           onClick={() => {
             setIsAddingAddress(true);
           }}
+          className="text-center my-4"
         >
-          fromton
+          Créer une nouvelle adresse
         </p>
+        <div className="border flex w-3/4 mx-auto text-center gap-8">
         {addresses.length > 0 &&
           addresses.map((item, index) => (
-            <div key={index}> {/* en cliquant sur la div / la card contenant les infos, ouvre de quoi la modifier */}
+            <div key={index} className="w-1/4 border cursor-pointer" onClick={() => {setIsUpdatingAddress(item)}}> {/* en cliquant sur la div / la card contenant les infos, ouvre de quoi la modifier */}            
               <p>{item.country}</p>
               <p>{item.city}</p>
               <p>{item.zipcode}</p>
               <p>{item.address}</p>
             </div>
-          ))}
+          ))
+        }
+        </div>
+        {
+          isUpdatingAddress ? 
+          (
+            <form
+              onSubmit={newAddress}
+              className="flex flex-col w-2/4 mx-auto mt-8 border rounded-xl p-2"
+            >
+            <label htmlFor="country">Votre pays</label>
+            <input
+              type="text"
+              id="country"
+              name="country"
+              value={isUpdatingAddress.country}
+              onChange={handleChange}
+              required
+              placeholder="Pays"
+              className="border"
+            />
+            <label htmlFor="city">Votre ville</label>
+            <input
+              type="text"
+              id="city"
+              name="city"
+              value={isUpdatingAddress.city}
+              onChange={handleChange}
+              required
+              placeholder="Ville"
+              className="border"
+            />
+            <label htmlFor="city">Code postal</label>
+            <input
+              type="text"
+              id="zipcode"
+              name="zipcode"
+              value={isUpdatingAddress.zipcode}
+              onChange={handleChange}
+              required
+              placeholder="Code postal"
+              className="border"
+            />
+            <label htmlFor="adress">Votre adresse</label>
+            <input
+              type="text"
+              id="address"
+              name="address"
+              value={isUpdatingAddress.address}
+              onChange={handleChange}
+              required
+              placeholder="Adresse"
+              className="border"
+            />
+            <button
+              type="submit"
+              className="mt-5 bg-[#4FBEB7] p-2 mb-2 rounded-lg"
+            >
+              Créer la nouvelle adresse
+            </button>
+          </form>
+          ) : 
+          (null)
+        }
       </div>
     ))
   );
