@@ -21,6 +21,16 @@ const Cart = () => {
   const [selectedOffer, setSelectedOffer] = useState('Priority')
   const [totallySprice, setTotallySprice] = useState(0)
   const [logIn, setLogIn] = useState(true);
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handlePaymentClick = () => {
+    setShowPopup(true);
+  };
+
+  const closePopup = () => {
+    setShowPopup(false);
+  };
+
 
     useEffect(() => {
         if (currentUser && !userLoading) {
@@ -292,7 +302,7 @@ const Cart = () => {
               </div>
               <div className="w-full flex justify-center p-4">
                 <button
-                  onClick={newOrder}
+                  onClick={handlePaymentClick}
                   className="bg-[#4FBEB7] w-full mx-auto p-2 border "
                 >
                   Paiement
@@ -330,6 +340,27 @@ const Cart = () => {
         </div>
         
       </div>
+      {/* Le pop-up */}
+    {showPopup && (
+      <div className="popup-overlay">
+        <div className="popup-container">
+          <h2 className="text-2xl font-semibold mb-4">Vos Addresses</h2>
+          <div className="flex gap-6">
+            {/* ecris */}
+            
+          </div>
+          <button
+            onClick={() => {
+              closePopup();
+              newOrder();
+            }}
+            className="w-full p-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition duration-300"
+          >
+            Fermer
+          </button>
+        </div>
+      </div>
+    )}
     </div>
   )}
 </>
