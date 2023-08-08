@@ -183,20 +183,18 @@ code {
 }
 
 
-/* Styles pour l'arrière-plan semi-transparent */
 .popup-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
+  background-color: rgba(0, 0, 0, 0.5); 
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-/* Styles pour le contenu du pop-up */
 .popup-container {
   background-color: white;
   padding: 20px;
