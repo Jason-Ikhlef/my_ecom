@@ -196,6 +196,9 @@ export default function ArticleSeeMore() {
                 <div className="border rounded-xl w-full lg:w-2/5 ">
                     <p className="p-2 ml-5">Livraison</p>
                     <p className="p-2 ml-5">{article.price} €</p>
+                    {article.reduction > 0 ? (
+                        <p className="p-2 ml-5">Prix avec promotion : {article.price - ((article.reduction * article.price) / 100)}€</p>
+                    ) : null}
                     <div className="p-2 ml-5">
                         {article.stock === 0 ? (
                             <p className="text-red-600">
