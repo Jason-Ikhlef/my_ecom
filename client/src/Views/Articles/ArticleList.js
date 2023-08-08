@@ -127,14 +127,20 @@ export default function SimpleSlider() {
                             (article.stock === 0 ? "opacity-50" : "")
                         }>
                         <Link
-                            className="w-3/4 mx-auto"
+                            className="w-3/4 mx-auto relative"
                             to={`/articles/${article._id}`}
                             state={{ id: article._id }}>
                             <p className="text-center text-white mb-6 p-2 bg-[#4FBEB7] rounded-t-xl">
                                 {article.title}
                             </p>
+                            {
+                                article.reduction > 0 ? 
+                                <p className=" absolute left-0 z-10 ml-2 bg-green-500 font-bold text-white text-xl h-fit my-auto rounded-lg px-2">-{article.reduction}%</p>
+                                :
+                                null
+                            }
                             {article.stock === 0 ? (
-                                <div className="absolute bg-red-600 text-white w-[12.45%] mt-[-24px] flex justify-center items-center text-center">
+                                <div className="bg-red-600 text-white w-[12.45%] mt-[-24px] flex justify-center items-center text-center relative">
                                     <h1
                                         id="outOfStock"
                                         className="text-lg font-bold">
@@ -147,7 +153,7 @@ export default function SimpleSlider() {
                             <img
                                 src={`http://localhost:8000/storage/${article.pictures[0]}`}
                                 className="w-[200px] h-[200px] mx-auto"
-                                alt="article img"></img>
+                                alt="article img"></img>                            
                             <p className="text-center my-6 h-16">
                                 {article.description}
                             </p>

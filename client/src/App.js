@@ -43,7 +43,7 @@ function App() {
         <Route path='/subpage' Component={SubPage} />
         <Route path='/history' Component={History} />
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </Router>
   );
 }
