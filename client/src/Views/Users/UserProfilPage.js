@@ -13,7 +13,6 @@ export default function UserProfilPage ()
 
     const { currentUser, userLoading } = User()
     const [update, setUpdate] = useState(false)
-    const [isWatchingHistory, setIsWatchingHistory] = useState(false)
     const [isAddingAddress, setIsAddingAddress] = useState(false)
 
     if (userLoading) {
@@ -58,7 +57,7 @@ export default function UserProfilPage ()
                     <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={(e) => {setUpdate(true)}}>
                         Modifier
                     </p>
-                    <Link to="/history" className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={handleClick}>
+                    <Link to="/history" className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer">
                         Voir Historique
                     </Link>
                     <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={LogOut}>
@@ -85,11 +84,6 @@ export default function UserProfilPage ()
             :
             <ReadUser />
             }
-            {/* {
-                isWatchingHistory ? 
-              
-                null
-            } */}
         </div>
     )
 }
