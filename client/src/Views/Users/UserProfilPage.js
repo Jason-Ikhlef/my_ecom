@@ -50,7 +50,15 @@ export default function UserProfilPage ()
                     <div className="mt-2 bg-[#4FBEB7]">
                         <p className="text-center">Vos informations :</p>
                         <p className="text-center">Email : {currentUser.email}  </p>
-                        <p className="text-center">Role: {currentUser.admin ? 'administrateur' : 'Utilisateur'}  </p>
+                        <p className="text-center">Role: {currentUser.admin ? 'Administrateur' : 'Utilisateur'}  </p>
+                        {
+                            currentUser.subscribe && currentUser.subscribe.month ?
+                            <p className="text-center">Abonnement : Mensuel</p> : null
+                        }
+                        {
+                            currentUser.subscribe && currentUser.subscribe.year ?
+                            <p className="text-center">Abonnement : Annuel</p> : null
+                        }
                     </div>
                 </div>
                 <div className="flex flex-wrap">
@@ -70,11 +78,16 @@ export default function UserProfilPage ()
                         Adresses
                     </Link>
                 </div>
-                <div>
-                    <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer">
-                    <Link to="http://localhost:3000/SubPage">S'abonner</Link> 
-                    </p>
-                </div>
+                {
+                    !currentUser.subscribe.month && !currentUser.subscribe.year ? (
+                    <div>
+                        <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer">
+                            <Link to="http://localhost:3000/SubPage">S'abonner</Link> 
+                        </p>
+                    </div>
+                    ) : ( null )
+                }
+                
                 {
                     update ? 
                     <UpdateUser /> : 

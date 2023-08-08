@@ -155,9 +155,15 @@ const Cart = () => {
   <ToastContainer />
   {cart && (
     <div>
-      <div id="subbutton" className="w-3/5 p-2 bg-[#4FBEB7]">
-          <Link to="http://localhost:3000/SubPage">DEFILE STRplaIT</Link>
-      </div>
+      {
+        !currentUser.subscribe.month && !currentUser.subscribe.year ? (
+          <div id="subbutton" className="w-3/5 p-2 bg-[#4FBEB7]">
+              <Link to="http://localhost:3000/SubPage">DEFILE STRplaIT</Link>
+          </div>
+        ) : (
+          null
+        )
+      }
       <div className="w-3/4 mx-auto flex justify-center gap-4 mt-4">
         {logIn === false ? (
           <div className="w-1/2 border flex flex-col justify-evenly items-center">
@@ -228,21 +234,37 @@ const Cart = () => {
             <p className="text-2xl">Panier</p>
             <p className="p-2">{totalPrice.toFixed(2)} €</p>
           </div>
+          {
+            currentUser.subscribe.month || currentUser.subscribe.year ? (
             <div className="flex justify-between mx-4">
               <p className="text-2xl">Frais de port</p>
-              <p className="p-2">{totallySprice} €</p>
+              <p className="p-2">0 €</p>
             </div>
-          <div className="flex justify-between mx-4">
-            <p className="text-2xl">Prix total</p>
-            <p className="p-2">
-              {(Number(totallySprice) + Number(totalPrice)).toFixed(2)} €
-            </p>
-          </div>
+            ) : (
+              <div className="flex justify-between mx-4">
+                <p className="text-2xl">Frais de port</p>
+                <p className="p-2">{totallySprice} €</p>
+              </div>
+            )
+          }
           {
-            currentUser 
+            currentUser.subscribe.month || currentUser.subscribe.year ? (
+            <div className="flex justify-between mx-4">
+              <p className="text-2xl">Prix total</p>
+              <p className="p-2">{totalPrice.toFixed(2)} €</p>
+            </div>
+            ) : (
+              <div className="flex justify-between mx-4">
+                <p className="text-2xl">Prix total</p>
+                {(Number(totallySprice) + Number(totalPrice)).toFixed(2)} €
+              </div>
+            )
+          }
+          {
+            !currentUser.subscribe.month && !currentUser.subscribe.year 
             ?
             <div className="flex justify-between mx-4">
-              <p className="text-2xl">avec prime</p>
+              <p className="text-2xl">Avec prime</p>
               <p className="p-2">{(totalPrice).toFixed(2)} €</p>
             </div>
             :

@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 export default function SubPage() {
   const [showPopup, setShowPopup] = useState(false);
@@ -17,6 +20,10 @@ export default function SubPage() {
     },
      { withCredentials: true })
     .then(response => {
+      toast.success('Merci pour votre abonnement ! :)')
+      setTimeout(() => {
+        window.location.href = 'http://localhost:3000/profil'
+      }, 1500);
       console.log(response.data)
     }
     )
@@ -31,6 +38,10 @@ export default function SubPage() {
     },
     { withCredentials: true })
     .then(response => {
+      toast.success('Merci pour votre abonnement ! :)')
+      setTimeout(() => {
+        window.location.href = 'http://localhost:3000/profil'
+      }, 1500);
       console.log(response.data)
     }
     )
@@ -45,6 +56,7 @@ export default function SubPage() {
 
   return (
     <div className="bg-gray-100 py-10 px-4 sm:px-6 lg:px-8">
+      <ToastContainer />
       <h1 className="text-center text-2xl md:text-4xl font-bold mb-6">
         🎉 Découvrez notre tout nouveau service d'abonnement exclusif : PetHeaven Premier ! 🎉
       </h1>
