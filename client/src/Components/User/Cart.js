@@ -93,13 +93,11 @@ const Cart = () => {
           console.error(err);
         });
     } else {
-      // pop up qui demande si l'utilisateur non connecté veut se connecter, s'inscrire ou procéder au paiement sans se co
-      setLogIn(false);
+      setLogIn(true);
+      setCart([]);
+      setTotalPrice(0);
+      localStorage.removeItem("cart");
     }
-  };
-
-  const orderWithoutUser = () => {
-    setLogIn(true);
   };
 
   const deleteArticle = async (articleId, price, quantity) => {
@@ -201,7 +199,7 @@ const Cart = () => {
                 Me connecter
               </button>
               <button
-                onClick={orderWithoutUser}
+                onClick={handlePaymentClick}
                 className="w-full text-center bg-[#4FBEB7] p-2 text-lg"
               >
                 Continuer sans me connecter
@@ -304,12 +302,23 @@ const Cart = () => {
                 </select>
               </div>
               <div className="w-full flex justify-center p-4">
+                {currentUser ?(
+
                 <button
                   onClick={handlePaymentClick}
                   className="bg-[#4FBEB7] w-full mx-auto p-2 border "
                 >
                   Paiement
                 </button>
+                ) :(
+                  <button
+                  onClick={() => setLogIn(false)}
+                  className="bg-[#4FBEB7] w-full mx-auto p-2 border "
+                >
+                  Paiement
+                </button>
+
+                )}
               </div>
               <p className="px-4 text-2xl">Nous acceptons :</p>
               <div className="flex justify-evenly mb-4">
@@ -350,16 +359,16 @@ const Cart = () => {
         <div className="popup-container">
           <h2 className="text-2xl font-semibold mb-4">Vos Addresses</h2>
           <div className="flex gap-6">
-            currentUser ?(
-            {currentUser.data.addresses.map((item, index) => (
+            {currentUser ?(
+            currentUser.data.addresses.map((item, index) => (
               <div key={index}> {/* en cliquant sur la div / la card contenant les infos, ouvre de quoi la modifier */}
               <p>{item.country}</p>
               <p>{item.city}</p>
               <p>{item.zipcode}</p>
               <p>{item.address}</p>
-            </div>))}) : (
+            </div>))) : (
               <p>Vous n'avez pas d'adresse enregistrée</p>
-            )
+            )}
             
           </div>
           <button
@@ -384,7 +393,7 @@ const Cart = () => {
         <button
           onClick={() => {
             closePopup();
-             newOrder();
+            newOrder();
           }}
           className="w-full p-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition duration-300"
         >
