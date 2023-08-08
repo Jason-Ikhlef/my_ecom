@@ -31,7 +31,7 @@ export default function Navbar() {
     }, []);
 
     if (userLoading) {
-        return <p>Loading...</p>;
+        return <Loader />;
     }
 
     const isOnCartPage = location.pathname === "/cart";

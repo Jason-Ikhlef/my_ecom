@@ -165,10 +165,9 @@ code {
 
 
 #subbutton {
-  max-width: 30em;                      /* largeur de la fenêtre */
   margin: 1em auto 2em;
   border: 10px solid #F0F0FF;
-  overflow: hidden;                     /* masque tout ce qui dépasse */
+  overflow: hidden;                     
   box-shadow: 0 .25em .5em #CCC,inset 0 0 1em .25em #CCC;
 }
 

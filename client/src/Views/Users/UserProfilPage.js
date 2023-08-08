@@ -6,6 +6,7 @@ import axios from "axios";
 import User from "../../Components/Widgets/User";
 import ReadUser from "../../Components/Form/User/ReadUser";
 import UpdateUser from "../../Components/Form/User/UpdateUser";
+import Loader from "../../Components/Widgets/Loader";
 
 export default function UserProfilPage ()
 {
@@ -17,7 +18,7 @@ export default function UserProfilPage ()
 
     if (userLoading) {
 
-        return <p>Loading...</p>
+        return <Loader />
     
     }
 
@@ -57,9 +58,9 @@ export default function UserProfilPage ()
                     <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={(e) => {setUpdate(true)}}>
                         Modifier
                     </p>
-                    <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={() => setIsWatchingHistory(true)}>
+                    <Link to="/history" className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={handleClick}>
                         Voir Historique
-                    </p>
+                    </Link>
                     <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={LogOut}>
                         Se déconnecter
                     </p>
@@ -84,26 +85,11 @@ export default function UserProfilPage ()
             :
             <ReadUser />
             }
-            {
+            {/* {
                 isWatchingHistory ? 
-                <div className="w-3/4 mx-auto text-center">
-                    <p onClick={() => {setIsWatchingHistory(false)}} className="cursor-pointer">X</p>
-                    {currentUser.old_orders && (
-                        currentUser.old_orders.map((order, index) => (
-                            <div key={index}>
-                                {order.cart.map((element, elementIndex) => ( // tous les éléments de la commande avec pour chaque element : name, price, articleId, quantity.
-                                <div key={elementIndex}>
-                                    <p>{element.name}</p>
-                                </div>
-                                ))} 
-                            <p>{order.totalPrice} €</p> {/* prix total de la commande */}
-                            <p>{order.date}</p> {/*la date sera a convertir en format JJ/MM/YY */}
-                            </div>
-                        ))
-                    )}
-                </div> :
+              
                 null
-            }
+            } */}
         </div>
     )
 }
