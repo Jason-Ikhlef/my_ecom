@@ -22,14 +22,17 @@ const Cart = () => {
   const [totallySprice, setTotallySprice] = useState(0)
   const [logIn, setLogIn] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
+  const [isSelectingAddress,setIsSelectingAddress] = useState(false);
 
   const handlePaymentClick = () => {
     setShowPopup(true);
+    setIsSelectingAddress(true);
   };
 
   const closePopup = () => {
     setShowPopup(false);
   };
+  
 
 
     useEffect(() => {
@@ -342,25 +345,55 @@ const Cart = () => {
       </div>
       {/* Le pop-up */}
     {showPopup && (
+      isSelectingAddress ? (
       <div className="popup-overlay">
         <div className="popup-container">
           <h2 className="text-2xl font-semibold mb-4">Vos Addresses</h2>
           <div className="flex gap-6">
-            {/* ecris */}
+            currentUser ?(
+            {currentUser.data.addresses.map((item, index) => (
+              <div key={index}> {/* en cliquant sur la div / la card contenant les infos, ouvre de quoi la modifier */}
+              <p>{item.country}</p>
+              <p>{item.city}</p>
+              <p>{item.zipcode}</p>
+              <p>{item.address}</p>
+            </div>))}) : (
+              <p>Vous n'avez pas d'adresse enregistrée</p>
+            )
             
           </div>
           <button
             onClick={() => {
-              closePopup();
-              newOrder();
+              setIsSelectingAddress(false);
+              // newOrder();
             }}
             className="w-full p-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition duration-300"
           >
-            Fermer
+            Valider
           </button>
         </div>
       </div>
-    )}
+    ) : (
+      <div className="popup-overlay">
+      <div className="popup-container">
+        <h2 className="text-2xl font-semibold mb-4">Moyen de paiement</h2>
+        <div className="flex gap-6">
+          {"mettre une fomulaire pour ajouter un moyen de paiement"}
+          
+        </div>
+        <button
+          onClick={() => {
+            closePopup();
+             newOrder();
+          }}
+          className="w-full p-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition duration-300"
+        >
+          Valider
+        </button>
+      </div>
+    </div>
+    ))
+  }
     </div>
   )}
 </>
