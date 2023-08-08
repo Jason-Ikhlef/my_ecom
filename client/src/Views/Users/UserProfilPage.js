@@ -13,16 +13,12 @@ export default function UserProfilPage ()
     const { currentUser, userLoading } = User()
     const [update, setUpdate] = useState(false)
     const [isWatchingHistory, setIsWatchingHistory] = useState(false)
+    const [isAddingAddress, setIsAddingAddress] = useState(false)
 
     if (userLoading) {
 
         return <p>Loading...</p>
     
-    }
-
-    const handleClick = (e) => 
-    {
-        setIsWatchingHistory(true);
     }
 
     const deleteOnClick = async (e) => 
@@ -61,7 +57,7 @@ export default function UserProfilPage ()
                     <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={(e) => {setUpdate(true)}}>
                         Modifier
                     </p>
-                    <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={handleClick}>
+                    <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={() => setIsWatchingHistory(true)}>
                         Voir Historique
                     </p>
                     <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={LogOut}>
@@ -69,6 +65,9 @@ export default function UserProfilPage ()
                     </p>
                     <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={deleteOnClick}>
                         Supprimer
+                    </p>
+                    <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer">
+                        Ajouter une adresse
                     </p>
                 </div>
                 <div>
