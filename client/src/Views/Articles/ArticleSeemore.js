@@ -135,6 +135,7 @@ export default function ArticleSeeMore() {
 
     return (
         <div className="flex flex-col">
+            <ToastContainer />
             <div className="flex flex-col lg:flex-row w-3/4 mx-auto justify-evenly mt-10 z-10">
                 <div className="flex flex-col w-full lg:w-2/5">
                     <div className="bg-[#C1E1C1] border rounded-xl">
@@ -145,9 +146,8 @@ export default function ArticleSeeMore() {
                                 </h1>
                             </div>
                         ) : (
-                            <></>
-                            )}
-                        <ToastContainer />
+                            null
+                        )}
                         <p className="text-center text-white mb-6 p-2 bg-[#4FBEB7] rounded-t-xl">
                             {article.title}
                         </p>
