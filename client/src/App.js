@@ -41,7 +41,7 @@ function App() {
         {/* <Route path='/articles/seatch/:name' Component={UpdateUser} /> */}
         <Route path='/subpage' Component={SubPage} />
       </Routes>
-      <Footer />
+      {/* <Footer /> */}
     </Router>
   );
 }
