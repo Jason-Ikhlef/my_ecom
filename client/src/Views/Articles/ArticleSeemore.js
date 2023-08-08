@@ -88,7 +88,7 @@ export default function ArticleSeeMore() {
                 quantity: Number(articleQuantity),
                 img: article.pictures[0],
                 name: article.title,
-                price: article.price,
+                price: article.price - ((article.reduction * article.price) / 100).toFixed(2),
                 weight: article.weight
             }, {withCredentials: true})
             .then(response => {
@@ -109,7 +109,7 @@ export default function ArticleSeeMore() {
                 quantity: Number(articleQuantity),
                 img: article.pictures[0],
                 name: article.title,
-                price: article.price,
+                price: article.price - ((article.reduction * article.price) / 100).toFixed(2),
                 weight: article.weight
             }
             articleExists ? articleExists.quantity += element.quantity : cart.push(element)
