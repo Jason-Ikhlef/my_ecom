@@ -6,8 +6,6 @@ router.post('/changeShipping', async (req, res) => {
 
     const newShipping = req.body
 
-    console.log(req.body);
-
     await appCollection
     .findOne()
     .then(app => {

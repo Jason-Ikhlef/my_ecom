@@ -88,7 +88,8 @@ export default function ArticleSeeMore() {
                 quantity: Number(articleQuantity),
                 img: article.pictures[0],
                 name: article.title,
-                price: article.price
+                price: article.price,
+                weight: article.weight
             }, {withCredentials: true})
             .then(response => {
                 toast.success("Article ajouté au panier")
@@ -108,7 +109,8 @@ export default function ArticleSeeMore() {
                 quantity: Number(articleQuantity),
                 img: article.pictures[0],
                 name: article.title,
-                price: article.price
+                price: article.price,
+                weight: article.weight
             }
             articleExists ? articleExists.quantity += element.quantity : cart.push(element)
             localStorage.setItem('cart', JSON.stringify(cart));
@@ -194,6 +196,9 @@ export default function ArticleSeeMore() {
                 <div className="border rounded-xl w-full lg:w-2/5 ">
                     <p className="p-2 ml-5">Livraison</p>
                     <p className="p-2 ml-5">{article.price} €</p>
+                    {article.reduction > 0 ? (
+                        <p className="p-2 ml-5">Prix avec promotion : {article.price - ((article.reduction * article.price) / 100)}€</p>
+                    ) : null}
                     <div className="p-2 ml-5">
                         {article.stock === 0 ? (
                             <p className="text-red-600">

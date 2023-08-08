@@ -1,8 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const storage = require('../../middleware/storage')
+const path = require('path');
+const fs = require('fs')
 
-const { articleCollection } = require("../../mongo");
+const {
+    articleCollection
+} = require("../../mongo");
 
 router.put("/UpdateArticle", storage.upload.array('photo'), async (req, res) => {
 
@@ -21,10 +25,11 @@ router.put("/UpdateArticle", storage.upload.array('photo'), async (req, res) => 
         subCategoriesName,
         recommanded: recommanded,
         pictures,
-        weight
+        weight,
+        reduction
     } = req.body;
 
-    
+    const uploadDir = path.join(__dirname, '../../storage');
     const picturesNames = req.files.map(file => file.filename);
     let picturesArray = [];
     let finalArray = [];
@@ -56,21 +61,31 @@ router.put("/UpdateArticle", storage.upload.array('photo'), async (req, res) => 
         categoriesName,
         subCategoriesName,
         recommanded,
-        weight
+        weight,
+        reduction
     };
-
+    
     try {
 
-        await articleCollection.updateOne({
+        const article = await articleCollection.findOneAndUpdate({
             _id: id
-        }, 
-        {
+        }, {
             $set: data
+        });
+
+        let intersection = article.pictures.filter(x => !finalArray.includes(x));
+
+        intersection.forEach(element => {
+            try {
+                fs.unlinkSync(uploadDir + '/' + element)
+            } catch (err) {
+                console.error(err)
+            }
         });
 
         res.json("success");
     } catch (e) {
-        
+
         console.log(e);
         res.json("fail");
     }

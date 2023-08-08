@@ -27,6 +27,18 @@ const userSchema = new mongoose.Schema({
         type: Array,
         default: []
     },
+    data: {
+        type: Array,
+        default: [],
+        adresses: {
+            type: Array,
+            default: []
+        },
+        cards: {
+            type: Array,
+            default: []
+        }
+    },
     admin: {
         type: Boolean,
         default: false
@@ -55,6 +67,13 @@ const googleSchema = new mongoose.Schema({
         type: Array,
         default: []
     },
+    data: {
+        type: Object,
+        default: {
+            addresses: [],
+            cards: []
+        }
+    },
     admin: {
         type: Boolean,
         default: false
@@ -82,6 +101,18 @@ const facebookSchema = new mongoose.Schema({
     old_orders: {
         type: Array,
         default: []
+    },
+    data: {
+        type: Array,
+        default: [],
+        adresses: {
+            type: Array,
+            default: []
+        },
+        cards: {
+            type: Array,
+            default: []
+        }
     },
     admin: {
         type: Boolean,
@@ -154,6 +185,10 @@ const articleSchema = new mongoose.Schema({
     property: {
         type: String,
         required: true
+    },
+    reduction: {
+        type: Number,
+        default: 0
     }
 })
 

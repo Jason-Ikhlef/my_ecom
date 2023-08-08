@@ -14,16 +14,12 @@ export default function UserProfilPage ()
     const { currentUser, userLoading } = User()
     const [update, setUpdate] = useState(false)
     const [isWatchingHistory, setIsWatchingHistory] = useState(false)
+    const [isAddingAddress, setIsAddingAddress] = useState(false)
 
     if (userLoading) {
 
         return <Loader />
     
-    }
-
-    const handleClick = (e) => 
-    {
-        setIsWatchingHistory(true);
     }
 
     const deleteOnClick = async (e) => 
@@ -70,6 +66,9 @@ export default function UserProfilPage ()
                     </p>
                     <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={deleteOnClick}>
                         Supprimer
+                    </p>
+                    <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer">
+                        Ajouter une adresse
                     </p>
                 </div>
                 <div>
