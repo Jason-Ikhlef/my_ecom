@@ -25,7 +25,7 @@ router.post('/login', async (req, res) => {
             if (storage.length > 0) user.cart = storage
             user.markModified('cart');
             user.save()
-            req.session.user = { id: user._id, email: user.email, admin : user.admin, cart: user.cart, old_orders: user.old_orders, data: user.data, auth: 'petheaven' }
+            req.session.user = { id: user._id, email: user.email, admin : user.admin, cart: user.cart, old_orders: user.old_orders, data: user.data, subscribe : user.subscribed ,auth: 'petheaven' }
             res.status(200).json("success")
         } else {
             res.status(400).json("nom de compte ou mot de passe incorrect")
