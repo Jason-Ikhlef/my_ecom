@@ -26,7 +26,6 @@ router.post("/getShippingCost", async (req, res) => {
         name: "Dr. Steve Brule",
         street1: "179 N Harbor Dr",
         city: "Redondo Beach",
-        state: "CA",
         zip: "90277",
         country: "US",
         phone: "4155559999",
