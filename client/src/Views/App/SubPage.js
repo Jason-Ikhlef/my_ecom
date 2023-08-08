@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 export default function SubPage() {
+  const [showPopup, setShowPopup] = useState(false);
+
+  const openPopup = () => {
+    setShowPopup(true);
+  };
+
+  const closePopup = () => {
+    setShowPopup(false);
+  };
+
   return (
     <div className="bg-gray-100 py-10 px-4 sm:px-6 lg:px-8">
       <h1 className="text-center text-2xl md:text-4xl font-bold mb-6">
@@ -70,12 +80,42 @@ export default function SubPage() {
         d'achat en quelque chose d'extraordinaire. Rejoignez la communauté [Amazon Prime] dès aujourd'hui et commencez à profiter
         des avantages instantanément !
       </p>
-    <div id="subbutton">
-      <div className="text-xl font-semibold mt-4 text-center">
-        🛒 Abonnez-vous maintenant et libérez le plein potentiel de vos achats en
-        ligne ! 🛒
+      
+      <div id="subbutton" onClick={openPopup} className="cursor-pointer">
+        <div className="text-xl font-semibold mt-4 text-center">
+          🛒 Abonnez-vous maintenant et libérez le plein potentiel de vos achats en ligne ! 🛒
         </div>
       </div>
+
+      {showPopup && (
+        <div className="fixed inset-0 flex items-center justify-center z-10">
+          <div className="bg-white rounded-lg p-8 max-w-md w-full shadow-lg">
+            <h2 className="text-2xl font-semibold mb-4">Choisissez un abonnement</h2>
+            <div className="flex gap-6">
+              <div className="bg-blue-100 p-4 rounded-lg flex-1">
+                <h3 className="text-lg font-semibold mb-2">Abonnement Mensuel</h3>
+                <p className="text-gray-600">12€/mois</p>
+                <button className="mt-2 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-300">
+                  S'abonner au mois
+                </button>
+              </div>
+              <div className="bg-green-100 p-4 rounded-lg flex-1">
+                <h3 className="text-lg font-semibold mb-2">Abonnement Annuel</h3>
+                <p className="text-gray-600">120€/an</p>
+                <button className="mt-2 bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition duration-300">
+                  S'abonner à l'année
+                </button>
+              </div>
+            </div>
+            <button
+              onClick={closePopup}
+              className="mt-6 w-full bg-gray-300 text-gray-800 py-2 rounded-lg hover:bg-gray-400 transition duration-300"
+            >
+              Fermer
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
