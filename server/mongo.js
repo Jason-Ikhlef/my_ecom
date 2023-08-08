@@ -23,6 +23,10 @@ const userSchema = new mongoose.Schema({
         type: Array,
         default: []
     },
+    old_orders: {
+        type: Array,
+        default: []
+    },
     admin: {
         type: Boolean,
         default: false
@@ -72,6 +76,10 @@ const facebookSchema = new mongoose.Schema({
         },
     },
     cart: {
+        type: Array,
+        default: []
+    },
+    old_orders: {
         type: Array,
         default: []
     },

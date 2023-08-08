@@ -15,6 +15,7 @@ const Cart = () => {
   const { currentUser, userLoading } = User();
   const { currentShipping, shippingLoading } = Shipping();
   const [totalPrice, setTotalPrice] = useState(0);
+  const [totalWeight, setTotalWeight] = useState(0);
   const [cart, setCart] = useState(null);
   const [easyPost, setEasyPost] = useState(null);
   const [selectedOffer, setSelectedOffer] = useState('Priority')
@@ -23,30 +24,35 @@ const Cart = () => {
 
     useEffect(() => {
         if (currentUser && !userLoading) {
+            let weight = 0
             let price = 0;
             currentUser.cart.map((item) => {
+                weight += item.weight * item.quantity
                 price += item.quantity * item.price;
             });
             setTotalPrice(price);
             setCart(currentUser.cart);
+            setTotalWeight(Number((weight * 0.00220462).toFixed(2)))
         } else {
             const storage = JSON.parse(localStorage.getItem("cart")) || [];
+            let weight = 0
             let price = 0;
             storage.map((item) => {
+                weight += item.weight * item.quantity
                 price += item.quantity * item.price;
             });
 
             setTotalPrice(price);
             setCart(storage);
+            setTotalWeight(Number((weight * 0.00220462).toFixed(2)))
         }
     }, [currentUser, userLoading]);
 
   useEffect(() => {
     if (!totallySprice) {
     axios
-      .get("http://localhost:8000/getShippingCost")
+      .post("http://localhost:8000/getShippingCost", {weight: totalWeight})
       .then((response) => {
-        console.log(response.data);
         setEasyPost(response.data);
         setSelectedOffer(response.data[0])
       })
@@ -55,8 +61,8 @@ const Cart = () => {
       });
     }
 
-      setTotallySprice((((Number(selectedOffer.rate) * Number(currentShipping)) / 100) + (Number(selectedOffer.rate))).toFixed(2))
-  }, [selectedOffer, currentShipping]);
+      if (totalWeight > 0) setTotallySprice((((Number(selectedOffer.rate) * Number(currentShipping)) / 100) + (Number(selectedOffer.rate))).toFixed(2))
+  }, [selectedOffer, currentShipping, totalWeight]);
 
   const newOrder = async () => {
     if (currentUser) {
@@ -95,6 +101,7 @@ const Cart = () => {
           const newPrice = totalPrice - quantity * price;
           setTotalPrice(newPrice);
           setCart(response.data);
+          setTotallySprice(0)
         })
         .catch((err) => {
           console.error(err);
@@ -140,7 +147,7 @@ const Cart = () => {
     })
   }
 
-  if (userLoading || !easyPost || shippingLoading) {
+  if ((userLoading || (!easyPost && cart.length !== 0) || shippingLoading)) {
     return <Loader />;
   }
   return(

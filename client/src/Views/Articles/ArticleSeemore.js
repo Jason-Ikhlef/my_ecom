@@ -88,17 +88,18 @@ export default function ArticleSeeMore() {
                 quantity: Number(articleQuantity),
                 img: article.pictures[0],
                 name: article.title,
-                price: article.price
-            }, { withCredentials: true })
-                .then(response => {
-                    toast.success("Article ajouté au panier")
-                    setTimeout(() => {
-                        window.location.reload()
-                    }, 2000);
-                })
-                .catch(err => {
-                    console.log(err);
-                })
+                price: article.price,
+                weight: article.weight
+            }, {withCredentials: true})
+            .then(response => {
+                toast.success("Article ajouté au panier")
+                setTimeout(() => {
+                    window.location.reload()
+                }, 2000);
+            })
+            .catch(err => {
+                console.log(err);
+            })
         } else {
 
             const cart = JSON.parse(localStorage.getItem('cart')) || []
@@ -108,7 +109,8 @@ export default function ArticleSeeMore() {
                 quantity: Number(articleQuantity),
                 img: article.pictures[0],
                 name: article.title,
-                price: article.price
+                price: article.price,
+                weight: article.weight
             }
             articleExists ? articleExists.quantity += element.quantity : cart.push(element)
             localStorage.setItem('cart', JSON.stringify(cart));
