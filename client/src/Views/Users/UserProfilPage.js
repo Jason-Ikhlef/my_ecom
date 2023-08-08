@@ -66,9 +66,9 @@ export default function UserProfilPage ()
                     <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={deleteOnClick}>
                         Supprimer
                     </p>
-                    <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer">
-                        Ajouter une adresse
-                    </p>
+                    <Link to="/addresses" className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer">
+                        Adresses
+                    </Link>
                 </div>
                 <div>
                     <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer">
