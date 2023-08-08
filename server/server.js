@@ -73,6 +73,10 @@ app.use('/', SearchArticle);
 const Users = require('./routes/users/index');
 app.use('/', Users);
 
+const Subscribe = require('./routes/users/subscribe');
+app.use('/', Subscribe);
+
+
 const AddUser = require('./routes/users/new');
 app.use('/', AddUser);
 

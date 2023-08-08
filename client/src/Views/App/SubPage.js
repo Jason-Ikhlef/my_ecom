@@ -11,6 +11,37 @@ export default function SubPage() {
   const closePopup = () => {
     setShowPopup(false);
   };
+  const subMonth = async () => {
+    await axios.post("http://localhost:8000/subscribe",{
+      duration: "month",
+    },
+     { withCredentials: true })
+    .then(response => {
+      console.log(response.data)
+    }
+    )
+    .catch(err => {
+      console.error(err)
+    }
+    )
+  };
+  const subYear = async () => {
+    await axios.post("http://localhost:8000/subscribe",{
+      duration: "year",
+    },
+    { withCredentials: true })
+    .then(response => {
+      console.log(response.data)
+    }
+    )
+    .catch(err => {
+      console.error(err)
+    }
+    )
+  };
+
+  //faire des check pour savoir si l'utilisateur est abonné ou non avec true ou false
+
 
   return (
     <div className="bg-gray-100 py-10 px-4 sm:px-6 lg:px-8">
@@ -95,14 +126,14 @@ export default function SubPage() {
               <div className="bg-blue-100 p-4 rounded-lg flex-1">
                 <h3 className="text-lg font-semibold mb-2">Abonnement Mensuel</h3>
                 <p className="text-gray-600">12€/mois</p>
-                <button className="mt-2 bg-blue-500 text-white py-2 px-10 rounded-lg hover:bg-blue-600 transition duration-300">
+                <button onClick={subMonth} className="mt-2 bg-blue-500 text-white py-2 px-10 rounded-lg hover:bg-blue-600 transition duration-300">
                   S'abonner au mois
                 </button>
               </div>
               <div className="bg-green-100 p-4 rounded-lg flex-1">
                 <h3 className="text-lg font-semibold mb-2">Abonnement Annuel</h3>
                 <p className="text-gray-600">120€/an au lieu de 144 €</p>
-                <button className="mt-2 bg-green-500 text-white py-2 px-8 rounded-lg hover:bg-green-600 transition duration-300">
+                <button onClick={subYear} className="mt-2 bg-green-500 text-white py-2 px-8 rounded-lg hover:bg-green-600 transition duration-300">
                   S'abonner à l'année
                 </button>
               </div>

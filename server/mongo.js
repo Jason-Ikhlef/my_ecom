@@ -27,6 +27,13 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    subscribed: {
+        type: Object,
+        default: { 
+            month: false,
+            year: false
+        }
+    },
 });
 
 const googleSchema = new mongoose.Schema({
@@ -55,6 +62,13 @@ const googleSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    subscribed: {
+        type: Object,
+        default: { 
+            month: false,
+            year: false
+        }
+    },
 });
 
 const facebookSchema = new mongoose.Schema({
@@ -78,6 +92,13 @@ const facebookSchema = new mongoose.Schema({
     admin: {
         type: Boolean,
         default: false
+    },
+    subscribed: {
+        type: Object,
+        default: { 
+            month: false,
+            year: false
+        }
     },
 });
 
