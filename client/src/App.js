@@ -17,7 +17,7 @@ import Footer from './Components/Widgets/Footer';
 import Cart from './Components/User/Cart';
 import SubPage from './Views/App/SubPage';
 import History from './Views/Users/History';
-
+import Addresses from './Views/Users/Addresses';
 
 
 
@@ -42,6 +42,7 @@ function App() {
         {/* <Route path='/articles/seatch/:name' Component={UpdateUser} /> */}
         <Route path='/subpage' Component={SubPage} />
         <Route path='/history' Component={History} />
+        <Route path='/addresses' Component={Addresses} />
       </Routes>
       {/* <Footer /> */}
     </Router>

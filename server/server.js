@@ -105,6 +105,11 @@ app.use('/', clearCart);
 const newOrder = require('./routes/users/old_orders/new');
 app.use('/', newOrder);
 
+// ADDRESSES
+
+const NewAddress = require('./routes/users/addresses/new');
+app.use('/', NewAddress);
+
 // CATEGORIES
 
 const NewCategory = require('./routes/animals/new');
