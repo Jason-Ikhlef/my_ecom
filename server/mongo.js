@@ -147,6 +147,12 @@ const articleSchema = new mongoose.Schema({
         default: false,
         required: true
     },
+    new: {
+        type: String,
+        enum: ['new', 'old', 'forced'],
+        default: 'new',
+        required: true
+    },
     weight: {
         type: Number,
         required: true
