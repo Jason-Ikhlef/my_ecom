@@ -39,6 +39,7 @@ router.post("/subscribe", async(req, res) => {
         }
         user.markModified('subscribed');
         user.save()
+        req.session.user.subscribe = user.subscribed
         res.status(200).json(user.subscribed)
     })
     .catch(err => {
