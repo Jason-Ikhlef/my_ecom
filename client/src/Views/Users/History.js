@@ -57,7 +57,7 @@ export default function History() {
                         </div>
                         <div className="flex">
                            <div className="flex flex-col mr-2">
-                              <p>N° de commande</p>
+                              <p>N° de commande : {order._id}</p>
                            </div>
                         </div>
                      </div>

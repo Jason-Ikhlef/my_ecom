@@ -374,7 +374,6 @@ const Cart = () => {
           <button
             onClick={() => {
               setIsSelectingAddress(false);
-              // newOrder();
             }}
             className="w-full p-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition duration-300"
           >
