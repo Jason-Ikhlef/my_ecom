@@ -77,6 +77,9 @@ export default function UserProfilPage ()
                     <Link to="/addresses" className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer">
                         Adresses
                     </Link>
+                    <Link to="/payments" className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer">
+                        Moyens de paiement
+                    </Link>
                 </div>
                 {
                     !currentUser.subscribe.month && !currentUser.subscribe.year ? (
