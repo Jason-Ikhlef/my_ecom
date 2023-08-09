@@ -18,6 +18,7 @@ import Cart from './Components/User/Cart';
 import SubPage from './Views/App/SubPage';
 import History from './Views/Users/History';
 import Addresses from './Views/Users/Addresses';
+import Payments from './Views/Users/Payments';
 
 
 
@@ -43,6 +44,7 @@ function App() {
         <Route path='/subpage' Component={SubPage} />
         <Route path='/history' Component={History} />
         <Route path='/addresses' Component={Addresses} />
+        <Route path='/payments' Component={Payments} />
       </Routes>
       {/* <Footer /> */}
     </Router>
