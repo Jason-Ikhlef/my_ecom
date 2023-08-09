@@ -24,6 +24,9 @@ const Cart = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [isSelectingAddress,setIsSelectingAddress] = useState(false);
 
+  const [address , setAddress] = useState(null)
+  const [payment, setPayment] = useState(null)
+
   const handlePaymentClick = () => {
     setShowPopup(true);
     setIsSelectingAddress(true);
@@ -33,7 +36,29 @@ const Cart = () => {
     setShowPopup(false);
   };
   
+  const [AddressForm, setAddressForm] = useState({
+    country: "",
+    city: "",
+    zipcode: Number(),
+    address: "",
+  });
 
+  const [PaymentForm, setPaymentForm] = useState({
+    name: "",
+    card: "",
+    date: Number(),
+    cvv: "",
+  });
+
+  const handleAddressChange = (e) => {
+    const { name, value } = e.target;
+    setAddressForm({ ...AddressForm, [name]: value });
+  };
+
+  const handlePaymentChange = (e) => {
+    const { name, value } = e.target;
+    setPaymentForm({ ...PaymentForm, [name]: value });
+  };
 
     useEffect(() => {
         if (currentUser && !userLoading) {
@@ -355,13 +380,100 @@ const Cart = () => {
       {/* Le pop-up */}
     {showPopup && (
       isSelectingAddress ? (
-      <div className="popup-overlay">
+      <div className="popup-overlay z-20">
         <div className="popup-container">
-          <h2 className="text-2xl font-semibold mb-4">Vos Addresses</h2>
+          <h2 className="text-2xl font-semibold mb-4 text-center">Vos Adresses</h2>
           <div className="flex gap-6">
             {
               currentUser && currentUser.data.addresses.length !== 0 ? (
                 currentUser.data.addresses.map((item, index) => (
+                  <div key={index} onClick={() => {setAddressForm(item)}}> {/* en cliquant sur la div / la card contenant les infos, ouvre de quoi la modifier */}
+                    <p>{item.country}</p>
+                    <p>{item.city}</p>
+                    <p>{item.zipcode}</p>
+                    <p>{item.address}</p>
+                  </div>
+                  ))
+                ) : (
+                  <form
+                  className="flex flex-col w-full mx-auto mt-8 border rounded-xl p-2 mb-5"
+                >
+                  <label htmlFor="country">Votre pays</label>
+                  <input
+                    type="text"
+                    id="country"
+                    name="country"
+                    value={AddressForm.country}
+                    onChange={handleAddressChange}
+                    required
+                    placeholder="Pays"
+                    className="border"
+                  />
+                  <label htmlFor="city">Votre ville</label>
+                  <input
+                    type="text"
+                    id="city"
+                    name="city"
+                    value={AddressForm.city}
+                    onChange={handleAddressChange}
+                    required
+                    placeholder="Ville"
+                    className="border"
+                  />
+                  <label htmlFor="city">Code postal</label>
+                  <input
+                    type="text"
+                    id="zipcode"
+                    name="zipcode"
+                    value={AddressForm.zipcode}
+                    onChange={handleAddressChange}
+                    required
+                    placeholder="Code postal"
+                    className="border"
+                  />
+                  <label htmlFor="adress">Votre adresse</label>
+                  <input
+                    type="text"
+                    id="address"
+                    name="address"
+                    value={AddressForm.address}
+                    onChange={handleAddressChange}
+                    required
+                    placeholder="Adresse"
+                    className="border"
+                  />
+                </form>
+              )
+            }
+          </div>
+          <button
+            onClick={() => {
+              setIsSelectingAddress(false);
+              setAddress(AddressForm);
+            }}
+            className="w-full mb-4 p-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition duration-300"
+          >
+            Valider
+          </button>
+          <hr></hr>
+          {
+            currentUser && ( 
+              <Link to='/addresses' className="bg-[#4FBEB7] p-2 rounded-lg">
+                Enregistrer une nouvelle adresse
+              </Link>
+            ) 
+          }
+          
+        </div>
+      </div>
+    ) : (
+      <div className="popup-overlay z-20">
+      <div className="popup-container">
+        <h2 className="text-2xl font-semibold mb-4">Moyen de paiement</h2>
+        <div className="flex gap-6">
+        {
+          currentUser && currentUser.data.addresses.length !== 0 ? (
+            currentUser.data.addresses.map((item, index) => (
                   <div key={index}> {/* en cliquant sur la div / la card contenant les infos, ouvre de quoi la modifier */}
                     {console.log('pii')}
                     <p>{item.country}</p>
@@ -371,36 +483,65 @@ const Cart = () => {
                   </div>
                   ))
                 ) : (
-                <p>Vous n'avez pas d'adresse enregistrée</p>
+                <form
+                  className="flex flex-col w-2/4 mx-auto mt-8 border rounded-xl p-2"
+                >
+                  <label htmlFor="name">Titulaire de la carte</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={PaymentForm.name}
+                    onChange={handlePaymentChange}
+                    required
+                    placeholder="Nom et Prénom"
+                    className="border"
+                  />
+                  <label htmlFor="card">Numéro de carte</label>
+                  <input
+                    type="text"
+                    id="card"
+                    name="card"
+                    value={PaymentForm.card}
+                    onChange={handlePaymentChange}
+                    required
+                    placeholder="Numéro"
+                    className="border"
+                  />
+                  <label htmlFor="date">Date d'expiration</label>
+                  <input
+                    type="text"
+                    id="date"
+                    name="date"
+                    value={PaymentForm.date}
+                    onChange={handlePaymentChange}
+                    required
+                    placeholder="Date"
+                    className="border"
+                  />
+                  <label htmlFor="cvv">CVV</label>
+                  <input
+                    type="password"
+                    id="cvv"
+                    name="cvv"
+                    value={PaymentForm.cvv}
+                    onChange={handlePaymentChange}
+                    required
+                    className="border"
+                  />
+                </form>
               )
             }
           </div>
-          <button
-            onClick={() => {
-              setIsSelectingAddress(false);
-            }}
-            className="w-full p-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition duration-300"
-          >
-            Valider
-          </button>
-        </div>
-      </div>
-    ) : (
-      <div className="popup-overlay">
-      <div className="popup-container">
-        <h2 className="text-2xl font-semibold mb-4">Moyen de paiement</h2>
-        <div className="flex gap-6">
-          {"mettre une fomulaire pour ajouter un moyen de paiement"}
-          
-        </div>
         <button
           onClick={() => {
             closePopup();
+            setPayment(PaymentForm)
             newOrder();
           }}
           className="w-full p-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition duration-300"
         >
-          Valider
+          Utiliser cette carte
         </button>
       </div>
     </div>

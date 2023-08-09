@@ -21,7 +21,6 @@ const UserCart = () => {
 
   return (
     <div>
-      {console.log('oui')}
       <Cart />
     </div>
   );
