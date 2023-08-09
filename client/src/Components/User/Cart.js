@@ -359,17 +359,21 @@ const Cart = () => {
         <div className="popup-container">
           <h2 className="text-2xl font-semibold mb-4">Vos Addresses</h2>
           <div className="flex gap-6">
-            {currentUser ?(
-            currentUser.data.addresses.map((item, index) => (
-              <div key={index}> {/* en cliquant sur la div / la card contenant les infos, ouvre de quoi la modifier */}
-              <p>{item.country}</p>
-              <p>{item.city}</p>
-              <p>{item.zipcode}</p>
-              <p>{item.address}</p>
-            </div>))) : (
-              <p>Vous n'avez pas d'adresse enregistrée</p>
-            )}
-            
+            {
+              currentUser && currentUser.data.addresses.length !== 0 ? (
+                currentUser.data.addresses.map((item, index) => (
+                  <div key={index}> {/* en cliquant sur la div / la card contenant les infos, ouvre de quoi la modifier */}
+                    {console.log('pii')}
+                    <p>{item.country}</p>
+                    <p>{item.city}</p>
+                    <p>{item.zipcode}</p>
+                    <p>{item.address}</p>
+                  </div>
+                  ))
+                ) : (
+                <p>Vous n'avez pas d'adresse enregistrée</p>
+              )
+            }
           </div>
           <button
             onClick={() => {
