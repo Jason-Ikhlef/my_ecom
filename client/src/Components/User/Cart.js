@@ -29,7 +29,7 @@ const Cart = () => {
 
   const handlePaymentClick = () => {
     setShowPopup(true);
-    setIsSelectingAddress(true);
+    setIsSelectingAddress(true)
   };
 
   const closePopup = () => {
@@ -49,6 +49,23 @@ const Cart = () => {
     date: Number(),
     cvv: "",
   });
+
+  const validatedAddress = (e) => {
+    if(AddressForm.country !== '' && AddressForm.city !== '' && AddressForm.zipcode !== '' && AddressForm.address !== '')
+    {
+      setIsSelectingAddress(false)
+      setAddress(AddressForm)
+    }
+  }
+
+  const validatedPayment = (e) => {
+    if(PaymentForm.name !== '' && PaymentForm.card !== '' && PaymentForm.date !== '' && PaymentForm.cvv !== '')
+    {
+      closePopup();
+      setPayment(PaymentForm)
+      newOrder();
+    }
+  }
 
   const handleAddressChange = (e) => {
     const { name, value } = e.target;
@@ -292,7 +309,7 @@ const Cart = () => {
             ) : (
               <div className="flex justify-between mx-4">
                 <p className="text-2xl">Prix total</p>
-                {(Number(totallySprice) + Number(totalPrice)).toFixed(2)} €
+                <p className="p-2">{(Number(totallySprice) + Number(totalPrice)).toFixed(2)} €</p>
               </div>
             )
           }
@@ -387,7 +404,7 @@ const Cart = () => {
             {
               currentUser && currentUser.data.addresses.length !== 0 ? (
                 currentUser.data.addresses.map((item, index) => (
-                  <div key={index} onClick={() => {setAddressForm(item)}}> {/* en cliquant sur la div / la card contenant les infos, ouvre de quoi la modifier */}
+                  <div key={index} className="cursor-pointer focus:border" onClick={() => {setAddressForm(item)}}> {/* en cliquant sur la div / la card contenant les infos, ouvre de quoi la modifier */}
                     <p>{item.country}</p>
                     <p>{item.city}</p>
                     <p>{item.zipcode}</p>
@@ -447,10 +464,7 @@ const Cart = () => {
             }
           </div>
           <button
-            onClick={() => {
-              setIsSelectingAddress(false);
-              setAddress(AddressForm);
-            }}
+            onClick={validatedAddress}
             className="w-full mb-4 p-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition duration-300"
           >
             Valider
@@ -472,19 +486,18 @@ const Cart = () => {
         <h2 className="text-2xl font-semibold mb-4">Moyen de paiement</h2>
         <div className="flex gap-6">
         {
-          currentUser && currentUser.data.addresses.length !== 0 ? (
-            currentUser.data.addresses.map((item, index) => (
-                  <div key={index}> {/* en cliquant sur la div / la card contenant les infos, ouvre de quoi la modifier */}
-                    {console.log('pii')}
-                    <p>{item.country}</p>
-                    <p>{item.city}</p>
-                    <p>{item.zipcode}</p>
-                    <p>{item.address}</p>
+          currentUser && currentUser.data.cards.length !== 0 ? (
+            currentUser.data.cards.map((item, index) => (
+                  <div key={index} onClick={() => {setPaymentForm(item)}}> {/* en cliquant sur la div / la card contenant les infos, ouvre de quoi la modifier */}
+                    <p>{item.name}</p>
+                    <p>{item.card}</p>
+                    <p>{item.date}</p>
+                    <p>{item.cvv}</p>
                   </div>
                   ))
                 ) : (
                 <form
-                  className="flex flex-col w-2/4 mx-auto mt-8 border rounded-xl p-2"
+                  className="flex flex-col mx-auto mt-8 border rounded-xl p-2"
                 >
                   <label htmlFor="name">Titulaire de la carte</label>
                   <input
@@ -534,11 +547,7 @@ const Cart = () => {
             }
           </div>
         <button
-          onClick={() => {
-            closePopup();
-            setPayment(PaymentForm)
-            newOrder();
-          }}
+          onClick={validatedPayment}
           className="w-full p-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition duration-300"
         >
           Utiliser cette carte
