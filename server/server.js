@@ -167,7 +167,7 @@ async function updateArticle () {
     
     articles.forEach(async element => {
         let articleDate = element._id.getTimestamp();
-        if (currentDate > articleDate && element.new === 'new') {
+        if (currentDate > articleDate && element.isNewState === 'new') {
             await articleCollection.updateOne({
                 _id: element._id
             },

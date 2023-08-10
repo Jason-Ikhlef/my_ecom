@@ -13,7 +13,7 @@ export default function RecommendCarrousel() {
         const fetchArticles = async () => {
             try {
                 const response = await axios.get(
-                    "http://localhost:8000/slider/"
+                    "http://localhost:8000/slider/recommanded", 
                 );
                 setArticles(response.data);
             } catch (error) {
