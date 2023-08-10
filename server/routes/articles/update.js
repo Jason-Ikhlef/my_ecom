@@ -10,7 +10,7 @@ const {
 
 router.put("/UpdateArticle", storage.upload.array('photo'), async (req, res) => {
 
-    const {
+    let {
         title,
         description,
         price,
@@ -25,8 +25,11 @@ router.put("/UpdateArticle", storage.upload.array('photo'), async (req, res) => 
         subCategoriesName,
         recommanded: recommanded,
         pictures,
-        weight
+        weight,
+        newArticle,
     } = req.body;
+
+    let isNewState = newArticle
 
     const uploadDir = path.join(__dirname, '../../storage');
     const picturesNames = req.files.map(file => file.filename);
@@ -60,7 +63,8 @@ router.put("/UpdateArticle", storage.upload.array('photo'), async (req, res) => 
         categoriesName,
         subCategoriesName,
         recommanded,
-        weight
+        weight,
+        isNewState
     };
 
     try {

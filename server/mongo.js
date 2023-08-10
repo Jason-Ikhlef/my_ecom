@@ -147,7 +147,7 @@ const articleSchema = new mongoose.Schema({
         default: false,
         required: true
     },
-    new: {
+    isNewState: {
         type: String,
         enum: ['new', 'old', 'forced'],
         default: 'new',

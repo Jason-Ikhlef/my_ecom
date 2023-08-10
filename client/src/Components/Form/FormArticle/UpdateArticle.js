@@ -13,6 +13,7 @@ export default function UpdateArticle({ idArticle }) {
     const [article, setArticle] = useState(null);
     const [parentArticle, setParentArticle] = useState(null);
     const [isNew, setIsNew] = useState(false);
+    const [newArticleState, setNewArticleState] = useState(false);
 
     const [recommanded, setRecommanded] = useState(true)
     const [img, setImg] = useState('');
@@ -24,14 +25,14 @@ export default function UpdateArticle({ idArticle }) {
     const [animalIndex, setAnimalIndex] = useState(null);
     const [catIndex, setCatIndex] = useState(null);
 
-    const [dropdownAnimals, setDropdownAnimals] = useState("Animaux")
-    const [dropdownCat, setDropdownCat] = useState("Categorie")
-    const [dropdownSubCat, setDropdownSubCat] = useState("Sous-categorie")
+    const [dropdownAnimals, setDropdownAnimals] = useState("Animaux");
+    const [dropdownCat, setDropdownCat] = useState("Categorie");
+    const [dropdownSubCat, setDropdownSubCat] = useState("Sous-categorie");
     const [dropDownName, setDropDownName] = useState(null);
 
     const [photoArray, setPhotoArray] = useState([]);
 
-    const location = useLocation()
+    const location = useLocation();
 
     const [form, setForm] = useState({
         title: '',
@@ -47,7 +48,8 @@ export default function UpdateArticle({ idArticle }) {
         subCategoriesName: '',
         recommanded: false,
         weight: '',
-        property: ''  
+        property: '',
+        newArticle: ''
     });
 
     useEffect(() => {
@@ -89,10 +91,15 @@ export default function UpdateArticle({ idArticle }) {
                 categoryName: article.categoriesName,
                 subCategoriesName: article.subCategoriesName,
                 recommanded: article.recommanded,
-                weight: article.weight
+                weight: article.weight,
+                newArticle: article.isNewState
             })
 
             setRecommanded(article.recommanded);
+
+            if (article.isNewState === "new" || article.isNewState === "forced") {
+                setNewArticleState(true)
+            }
         }
     }, [article])
 
@@ -150,6 +157,18 @@ export default function UpdateArticle({ idArticle }) {
         } else if (name === "recommanded") {
             setForm({ ...form, [name]: !form.recommanded })
             setRecommanded(!recommanded);
+        } else if (name === "newArticle") {
+            const updatedNewArticleState = !newArticleState;
+            setNewArticleState(updatedNewArticleState);
+
+            let newArticleValue;
+            if (updatedNewArticleState) {
+                newArticleValue = "forced";
+            } else {
+                newArticleValue = "old";
+            }
+
+            setForm({ ...form, [name]: newArticleValue });
         } else {
             setForm({ ...form, [name]: value });
         }
@@ -311,6 +330,7 @@ export default function UpdateArticle({ idArticle }) {
         formData.append("pictures", img);
         formData.append("groupName", parentArticle.name);
         formData.append("weight", form.weight);
+        formData.append("newArticle", form.newArticle)
 
         if (isNew) {
             formData.append("property", form.property)
@@ -542,6 +562,10 @@ export default function UpdateArticle({ idArticle }) {
                     <div className='flex justify-evenly'>                    
                         <label htmlFor="recommanded" className='underline'>Recommander l'article :</label>
                         <input onChange={handleChange} type="checkbox" name="recommanded" checked={recommanded} />
+                    </div>
+                    <div className='flex justify-evenly'>                    
+                        <label htmlFor="newArticle" className='underline'>Mettre l'article en nouveauté :</label>
+                        <input onChange={handleChange} type="checkbox" name="newArticle" checked={newArticleState} />
                     </div>
                     <div className='w-full flex justify-center'>
                         <label htmlFor="weight" className='underline'>Poids de l'article</label>
