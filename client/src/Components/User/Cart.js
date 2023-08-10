@@ -404,7 +404,7 @@ const Cart = () => {
             {
               currentUser && currentUser.data.addresses.length !== 0 ? (
                 currentUser.data.addresses.map((item, index) => (
-                  <div key={index} className="cursor-pointer focus:border" onClick={() => {setAddressForm(item)}}> {/* en cliquant sur la div / la card contenant les infos, ouvre de quoi la modifier */}
+                  <div key={index} tabIndex={0} className="cursor-pointer focus:border-[#4FBEB7] border border-transparent p-2 rounded-lg mb-4" onClick={() => {setAddressForm(item)}}> {/* en cliquant sur la div / la card contenant les infos, ouvre de quoi la modifier */}
                     <p>{item.country}</p>
                     <p>{item.city}</p>
                     <p>{item.zipcode}</p>
@@ -469,11 +469,12 @@ const Cart = () => {
           >
             Valider
           </button>
-          <hr></hr>
           {
             currentUser && ( 
-              <Link to='/addresses' className="bg-[#4FBEB7] p-2 rounded-lg">
-                Enregistrer une nouvelle adresse
+              <Link to='/addresses'>
+                <div className="w-fit mx-auto bg-[#4FBEB7] p-2 rounded-lg">
+                  Enregistrer une nouvelle adresse
+                </div>
               </Link>
             ) 
           }
@@ -488,7 +489,7 @@ const Cart = () => {
         {
           currentUser && currentUser.data.cards.length !== 0 ? (
             currentUser.data.cards.map((item, index) => (
-                  <div key={index} onClick={() => {setPaymentForm(item)}}> {/* en cliquant sur la div / la card contenant les infos, ouvre de quoi la modifier */}
+                  <div key={index} tabIndex={0} className="cursor-pointer focus:border-[#4FBEB7] border border-transparent p-2 rounded-lg mb-4" onClick={() => {setPaymentForm(item)}}>
                     <p>{item.name}</p>
                     <p>{item.card}</p>
                     <p>{item.date}</p>
