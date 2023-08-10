@@ -65,7 +65,7 @@ router.put("/UpdateArticle", storage.upload.array('photo'), async (req, res) => 
         subCategoriesName,
         recommanded,
         weight,
-        isNewState
+        isNewState,
         reduction
     };
     

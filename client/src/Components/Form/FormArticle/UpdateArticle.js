@@ -49,7 +49,7 @@ export default function UpdateArticle({ idArticle }) {
         recommanded: false,
         weight: '',
         property: '',
-        newArticle: ''
+        newArticle: '',
         reduction: ''  
     });
 
@@ -93,7 +93,7 @@ export default function UpdateArticle({ idArticle }) {
                 subCategoriesName: article.subCategoriesName,
                 recommanded: article.recommanded,
                 weight: article.weight,
-                newArticle: article.isNewState
+                newArticle: article.isNewState,
                 reduction: article.reduction
             })
 
