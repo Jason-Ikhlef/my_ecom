@@ -23,7 +23,7 @@ router.post('/createFacebook', async (req, res) => {
         if (storage.length > 0) user.cart = storage
         user.markModified('cart');
         user.save()
-        req.session.user = { id: user._id, email: user.email, admin : user.admin, cart: user.cart, old_orders: user.old_orders, auth: 'facebook' }
+        req.session.user = { id: user._id, email: user.email, admin : user.admin, cart: user.cart, subscribe : user.subscribed, old_orders: user.old_orders, data: user.data, auth: 'facebook' }
         res.status(200).json("success")
     } else {
         await facebookCollection
@@ -32,7 +32,7 @@ router.post('/createFacebook', async (req, res) => {
             if (storage.length > 0) response.cart = storage
             response.markModified('cart');
             response.save()
-            req.session.user = { id: response._id, email: response.email, admin : response.admin, cart: response.cart, old_orders: response.old_orders, auth: 'facebook' }
+            req.session.user = { id: response._id, email: response.email, admin : response.admin, cart: response.cart, subscribe : response.subscribed ,old_orders: response.old_orders, data: response.data, auth: 'facebook' }
             res.status(200).json("success")
         })
         .catch(err => {

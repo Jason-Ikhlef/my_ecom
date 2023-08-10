@@ -73,6 +73,9 @@ app.use('/', SearchArticle);
 const Users = require('./routes/users/index');
 app.use('/', Users);
 
+const Subscribe = require('./routes/users/subscribe');
+app.use('/', Subscribe);
+
 const AddUser = require('./routes/users/new');
 app.use('/', AddUser);
 
@@ -100,6 +103,16 @@ app.use('/', clearCart);
 
 const newOrder = require('./routes/users/old_orders/new');
 app.use('/', newOrder);
+
+// ADDRESSES
+
+const NewAddress = require('./routes/users/addresses/new');
+app.use('/', NewAddress);
+
+// CARDS
+
+const NewCard = require('./routes/users/cards/new');
+app.use('/', NewCard);
 
 // CATEGORIES
 

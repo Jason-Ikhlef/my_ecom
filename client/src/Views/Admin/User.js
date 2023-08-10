@@ -1,12 +1,14 @@
 import React from "react";
 import User from '../../Components/Widgets/User';
+import Loader from "../../Components/Widgets/Loader";
+
 export default function AdminUser ()
 {
     const { currentUser, userLoading } = User()
 
     if (userLoading) {
 
-        return <p>Loading...</p>
+        return <Loader />
     }
 
     if(!currentUser || currentUser.admin === false)

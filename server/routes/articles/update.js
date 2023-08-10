@@ -27,6 +27,7 @@ router.put("/UpdateArticle", storage.upload.array('photo'), async (req, res) => 
         pictures,
         weight,
         newArticle,
+        reduction
     } = req.body;
 
     let isNewState = newArticle
@@ -65,8 +66,9 @@ router.put("/UpdateArticle", storage.upload.array('photo'), async (req, res) => 
         recommanded,
         weight,
         isNewState
+        reduction
     };
-
+    
     try {
 
         const article = await articleCollection.findOneAndUpdate({

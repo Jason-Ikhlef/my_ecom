@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose')
 
 const { userCollection, googleCollection, facebookCollection } = require("../../../mongo");
 
@@ -7,6 +8,7 @@ router.post("/newOrder", async(req, res) => {
 
     const userId = req.session.user.id
     const auth = req.session.user.auth
+    const ObjectId = mongoose.Types.ObjectId;
 
     const { cart, totalPrice } = req.body
     
@@ -30,7 +32,7 @@ router.post("/newOrder", async(req, res) => {
     .findById(userId)
     .then(user => {
 
-        user.old_orders.push({cart, totalPrice, date: new Date()})
+        user.old_orders.push({cart, totalPrice, date: new Date(), _id: new ObjectId()})
         user.cart = []
         user.markModified('cart');
         user.markModified('old_orders');

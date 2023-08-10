@@ -27,9 +27,23 @@ const userSchema = new mongoose.Schema({
         type: Array,
         default: []
     },
+    data: {
+        type: Object,
+        default: {
+            addresses: [],
+            cards: []
+        }
+    },
     admin: {
         type: Boolean,
         default: false
+    },
+    subscribed: {
+        type: Object,
+        default: { 
+            month: false,
+            year: false
+        }
     },
 });
 
@@ -55,9 +69,23 @@ const googleSchema = new mongoose.Schema({
         type: Array,
         default: []
     },
+    data: {
+        type: Object,
+        default: {
+            addresses: [],
+            cards: []
+        }
+    },
     admin: {
         type: Boolean,
         default: false
+    },
+    subscribed: {
+        type: Object,
+        default: { 
+            month: false,
+            year: false
+        }
     },
 });
 
@@ -83,9 +111,23 @@ const facebookSchema = new mongoose.Schema({
         type: Array,
         default: []
     },
+    data: {
+        type: Object,
+        default: {
+            addresses: [],
+            cards: []
+        }
+    },
     admin: {
         type: Boolean,
         default: false
+    },
+    subscribed: {
+        type: Object,
+        default: { 
+            month: false,
+            year: false
+        }
     },
 });
 
@@ -160,6 +202,10 @@ const articleSchema = new mongoose.Schema({
     property: {
         type: String,
         required: true
+    },
+    reduction: {
+        type: Number,
+        default: 0
     }
 })
 

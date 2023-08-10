@@ -6,23 +6,19 @@ import axios from "axios";
 import User from "../../Components/Widgets/User";
 import ReadUser from "../../Components/Form/User/ReadUser";
 import UpdateUser from "../../Components/Form/User/UpdateUser";
+import Loader from "../../Components/Widgets/Loader";
 
 export default function UserProfilPage ()
 {
 
     const { currentUser, userLoading } = User()
     const [update, setUpdate] = useState(false)
-    const [isWatchingHistory, setIsWatchingHistory] = useState(false)
+    const [isAddingAddress, setIsAddingAddress] = useState(false)
 
     if (userLoading) {
 
-        return <p>Loading...</p>
+        return <Loader />
     
-    }
-
-    const handleClick = (e) => 
-    {
-        setIsWatchingHistory(true);
     }
 
     const deleteOnClick = async (e) => 
@@ -54,28 +50,47 @@ export default function UserProfilPage ()
                     <div className="mt-2 bg-[#4FBEB7]">
                         <p className="text-center">Vos informations :</p>
                         <p className="text-center">Email : {currentUser.email}  </p>
-                        <p className="text-center">Role: {currentUser.admin ? 'administrateur' : 'Utilisateur'}  </p>
+                        <p className="text-center">Role: {currentUser.admin ? 'Administrateur' : 'Utilisateur'}  </p>
+                        {
+                            currentUser.subscribe && currentUser.subscribe.month ?
+                            <p className="text-center">Abonnement : Mensuel</p> : null
+                        }
+                        {
+                            currentUser.subscribe && currentUser.subscribe.year ?
+                            <p className="text-center">Abonnement : Annuel</p> : null
+                        }
                     </div>
                 </div>
                 <div className="flex flex-wrap">
                     <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={(e) => {setUpdate(true)}}>
                         Modifier
                     </p>
-                    <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={handleClick}>
+                    <Link to="/history" className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer">
                         Voir Historique
-                    </p>
+                    </Link>
                     <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={LogOut}>
                         Se déconnecter
                     </p>
                     <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={deleteOnClick}>
                         Supprimer
                     </p>
+                    <Link to="/addresses" className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer">
+                        Adresses
+                    </Link>
+                    <Link to="/payments" className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer">
+                        Moyens de paiement
+                    </Link>
                 </div>
-                <div>
-                    <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer">
-                    <Link to="http://localhost:3000/SubPage">S'abonner</Link> 
-                    </p>
-                </div>
+                {
+                    !currentUser.subscribe.month && !currentUser.subscribe.year ? (
+                    <div>
+                        <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer">
+                            <Link to="http://localhost:3000/SubPage">S'abonner</Link> 
+                        </p>
+                    </div>
+                    ) : ( null )
+                }
+                
                 {
                     update ? 
                     <UpdateUser /> : 
@@ -84,26 +99,6 @@ export default function UserProfilPage ()
             </div>
             :
             <ReadUser />
-            }
-            {
-                isWatchingHistory ? 
-                <div className="w-3/4 mx-auto text-center">
-                    <p onClick={() => {setIsWatchingHistory(false)}} className="cursor-pointer">X</p>
-                    {currentUser.old_orders && (
-                        currentUser.old_orders.map((order, index) => (
-                            <div key={index}>
-                                {order.cart.map((element, elementIndex) => ( // tous les éléments de la commande avec pour chaque element : name, price, articleId, quantity.
-                                <div key={elementIndex}>
-                                    <p>{element.name}</p>
-                                </div>
-                                ))} 
-                            <p>{order.totalPrice} €</p> {/* prix total de la commande */}
-                            <p>{order.date}</p> {/*la date sera a convertir en format JJ/MM/YY */}
-                            </div>
-                        ))
-                    )}
-                </div> :
-                null
             }
         </div>
     )

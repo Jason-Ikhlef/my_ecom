@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import User from '../../Components/Widgets/User';
 import CreateCategory from "../../Components/Form/Category/CreateCategory";
 import DeleteCategory from "../../Components/Form/Category/DeleteCategory";
+import Loader from "../../Components/Widgets/Loader";
 
 export default function AdminCategories ()
 {
@@ -27,7 +28,7 @@ export default function AdminCategories ()
 
     if (userLoading) {
 
-        return <p>Loading...</p>
+        return <Loader />
     }
 
     if(!currentUser || currentUser.admin === false)

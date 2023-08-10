@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 import User from '../../Widgets/User';
+import Loader from '../../Widgets/Loader';
 
 export default function UpdateUser ()
 {
@@ -18,7 +19,7 @@ export default function UpdateUser ()
 
     if (userLoading) {
 
-        return <p>Loading...</p>
+        return <Loader /> 
     }
 
     const handleChange = (e) => {
