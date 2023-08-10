@@ -18,7 +18,7 @@ export default function Payments() {
 
   useEffect(() => {
     if (currentUser && card.length <= 0) {
-      setCard(currentUser.data.addresses);
+      setCard(currentUser.data.cards);
     }
   }, [currentUser, card]);
 
@@ -128,7 +128,7 @@ export default function Payments() {
         <div className="border flex w-3/4 mx-auto text-center gap-8">
         {card.length > 0 &&
           card.map((item, index) => (
-            <div key={index} className="w-1/4 border cursor-pointer" onClick={() => {setIsUpdatingCard(item)}}> {/* en cliquant sur la div / la card contenant les infos, ouvre de quoi la modifier */}            
+            <div key={index} className="w-1/4 border cursor-pointer" onClick={() => {setIsUpdatingCard(item)}}>           
               <p>{item.name}</p>
               <p>{item.card}</p>
               <p>{item.date}</p>
