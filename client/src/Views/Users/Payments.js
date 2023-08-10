@@ -35,7 +35,7 @@ export default function Payments() {
     e.preventDefault();
     await axios
       .post(
-        "http://localhost:8000/newAddress",
+        "http://localhost:8000/newCard",
         { form: form },
         { withCredentials: true }
       )
