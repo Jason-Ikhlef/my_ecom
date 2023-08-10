@@ -13,7 +13,7 @@ export default function PromotionCarrousel() {
         const fetchArticles = async () => {
             try {
                 const response = await axios.get(
-                    "http://localhost:8000/slider/"
+                    "http://localhost:8000/slider/promotions", 
                 );
                 setArticles(response.data);
             } catch (error) {
