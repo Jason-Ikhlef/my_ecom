@@ -1,51 +1,82 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
-const { userCollection, googleCollection, facebookCollection } = require("../../../mongo");
+const {
+  userCollection,
+  googleCollection,
+  facebookCollection,
+} = require("../../../mongo");
 
-router.post("/newOrder", async(req, res) => {
+const states = ["En vérification", "Verifiée", "Expediée", "Livrée"];
 
-    const userId = req.session.user.id
-    const auth = req.session.user.auth
-    const ObjectId = mongoose.Types.ObjectId;
+let currentIndex = 0;
 
-    const { cart, totalPrice } = req.body
-    
-    switch(auth) {
+router.post("/newOrder", async (req, res) => {
+  const userId = req.session.user.id;
+  const auth = req.session.user.auth;
+  const ObjectId = mongoose.Types.ObjectId;
 
-        case 'petheaven': {
-            collection = userCollection
-            break;
-        }
-        case 'google': {
-            collection = googleCollection
-            break;
-        }
-        case 'facebook': {
-            collection = facebookCollection
-            break;
-        }
+  switch (auth) {
+    case "petheaven": {
+      collection = userCollection;
+      break;
     }
+    case "google": {
+      collection = googleCollection;
+      break;
+    }
+    case "facebook": {
+      collection = facebookCollection;
+      break;
+    }
+  }
 
-    await collection
+  const { cart, totalPrice } = req.body;
+
+  await collection
     .findById(userId)
-    .then(user => {
-
-        user.old_orders.push({cart, totalPrice, date: new Date(), _id: new ObjectId()})
-        user.cart = []
-        user.markModified('cart');
-        user.markModified('old_orders');
-        user.save()
-        req.session.user.cart = user.cart
-        req.session.user.old_orders = user.old_orders
-        res.status(200).json(user.old_orders)
+    .then((user) => {
+      user.old_orders.push({
+        cart,
+        totalPrice,
+        date: new Date(),
+        _id: new ObjectId(),
+        state: states[currentIndex],
+      });
+      user.cart = [];
+      user.markModified("cart");
+      user.markModified("old_orders");
+      user.save();
+      req.session.user.cart = user.cart;
+      req.session.user.old_orders = user.old_orders;
+      res.status(200).json(user.old_orders);
+      setState(userId, collection, req)
     })
-    .catch(err => {
-        console.error(err)
-        res.status(400).json(err)
-    })
- 
-})
+    .catch((err) => {
+      console.error(err);
+      res.status(400).json(err);
+    });
+});
 
-module.exports = router
+async function setState(userId, collection, req) {
+  const timer = setTimeout(async () => {
+    if (currentIndex < states.length - 1) {
+      currentIndex = currentIndex + 1;
+      const user = await collection.findById(userId);
+      if (user && currentIndex < states.length) {
+        user.old_orders[user.old_orders.length - 1].state = states[currentIndex];
+        await user.markModified("old_orders");
+        await user.save();
+        console.log(user.old_orders);
+        req.session.user.old_orders = user.old_orders;
+        req.session.save()
+        if (currentIndex < 3) setState(userId, collection, req)
+      }
+    }
+  }, 6000);
+
+  return () => clearTimeout(timer);
+}
+
+module.exports = router;

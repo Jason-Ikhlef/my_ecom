@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import User from '../../Components/Widgets/User';
 import Loader from "../../Components/Widgets/Loader";
@@ -27,6 +27,8 @@ export default function History() {
         return <Loader />
     
    }
+
+   console.log(currentUser.old_orders);
  
    return (
          <div className="w-3/4 p-4 overflow-auto mx-auto flex flex-col gap-8">
@@ -63,8 +65,7 @@ export default function History() {
                      </div>
                      <div className="border rounded-b-xl">
                         <div className="flex flex-col justify-start p-4">
-                           <p>Livré : date</p>
-                           <p>Etat colis (remis)</p>
+                           <p>État colis: {order.state}</p>
                         </div>
                         <div className="flex justify-between p-4">
                            <div className="flex gap-8">
