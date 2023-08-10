@@ -156,6 +156,30 @@ app.use('/', GetShipping);
 const setShipping = require('./routes/easypost/newShipping');
 app.use('/', setShipping);
 
+// A deplacer 
+
+const { articleCollection } = require("./mongo");
+
+async function updateArticle () {
+    let currentDate = new Date
+    currentDate.setDate(currentDate.getDate() - 3);
+    const articles = await articleCollection.find({});
+    
+    articles.forEach(async element => {
+        let articleDate = element._id.getTimestamp();
+        if (currentDate > articleDate && element.new === 'new') {
+            await articleCollection.updateOne({
+                _id: element._id
+            },
+            {
+                $set: {new: 'old'}
+            });
+        }
+    });
+}
+
+updateArticle();
+
 app.listen(PORT, () => {
     console.log("Utilisation du port " + PORT);
 });
