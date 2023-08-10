@@ -76,7 +76,6 @@ app.use('/', Users);
 const Subscribe = require('./routes/users/subscribe');
 app.use('/', Subscribe);
 
-
 const AddUser = require('./routes/users/new');
 app.use('/', AddUser);
 
@@ -109,6 +108,11 @@ app.use('/', newOrder);
 
 const NewAddress = require('./routes/users/addresses/new');
 app.use('/', NewAddress);
+
+// CARDS
+
+const NewCard = require('./routes/users/cards/new');
+app.use('/', NewCard);
 
 // CATEGORIES
 
