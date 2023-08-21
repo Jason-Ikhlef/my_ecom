@@ -83,23 +83,46 @@ export default function History() {
             )}
             {
                order ? 
-               <div className="flex flex-col">
-                  <p className="text-2xl">Détails de la commande</p>
+               <div className="flex flex-col gap-6">
+                  <p className="text-2xl font-bold">Détails de la commande</p>
                   <div className="flex gap-6">
                      <p>Commandé le {changeDate(order.date)}</p>
                      <p>|</p>
                      <p>N° de commande : {order._id}</p>
                   </div>
-                  <div className="border rounded-xl flex">
+                  <div className="border rounded-xl flex justify-between p-6">
                      <div className="flex flex-col">
-                        <p>Adresse de livraison</p>
+                        <p className="font-bold">Adresse de livraison</p>
+                        <p>Email</p>
+                        <p>Rue</p>
+                        <p>Ville, code postal</p>
+                        <p>Pays</p>
                      </div>
                      <div className="flex flex-col">
-                        <p>Méthode de paiement</p>
+                        <p className="font-bold">Mode de paiement</p>
+                        <p>{'1291-1291-1291-1921'.slice(-5).padStart(8, '*')}</p>
                      </div>
                      <div className="flex flex-col">
-                        <p>Récapitulatif de la commande</p>
+                        <p className="font-bold">Récapitulatif de la commande</p>
+                        <p>Article : {order.totalPrice.toFixed(2)} €</p>
+                        <p>Livraison : ? €</p>
+                        <p>Total : € </p>
                      </div>
+                  </div>
+                  <div className="border rounded-xl p-6">
+                     <p className="font-bold text-xl mb-4">Livrée : date ?</p>
+                     {
+                        order.cart.map((items, index) => (
+                           <div key={index} className="flex gap-4">
+                              <img src={`http://localhost:8000/storage/${items.img}`} alt="article img" className="w-[100px] h-[100px]"></img>
+                              <div className="flex flex-col">
+                                 <p>{items.name}</p>
+                                 <p className="text-[#4FBEB7]">{items.price.toFixed(2)} €</p>
+                                 <p>x {items.quantity}</p>
+                              </div>
+                           </div>
+                        ))
+                     }
                   </div>
                   {console.log(order)}
                </div> 
