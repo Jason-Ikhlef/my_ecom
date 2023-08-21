@@ -69,7 +69,7 @@ export default function Payments() {
             type="text"
             id="name"
             name="name"
-            value={form.name}
+            defaultValue={form.name}
             onChange={handleChange}
             required
             placeholder="Nom et Prénom"
@@ -80,7 +80,7 @@ export default function Payments() {
             type="text"
             id="card"
             name="card"
-            value={form.card}
+            defaultValue={form.card}
             onChange={handleChange}
             required
             placeholder="Numéro"
@@ -91,7 +91,7 @@ export default function Payments() {
             type="text"
             id="date"
             name="date"
-            value={form.date}
+            defaultValue={form.date}
             onChange={handleChange}
             required
             placeholder="Date"
@@ -102,7 +102,7 @@ export default function Payments() {
             type="password"
             id="cvv"
             name="cvv"
-            value={form.cvv}
+            defaultValue={form.cvv}
             onChange={handleChange}
             required
             className="border"
@@ -149,7 +149,7 @@ export default function Payments() {
               type="text"
               id="name"
               name="name"
-              value={isUpdatingCard.name}
+              defaultValue={isUpdatingCard.name}
               onChange={handleChange}
               required
               placeholder="Nom et Prénom"
@@ -160,7 +160,7 @@ export default function Payments() {
               type="text"
               id="card"
               name="card"
-              value={isUpdatingCard.card}
+              defaultValue={isUpdatingCard.card}
               onChange={handleChange}
               required
               placeholder="Numéro"
@@ -171,7 +171,7 @@ export default function Payments() {
               type="text"
               id="date"
               name="date"
-              value={isUpdatingCard.date}
+              defaultValue={isUpdatingCard.date}
               onChange={handleChange}
               required
               placeholder="Date"
@@ -182,7 +182,7 @@ export default function Payments() {
               type="password"
               id="cvv"
               name="cvv"
-              value={isUpdatingCard.cvv}
+              defaultValue={isUpdatingCard.cvv}
               onChange={handleChange}
               required
               className="border"
