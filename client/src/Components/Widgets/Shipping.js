@@ -11,8 +11,9 @@ const Shipping = () => {
         const getShippingData = async () => {
 
             await axios
-            .get('http://localhost:8000/get_shipping', { withCredentials: true })
+            .get('http://localhost:8000/get_shipping')
             .then(response => {
+                console.log(response.data);
                 setCurrentShipping(response.data);
                 setShippingLoading(false)
             })

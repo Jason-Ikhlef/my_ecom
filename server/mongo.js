@@ -246,6 +246,22 @@ const appSchema = new mongoose.Schema({
         type: Number,
         default : 0
     },
+    startDate: {
+        type: Date,
+        default: null,
+    },
+    endDate: {
+        type: Date,
+        default: null,
+    },
+    salePeriod: {
+        type: Boolean,
+        default: false
+    },
+    promotion: {
+        type: Number,
+        default: 0
+    }
 });
 
 const userCollection = mongoose.model("user", userSchema)
