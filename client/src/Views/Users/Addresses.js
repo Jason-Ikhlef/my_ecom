@@ -69,7 +69,7 @@ export default function Addresses() {
             type="text"
             id="country"
             name="country"
-            value={form.country}
+            defaultValue={form.country}
             onChange={handleChange}
             required
             placeholder="Pays"
@@ -80,7 +80,7 @@ export default function Addresses() {
             type="text"
             id="city"
             name="city"
-            value={form.city}
+            defaultValue={form.city}
             onChange={handleChange}
             required
             placeholder="Ville"
@@ -91,7 +91,7 @@ export default function Addresses() {
             type="text"
             id="zipcode"
             name="zipcode"
-            value={form.zipcode}
+            defaultValue={form.zipcode}
             onChange={handleChange}
             required
             placeholder="Code postal"
@@ -102,7 +102,7 @@ export default function Addresses() {
             type="text"
             id="address"
             name="address"
-            value={form.address}
+            defaultValue={form.address}
             onChange={handleChange}
             required
             placeholder="Adresse"
@@ -150,7 +150,7 @@ export default function Addresses() {
               type="text"
               id="country"
               name="country"
-              value={isUpdatingAddress.country}
+              defaultValue={isUpdatingAddress.country}
               onChange={handleChange}
               required
               placeholder="Pays"
@@ -161,7 +161,7 @@ export default function Addresses() {
               type="text"
               id="city"
               name="city"
-              value={isUpdatingAddress.city}
+              defaultValue={isUpdatingAddress.city}
               onChange={handleChange}
               required
               placeholder="Ville"
@@ -172,7 +172,7 @@ export default function Addresses() {
               type="text"
               id="zipcode"
               name="zipcode"
-              value={isUpdatingAddress.zipcode}
+              defaultValue={isUpdatingAddress.zipcode}
               onChange={handleChange}
               required
               placeholder="Code postal"
@@ -183,7 +183,7 @@ export default function Addresses() {
               type="text"
               id="address"
               name="address"
-              value={isUpdatingAddress.address}
+              defaultValue={isUpdatingAddress.address}
               onChange={handleChange}
               required
               placeholder="Adresse"
