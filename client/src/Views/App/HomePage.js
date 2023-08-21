@@ -21,10 +21,39 @@ export default function HomePage(params) {
 
     return (
         <div className="h-[780px] flex flex-col justify-evenly items-center">
-            <div className="flex justify-evenly w-1/2">
-                <p onClick={newsCarrousel}>Nouveautés</p>
-                <p onClick={promotionCarrousel}>Promotions</p>
-                <p onClick={recommendCarrousel}>Recommendations</p>
+            <div
+                id="carrouselSwitchButton"
+                className="flex justify-evenly w-1/2">
+                <div
+                    className={`border border-transparent ${
+                        carrousel === "news"
+                            ? "border-4 border-b-[#4FBEB7] rounded"
+                            : ""
+                    }`}>
+                    <p onClick={newsCarrousel} className="cursor-pointer">
+                        Nouveautés
+                    </p>
+                </div>
+                <div
+                    className={`border border-transparent ${
+                        carrousel === "promotion"
+                            ? "border-4 border-b-[#4FBEB7] rounded"
+                            : ""
+                    }`}>
+                    <p onClick={promotionCarrousel} className="cursor-pointer">
+                        Promotions
+                    </p>
+                </div>
+                <div
+                    className={`border border-transparent ${
+                        carrousel === "recommend"
+                            ? "border-4 border-b-[#4FBEB7] rounded"
+                            : ""
+                    }`}>
+                    <p onClick={recommendCarrousel} className="cursor-pointer">
+                        Recommendations
+                    </p>
+                </div>
             </div>
             {carrousel === "recommend" ? (
                 <RecommendCarrousel />
