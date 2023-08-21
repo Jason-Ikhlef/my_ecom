@@ -251,8 +251,8 @@ export default function ArticleSeeMore() {
           {article.reduction > 0 ? (
             <p className="p-2 ml-5 font-bold text-green-500">
               Prix avec promotion :{" "}
-              {article.price -
-                ((article.reduction * article.price) / 100).toFixed(2)}
+              {(article.price -
+                ((article.reduction * article.price) / 100)).toFixed(2)}
               €
             </p>
           ) : null}

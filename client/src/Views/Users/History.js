@@ -23,6 +23,16 @@ export default function History() {
       return newDate; 
    }
 
+   // const downloadFile = () => {
+   //    console.log('oui');
+   //    const link = document.createElement('a')
+   //    const file = new Blob([order], { type : 'text/plain'});
+   //    link.href = URL.createObjectURL(file);
+   //    link.download = "sample.txt";
+   //    link.click();
+   //    URL.revokeObjectURL(link.href);
+   // }
+
    if (userLoading) {
 
         return <Loader />
@@ -85,10 +95,13 @@ export default function History() {
                order ? 
                <div className="flex flex-col gap-6">
                   <p className="text-2xl font-bold">Détails de la commande</p>
-                  <div className="flex gap-6">
-                     <p>Commandé le {changeDate(order.date)}</p>
-                     <p>|</p>
-                     <p>N° de commande : {order._id}</p>
+                  <div className="flex justify-between p-6">
+                     <div className="flex gap-6">
+                        <p>Commande effectuée le {changeDate(order.date)}</p>
+                        <p>|</p>
+                        <p>N° de commande : {order._id}</p>
+                     </div>
+                     <p className="cursor-pointer underline" /* onClick={downloadFile} */>Facture</p>
                   </div>
                   <div className="border rounded-xl flex justify-between p-6">
                      <div className="flex flex-col">
@@ -103,10 +116,8 @@ export default function History() {
                         <p>{'1291-1291-1291-1921'.slice(-5).padStart(8, '*')}</p>
                      </div>
                      <div className="flex flex-col">
-                        <p className="font-bold">Récapitulatif de la commande</p>
+                        <p className="font-bold">Prix total</p>
                         <p>Article : {order.totalPrice.toFixed(2)} €</p>
-                        <p>Livraison : ? €</p>
-                        <p>Total : € </p>
                      </div>
                   </div>
                   <div className="border rounded-xl p-6">
