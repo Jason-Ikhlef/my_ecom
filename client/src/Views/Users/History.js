@@ -36,7 +36,7 @@ export default function History() {
                isWatchingOrder ? <h1>OUI</h1> : <h1>Non</h1>
             }
             {currentUser.old_orders &&  (
-               currentUser.old_orders.map((order, index) => (
+               currentUser.old_orders.toReversed().map((order, index) => (
                   <div className="flex flex-col" key={index}> 
                      <div className="bg-gray-200 text-start p-2 rounded-t-xl flex justify-between">
                         <div className="flex gap-8">
