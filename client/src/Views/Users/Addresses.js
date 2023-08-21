@@ -16,11 +16,31 @@ export default function Addresses() {
     address: "",
   });
 
+  const [editForm, setEditForm] = useState({
+    country: "",
+    city: "",
+    zipcode: Number(),
+    address: "",
+  });
+
+  const handleEditChange = (e) => {
+    const { name, value } = e.target;
+    setEditForm({ ...editForm, [name]: value });
+  };
+
   useEffect(() => {
     if (currentUser && addresses.length <= 0) {
       setAddresses(currentUser.data.addresses);
     }
-  }, [currentUser, addresses]);
+    if (isUpdatingAddress) {
+      setEditForm({
+        country: isUpdatingAddress.address.country,
+        city: isUpdatingAddress.address.city,
+        zipcode: isUpdatingAddress.address.zipcode,
+        address: isUpdatingAddress.address.address,
+      });
+    }
+  }, [currentUser, addresses, isUpdatingAddress]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,6 +67,18 @@ export default function Addresses() {
         console.log(err);
       });
   };
+
+  const editAddress = async () => {
+
+    axios
+    .put('http://localhost:8000/updateAddress', {data: editForm, index: isUpdatingAddress.index}, {withCredentials: true})
+    .then(response => {
+      console.log(response);
+    })
+    .catch(err => {
+      console.error(err);
+    })
+  }
 
   return (
     currentUser &&
@@ -129,7 +161,7 @@ export default function Addresses() {
         <div className="border flex w-3/4 mx-auto text-center gap-8">
         {addresses.length > 0 &&
           addresses.map((item, index) => (
-            <div key={index} className="w-1/4 border cursor-pointer" onClick={() => {setIsUpdatingAddress(item)}}> {/* en cliquant sur la div / la card contenant les infos, ouvre de quoi la modifier */}            
+            <div key={index} className="w-1/4 border cursor-pointer" onClick={() => {setIsUpdatingAddress({address: item, index: index})}}> {/* en cliquant sur la div / la card contenant les infos, ouvre de quoi la modifier */}            
               <p>{item.country}</p>
               <p>{item.city}</p>
               <p>{item.zipcode}</p>
@@ -142,7 +174,7 @@ export default function Addresses() {
           isUpdatingAddress ? 
           (
             <form
-              onSubmit={newAddress}
+              onSubmit={editAddress}
               className="flex flex-col w-2/4 mx-auto mt-8 border rounded-xl p-2"
             >
             <label htmlFor="country">Votre pays</label>
@@ -150,8 +182,8 @@ export default function Addresses() {
               type="text"
               id="country"
               name="country"
-              defaultValue={isUpdatingAddress.country}
-              onChange={handleChange}
+              defaultValue={isUpdatingAddress.address.country}
+              onChange={handleEditChange}
               required
               placeholder="Pays"
               className="border"
@@ -161,8 +193,8 @@ export default function Addresses() {
               type="text"
               id="city"
               name="city"
-              defaultValue={isUpdatingAddress.city}
-              onChange={handleChange}
+              defaultValue={isUpdatingAddress.address.city}
+              onChange={handleEditChange}
               required
               placeholder="Ville"
               className="border"
@@ -172,8 +204,8 @@ export default function Addresses() {
               type="text"
               id="zipcode"
               name="zipcode"
-              defaultValue={isUpdatingAddress.zipcode}
-              onChange={handleChange}
+              defaultValue={isUpdatingAddress.address.zipcode}
+              onChange={handleEditChange}
               required
               placeholder="Code postal"
               className="border"
@@ -183,8 +215,8 @@ export default function Addresses() {
               type="text"
               id="address"
               name="address"
-              defaultValue={isUpdatingAddress.address}
-              onChange={handleChange}
+              defaultValue={isUpdatingAddress.address.address}
+              onChange={handleEditChange}
               required
               placeholder="Adresse"
               className="border"

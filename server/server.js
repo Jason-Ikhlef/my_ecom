@@ -109,10 +109,16 @@ app.use('/', newOrder);
 const NewAddress = require('./routes/users/addresses/new');
 app.use('/', NewAddress);
 
+const UpdateAddress = require('./routes/users/addresses/update');
+app.use('/', UpdateAddress);
+
 // CARDS
 
 const NewCard = require('./routes/users/cards/new');
 app.use('/', NewCard);
+
+const UpdateCard = require('./routes/users/cards/update');
+app.use('/', UpdateCard)
 
 // CATEGORIES
 
