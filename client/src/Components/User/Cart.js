@@ -128,7 +128,11 @@ const Cart = () => {
           { withCredentials: true }
         )
         .then((response) => {
+          toast.success('Commande effectuée 💰')
           setCart([]);
+          setTimeout(() => {
+            window.location.href = 'http://localhost:3000/history'
+          }, 2000);
           setTotalPrice(0);
         })
         .catch((err) => {
