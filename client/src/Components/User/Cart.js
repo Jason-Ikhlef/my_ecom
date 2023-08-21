@@ -218,65 +218,75 @@ const Cart = () => {
         )
       }
       <div className="w-3/4 mx-auto flex justify-center gap-4 mt-4">
-        {logIn === false ? (
-          <div className="w-1/2 border flex flex-col justify-evenly items-center">
-            <p className="my-4 text-2xl">
-              Souhaitez-vous vous connecter avant de payer ?
-            </p>
-            <div className="flex flex-col justify-evenly items-center h-1/2">
-              <button
-                onClick={() => {
-                  window.location.href = "http://localhost:3000/register";
-                }}
-                className="w-full text-center bg-[#4FBEB7] p-2 text-lg"
-              >
-                M'inscrire
-              </button>
-              <button
-                onClick={() => {
-                  window.location.href = "http://localhost:3000/login";
-                }}
-                className="w-full text-center bg-[#4FBEB7] p-2 text-lg"
-              >
-                Me connecter
-              </button>
-              <button
-                onClick={handlePaymentClick}
-                className="w-full text-center bg-[#4FBEB7] p-2 text-lg"
-              >
-                Continuer sans me connecter
-              </button>
-            </div>
+      {logIn === false ? (
+  <div className="w-1/2 border flex flex-col justify-evenly items-center">
+    <p className="my-4 text-2xl">
+      Souhaitez-vous vous connecter avant de payer ?
+    </p>
+    <div className="flex flex-col justify-evenly items-center h-1/2">
+      <button
+        onClick={() => {
+          window.location.href = "http://localhost:3000/register";
+        }}
+        className="w-full text-center bg-[#4FBEB7] p-2 text-lg"
+      >
+        M'inscrire
+      </button>
+      <button
+        onClick={() => {
+          window.location.href = "http://localhost:3000/login";
+        }}
+        className="w-full text-center bg-[#4FBEB7] p-2 text-lg"
+      >
+        Me connecter
+      </button>
+      {Number(totallySprice) + Number(totalPrice) > 50 ? (
+        <>
+         
+          <p className="text-red-600">
+            Impossible de payer sans compte au-delà de 50 euros.
+          </p>
+        </>
+      ) : (
+        <button
+          onClick={handlePaymentClick}
+          className="w-full text-center bg-[#4FBEB7] p-2 text-lg"
+        >
+          Continuer sans me connecter
+        </button>
+      )}
+    </div>
+  </div>
+) : (
+  <div className="w-1/2 border">
+    <p className="p-4 text-2xl">Mon panier</p>
+    {cart.map((item, index) => (
+      <div className="bg-white p-2 border-b" key={index}>
+        <div className="flex justify-evenly">
+          <img
+            src={`http://localhost:8000/storage/${item.img}`}
+            alt="img articles"
+            className="w-[100px] h-[100px]"
+          />
+          <div className="flex flex-col w-1/3">
+            <p>{item.price} €</p>
+            <p className="whitespace-normal text-[12px]">{item.name}</p>
+            <p>Qté : {item.quantity}</p>
+            <img
+              onClick={() =>
+                deleteArticle(item.articleId, item.price, item.quantity)
+              }
+              src={bin}
+              className="w-[20px] h-[20px] self-end z-10 cursor-pointer"
+              alt="delete bin"
+            />
           </div>
-        ) : (
-          <div className="w-1/2 border">
-            <p className="p-4 text-2xl">Mon panier</p>
-            {cart.map((item, index) => (
-              <div className="bg-white p-2 border-b" key={index}>
-                <div className="flex justify-evenly">
-                  <img
-                    src={`http://localhost:8000/storage/${item.img}`}
-                    alt="img articles"
-                    className="w-[100px] h-[100px]"
-                  />
-                  <div className="flex flex-col w-1/3">
-                    <p>{item.price} €</p>
-                    <p className="whitespace-normal text-[12px]">{item.name}</p>
-                    <p>Qté : {item.quantity}</p>
-                    <img
-                      onClick={() =>
-                        deleteArticle(item.articleId, item.price, item.quantity)
-                      }
-                      src={bin}
-                      className="w-[20px] h-[20px] self-end z-10 cursor-pointer"
-                      alt="delete bin"
-                    />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
+        </div>
+      </div>
+    ))}
+  </div>
+)}
+
 
         <div className="w-1/4 flex flex-col h-fit gap-4 sticky top-0 border">
           <div className="flex flex-col gap-4 border">
