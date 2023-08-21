@@ -68,6 +68,12 @@ app.use('/', DeleteArticle);
 const SearchArticle = require('./routes/articles/search');
 app.use('/', SearchArticle);
 
+const Promotion = require('./routes/articles/promotion');
+app.use('/', Promotion)
+
+const CreatePromotion = require('./routes/articles/createPromotion');
+app.use('/', CreatePromotion);
+
 // USERS
 
 const Users = require('./routes/users/index');
@@ -158,7 +164,7 @@ app.use('/', setShipping);
 
 // A deplacer 
 
-const { articleCollection } = require("./mongo");
+const { articleCollection, appCollection } = require("./mongo");
 
 async function updateArticle () {
     let currentDate = new Date
@@ -179,6 +185,30 @@ async function updateArticle () {
 }
 
 updateArticle();
+
+async function salePeriod () {
+    let currentDate = new Date;
+    const promotion = await appCollection.findOne({});
+
+    if (promotion.salePeriod === true && promotion.startDate < currentDate && promotion.endDate > currentDate && promotion !== 0) {
+
+        await articleCollection.updateMany({
+                $set: {reduction : promotion.promotion }
+            })
+
+    } else if ((promotion.salePeriod === true && promotion.endDate < currentDate) || promotion.promotion === 0) {
+
+        await appCollection.updateMany({
+            $set: {salePeriod: false}
+        });
+
+        await articleCollection.updateMany({
+            $set: {reduction: 0}
+        });
+    }
+}
+
+setInterval(salePeriod, 5000);
 
 app.listen(PORT, () => {
     console.log("Utilisation du port " + PORT);
