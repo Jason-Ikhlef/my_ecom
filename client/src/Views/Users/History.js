@@ -65,7 +65,7 @@ export default function History() {
                      </div>
                      <div className="border rounded-b-xl">
                         <div className="flex flex-col justify-start p-4">
-                           <p>État colis: {order.state}</p>
+                           <p>État de la commande : {order.state}</p>
                         </div>
                         <div className="flex justify-between p-4">
                            <div className="flex gap-8">
