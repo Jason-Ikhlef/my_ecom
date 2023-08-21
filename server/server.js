@@ -165,7 +165,6 @@ app.use('/', setShipping);
 // A deplacer 
 
 const { articleCollection, appCollection } = require("./mongo");
-const { setInterval } = require('timers/promises');
 
 async function updateArticle () {
     let currentDate = new Date
@@ -197,7 +196,7 @@ async function salePeriod () {
                 $set: {reduction : promotion.promotion }
             })
 
-    } else if (promotion.salePeriod === true && promotion.endDate < currentDate) {
+    } else if ((promotion.salePeriod === true && promotion.endDate < currentDate) || promotion.promotion === 0) {
 
         await appCollection.updateMany({
             $set: {salePeriod: false}
