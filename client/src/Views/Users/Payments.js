@@ -16,11 +16,31 @@ export default function Payments() {
     cvv: "",
   });
 
+  const [editForm, setEditForm] = useState({
+    name: "",
+    card: "",
+    date: Number(),
+    cvv: "",
+  });
+
+  const handleEditChange = (e) => {
+    const { name, value } = e.target;
+    setEditForm({ ...editForm, [name]: value });
+  };
+
   useEffect(() => {
     if (currentUser && card.length <= 0) {
       setCard(currentUser.data.cards);
     }
-  }, [currentUser, card]);
+    if (isUpdatingCard) {
+      setEditForm({
+        name: isUpdatingCard.data.name,
+        card: isUpdatingCard.data.card,
+        date: isUpdatingCard.data.date,
+        cvv: isUpdatingCard.data.cvv,
+      });
+    }
+  }, [currentUser, card, isUpdatingCard]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -47,6 +67,18 @@ export default function Payments() {
         console.log(err);
       });
   };
+
+  const editCard = async () => {
+
+    axios
+    .put('http://localhost:8000/updateCard', {data: editForm, index: isUpdatingCard.index}, {withCredentials: true})
+    .then(response => {
+      console.log(response);
+    })
+    .catch(err => {
+      console.error(err);
+    })
+  }
 
   return (
     currentUser &&
@@ -128,7 +160,7 @@ export default function Payments() {
         <div className="border flex w-3/4 mx-auto text-center gap-8">
         {card.length > 0 &&
           card.map((item, index) => (
-            <div key={index} className="w-1/4 border cursor-pointer" onClick={() => {setIsUpdatingCard(item)}}>           
+            <div key={index} className="w-1/4 border cursor-pointer" onClick={() => {setIsUpdatingCard({data: item, index: index})}}>           
               <p>{item.name}</p>
               <p>{item.card}</p>
               <p>{item.date}</p>
@@ -141,7 +173,7 @@ export default function Payments() {
           isUpdatingCard ? 
           (
             <form
-              onSubmit={newCard}
+              onSubmit={editCard}
               className="flex flex-col w-2/4 mx-auto mt-8 border rounded-xl p-2"
             >
             <label htmlFor="name">Titulaire de la carte</label>
@@ -149,8 +181,8 @@ export default function Payments() {
               type="text"
               id="name"
               name="name"
-              defaultValue={isUpdatingCard.name}
-              onChange={handleChange}
+              defaultValue={isUpdatingCard.data.name}
+              onChange={handleEditChange}
               required
               placeholder="Nom et Prénom"
               className="border"
@@ -160,8 +192,8 @@ export default function Payments() {
               type="text"
               id="card"
               name="card"
-              defaultValue={isUpdatingCard.card}
-              onChange={handleChange}
+              defaultValue={isUpdatingCard.data.card}
+              onChange={handleEditChange}
               required
               placeholder="Numéro"
               className="border"
@@ -171,8 +203,8 @@ export default function Payments() {
               type="text"
               id="date"
               name="date"
-              defaultValue={isUpdatingCard.date}
-              onChange={handleChange}
+              defaultValue={isUpdatingCard.data.date}
+              onChange={handleEditChange}
               required
               placeholder="Date"
               className="border"
@@ -182,8 +214,8 @@ export default function Payments() {
               type="password"
               id="cvv"
               name="cvv"
-              defaultValue={isUpdatingCard.cvv}
-              onChange={handleChange}
+              defaultValue={isUpdatingCard.data.cvv}
+              onChange={handleEditChange}
               required
               className="border"
             />
