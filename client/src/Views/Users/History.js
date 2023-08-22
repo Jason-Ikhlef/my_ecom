@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import User from '../../Components/Widgets/User';
 import Loader from "../../Components/Widgets/Loader";
+import { Page, Text, View, Document, PDFDownloadLink } from "@react-pdf/renderer"
 import { Dropdown } from "rsuite";
 import DropdownItem from "rsuite/esm/Dropdown/DropdownItem";
 
@@ -23,15 +24,37 @@ export default function History() {
       return newDate; 
    }
 
-   // const downloadFile = () => {
-   //    console.log('oui');
-   //    const link = document.createElement('a')
-   //    const file = new Blob([order], { type : 'text/plain'});
-   //    link.href = URL.createObjectURL(file);
-   //    link.download = "sample.txt";
-   //    link.click();
-   //    URL.revokeObjectURL(link.href);
-   // }
+   function extractCards (cart) 
+   {
+      return cart.map((items) => (
+         <Text>
+            {`${items.name} pour une quantitée de ${items.quantity} vous a coûté ${items.price}`}
+         </Text>
+      ))
+   }
+
+   const renderPDF = () => {
+      const currentOrder = {
+         date : changeDate(order.date),
+         price : order.totalPrice,
+         state : order.state,
+         cards : extractCards(order.cart)
+      }
+
+      return (
+         <Document>
+            <Page>
+               <View>
+                  <Text>Date: {currentOrder.date}</Text>
+                  <Text>Prix total: {currentOrder.price}</Text>
+                  <Text>État: {currentOrder.state}</Text>
+                  <Text>Articles:</Text>
+                  {currentOrder.cards}
+               </View>
+            </Page>
+         </Document>
+      )
+   }
 
    if (userLoading) {
 
@@ -101,7 +124,9 @@ export default function History() {
                         <p>|</p>
                         <p>N° de commande : {order._id}</p>
                      </div>
-                     <p className="cursor-pointer underline" /* onClick={downloadFile} */>Facture</p>
+                     <PDFDownloadLink document={renderPDF()} fileName="facture.pdf">
+                        {('Télécharger la facture')}
+                     </PDFDownloadLink>
                   </div>
                   <div className="border rounded-xl flex justify-between p-6">
                      <div className="flex flex-col">
