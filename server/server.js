@@ -168,6 +168,11 @@ app.use('/', GetShipping);
 const setShipping = require('./routes/easypost/newShipping');
 app.use('/', setShipping);
 
+// DATA
+
+const getCSV = require('./routes/data/get');
+app.use('/', getCSV);
+
 // A deplacer 
 
 const { articleCollection, appCollection } = require("./mongo");
