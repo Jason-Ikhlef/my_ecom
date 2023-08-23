@@ -3,13 +3,11 @@ import axios from "axios";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "../../assets/LogoImage.png";
 import profilPicture from "../../assets/user-line.svg";
-import cart from "../../assets/cart.svg";
 import User from "../Widgets/User";
 import { Dropdown } from "rsuite";
 import DropdownItem from "rsuite/esm/Dropdown/DropdownItem";
 import Loader from "./Loader";
 import CartDropDown from "../User/CartDropdown";
-import { toast } from 'react-toastify';
 
 export default function Navbar() {
   const { currentUser, userLoading } = User();
@@ -29,12 +27,23 @@ export default function Navbar() {
     fetchAnimals();
   }, []);
 
-  const handleClick = (e) => {
+  const handleClick = async (e) => {
     e.preventDefault();
     axios
-      .get(`http://localhost:8000/get_csv`)
+      .get(`http://localhost:8000/get_csv`, { responseType: "blob" })
       .then((res) => {
-        toast.success("Récupération des données effectué !");
+        const blobUrl = URL.createObjectURL(res.data);
+        const link = document.createElement("a");
+        link.href = blobUrl;
+
+        let date = new Date()
+        date = date.toLocaleDateString("fr").replaceAll("/", "-");
+  
+        link.download = `general_user_${date}.csv`;
+  
+        link.click();
+  
+        URL.revokeObjectURL(blobUrl);
       })
       .catch((err) => console.error(err));
   };

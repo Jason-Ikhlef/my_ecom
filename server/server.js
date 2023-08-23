@@ -169,7 +169,6 @@ const setShipping = require('./routes/easypost/newShipping');
 app.use('/', setShipping);
 
 // DATA
-
 const getCSV = require('./routes/data/get');
 app.use('/', getCSV);
 

@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const fs = require("fs");
+const path = require('path');
 const { format } = require("@fast-csv/format");
+
 let date = new Date
 date = date.toLocaleDateString("fr").replaceAll("/", "-");
 const fileName = `general_user_${date}.csv`;
-const csvFile = fs.createWriteStream(fileName);
 const {
   userCollection,
   googleCollection,
@@ -13,6 +14,10 @@ const {
 } = require("../../mongo");
 
 router.get("/get_csv", async (req, res) => {
+
+  const csvFile = fs.createWriteStream(fileName);
+
+  console.log("call");
   //   function extractAddresses(addresses) {
   //     return addresses.map(
   //       (addr) => `${addr.address}, ${addr.zipcode} ${addr.city}, ${addr.country}`
@@ -24,6 +29,7 @@ router.get("/get_csv", async (req, res) => {
   //   }
 
   // Commandes: item.old_orders.map((order) => JSON.stringify(order)),
+
 
   function averagePrice(old_orders) {
     let avgPrice = 0;
@@ -192,12 +198,28 @@ router.get("/get_csv", async (req, res) => {
   csvStream.end();
 
   csvFile.on("finish", () => {
-    res.status(200).send("ouais bah on est là");
+
+    const filePath = path.join(__dirname, `../../${fileName}`);
+
+    res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
+    
+    res.status(200).download(filePath, fileName, (err) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Une erreur s'est produite lors du téléchargement.");
+      }
+
+      fs.unlink(filePath, (unlinkErr) => {
+        if (unlinkErr) {
+          console.error("Erreur lors de la suppression du fichier :", unlinkErr);
+        }
+      });
+    });
   });
 
   csvFile.on("error", (err) => {
     console.error(err);
-    res.status(500).send("bah c'est chiant");
+    res.status(500).send("Une erreur s'est produite lors de la création du fichier");
   });
 });
 
