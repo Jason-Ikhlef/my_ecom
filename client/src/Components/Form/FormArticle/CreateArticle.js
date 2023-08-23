@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from 'react-toastify';
-import { Link } from 'react-router-dom';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import { Link } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
 import { Dropdown } from "rsuite";
 import DropdownItem from "rsuite/esm/Dropdown/DropdownItem";
-import Loader from '../../Widgets/Loader';
+import Loader from "../../Widgets/Loader";
 
 export default function CreateArticle() {
-
     const [animals, setAnimals] = useState(null);
     const [selectedAnimal, setSelectedAnimal] = useState(null);
     const [selectedCat, setSelectedCat] = useState(null);
@@ -16,33 +15,34 @@ export default function CreateArticle() {
     const [animalIndex, setAnimalIndex] = useState(null);
     const [catIndex, setCatIndex] = useState(null);
 
-    const [dropdownAnimals, setDropdownAnimals] = useState("Animaux")
-    const [dropdownCat, setDropdownCat] = useState("Categorie")
-    const [dropdownSubCat, setDropdownSubCat] = useState("Sous-categorie")
+    const [dropdownAnimals, setDropdownAnimals] = useState("Animaux");
+    const [dropdownCat, setDropdownCat] = useState("Categorie");
+    const [dropdownSubCat, setDropdownSubCat] = useState("Sous-categorie");
 
     const [form, setForm] = useState({
-        title: '',
-        description: '',
-        price: '',
-        caracteristics: '',
+        title: "",
+        description: "",
+        price: "",
+        caracteristics: "",
         photo: null,
-        animal: '',
-        category: '',
-        subCategory: '',
-        animalName: '',
-        categoryName: '',
-        subCategoriesName: '',
+        animal: "",
+        category: "",
+        subCategory: "",
+        animalName: "",
+        categoryName: "",
+        subCategoriesName: "",
         recommanded: false,
-        property: '',
-        weight: '',
+        property: "",
+        weight: "",
     });
 
     useEffect(() => {
         const fetchAnimals = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/categories');
-                setAnimals(response.data)
-
+                const response = await axios.get(
+                    "http://localhost:8000/categories"
+                );
+                setAnimals(response.data);
             } catch (error) {
                 console.error(error);
             }
@@ -54,13 +54,12 @@ export default function CreateArticle() {
     useEffect(() => {
         if (selectedAnimal) {
             const getAnimalIndex = async () => {
-    
-                animals.forEach(element => {
+                animals.forEach((element) => {
                     if (element._id === selectedAnimal) {
                         setAnimalIndex(animals.indexOf(element));
                     }
                 });
-            }
+            };
             getAnimalIndex();
         }
     }, [animalIndex, animals, selectedAnimal]);
@@ -68,14 +67,14 @@ export default function CreateArticle() {
     useEffect(() => {
         if (selectedCat) {
             const getCatIndex = async () => {
-    
-                animals[animalIndex].categories.forEach(element => {
-
+                animals[animalIndex].categories.forEach((element) => {
                     if (element._id === selectedCat) {
-                        setCatIndex(animals[animalIndex].categories.indexOf(element));
+                        setCatIndex(
+                            animals[animalIndex].categories.indexOf(element)
+                        );
                     }
                 });
-            }
+            };
 
             getCatIndex();
         }
@@ -83,10 +82,10 @@ export default function CreateArticle() {
 
     const handleChange = (e) => {
         const { name, value, files } = e.target;
-        if (name === 'photo') {
+        if (name === "photo") {
             setForm({ ...form, [name]: files });
         } else if (name === "recommanded") {
-            setForm({...form, [name]: !form.recommanded})
+            setForm({ ...form, [name]: !form.recommanded });
         } else {
             setForm({ ...form, [name]: value });
         }
@@ -95,31 +94,31 @@ export default function CreateArticle() {
     const handleAnimals = (animal) => {
         setDropdownAnimals(animal.name);
         setForm((prevForm) => ({
-          ...prevForm,
-          animal: animal._id,
-          animalName: animal.name
+            ...prevForm,
+            animal: animal._id,
+            animalName: animal.name,
         }));
         setSelectedAnimal(animal._id);
-      };
-      
-      const handleCat = (cat) => {
+    };
+
+    const handleCat = (cat) => {
         setDropdownCat(cat.name);
         setForm((prevForm) => ({
-          ...prevForm,
-          category: cat._id,
-          categoryName: cat.name
+            ...prevForm,
+            category: cat._id,
+            categoryName: cat.name,
         }));
         setSelectedCat(cat._id);
-      };
-      
-      const handleSubCat = (subCat) => {
+    };
+
+    const handleSubCat = (subCat) => {
         setDropdownSubCat(subCat.name);
         setForm((prevForm) => ({
-          ...prevForm,
-          subCategory: subCat._id,
-          subCategoriesName: subCat.name
+            ...prevForm,
+            subCategory: subCat._id,
+            subCategoriesName: subCat.name,
         }));
-      };
+    };
 
     const submit = async (e) => {
         e.preventDefault();
@@ -139,7 +138,10 @@ export default function CreateArticle() {
                     formData.append("subCategory", form.subCategory);
                     formData.append("animalsName", form.animalName);
                     formData.append("categoriesName", form.categoryName);
-                    formData.append("subCategoriesName", form.subCategoriesName);
+                    formData.append(
+                        "subCategoriesName",
+                        form.subCategoriesName
+                    );
                     formData.append("recommanded", form.recommanded);
                     formData.append("property", form.property);
                     formData.append("weight", form.weight);
@@ -152,19 +154,25 @@ export default function CreateArticle() {
 
                     console.log(form);
 
-                    const response = await axios.put("http://localhost:8000/AddArticle", formData);
+                    const response = await axios.put(
+                        "http://localhost:8000/AddArticle",
+                        formData
+                    );
 
                     if (response.data === "success") {
                         toast.success("Nouvel article ajouté !");
                         setTimeout(() => {
-                            window.location.href = 'http://localhost:3000/articles'
+                            window.location.href =
+                                "http://localhost:3000/articles";
                         }, 1500);
                     } else {
                         toast.error("Une erreur est survenue");
                     }
                 } catch (error) {
                     console.error("Error submitting form:", error);
-                    toast.error("Une erreur est survenue lors de l'ajout de l'article");
+                    toast.error(
+                        "Une erreur est survenue lors de l'ajout de l'article"
+                    );
                 }
             }
         } catch (e) {
@@ -173,15 +181,15 @@ export default function CreateArticle() {
     };
 
     if (!animals) {
-        return <Loader />
+        return <Loader />;
     }
 
     return (
         <div>
             <ToastContainer />
-            <h1 className='text-center my-5'>Formulaire d'ajout d'article</h1>
-            <div className='border w-1/2 mx-auto'>
-                <form onSubmit={submit} className='flex flex-col'>
+            <h1 className="text-center my-3">Formulaire d'ajout d'article</h1>
+            <div className="border w-1/2 mx-auto">
+                <form onSubmit={submit} className="flex flex-col p-2">
                     <label htmlFor="title">Titre de l'article</label>
                     <input
                         type="text"
@@ -191,8 +199,11 @@ export default function CreateArticle() {
                         onChange={handleChange}
                         required
                         placeholder="Titre de l'article"
+                        className="border"
                     />
-                    <label htmlFor="description">Description de l'article</label>
+                    <label htmlFor="description">
+                        Description de l'article
+                    </label>
                     <input
                         type="text"
                         id="description"
@@ -201,6 +212,7 @@ export default function CreateArticle() {
                         onChange={handleChange}
                         required
                         placeholder="Description de l'article"
+                        className="border"
                     />
                     <label htmlFor="price">Prix de l'article</label>
                     <input
@@ -211,8 +223,11 @@ export default function CreateArticle() {
                         onChange={handleChange}
                         required
                         placeholder="Prix de l'article"
+                        className="border"
                     />
-                    <label htmlFor="caracteristics">Caractéristiques de l'article</label>
+                    <label htmlFor="caracteristics">
+                        Caractéristiques de l'article
+                    </label>
                     <input
                         type="text"
                         id="caracteristics"
@@ -221,6 +236,7 @@ export default function CreateArticle() {
                         onChange={handleChange}
                         required
                         placeholder="Caractéristiques de l'article"
+                        className="border"
                     />
                     <label htmlFor="stock">Stock (nombre)</label>
                     <input
@@ -231,6 +247,7 @@ export default function CreateArticle() {
                         onChange={handleChange}
                         required
                         placeholder="Stock (nombre)"
+                        className="border"
                     />
                     <label htmlFor="property">Attribut</label>
                     <input
@@ -241,6 +258,7 @@ export default function CreateArticle() {
                         onChange={handleChange}
                         required
                         placeholder="Couleur, poids, taille..."
+                        className="border"
                     />
                     <label htmlFor="weight">Poids en gramme</label>
                     <input
@@ -251,6 +269,7 @@ export default function CreateArticle() {
                         onChange={handleChange}
                         required
                         placeholder="Poids de l'article"
+                        className="border"
                     />
                     <label htmlFor="photo">Photo de l'article</label>
                     <input
@@ -263,7 +282,9 @@ export default function CreateArticle() {
                     <div>
                         <Dropdown title={dropdownAnimals}>
                             {animals.map((animal) => (
-                                <DropdownItem key={animal._id} onSelect={() => handleAnimals(animal)}>
+                                <DropdownItem
+                                    key={animal._id}
+                                    onSelect={() => handleAnimals(animal)}>
                                     {animal.name}
                                 </DropdownItem>
                             ))}
@@ -273,11 +294,17 @@ export default function CreateArticle() {
                         <div>
                             <div>
                                 <Dropdown title={dropdownCat}>
-                                    {animals[animalIndex].categories.map((animal) => (
-                                        <DropdownItem key={animal._id} onSelect={() => handleCat(animal)}>
-                                            {animal.name}
-                                        </DropdownItem>
-                                    ))}
+                                    {animals[animalIndex].categories.map(
+                                        (animal) => (
+                                            <DropdownItem
+                                                key={animal._id}
+                                                onSelect={() =>
+                                                    handleCat(animal)
+                                                }>
+                                                {animal.name}
+                                            </DropdownItem>
+                                        )
+                                    )}
                                 </Dropdown>
                             </div>
                         </div>
@@ -286,8 +313,14 @@ export default function CreateArticle() {
                         <div>
                             <div>
                                 <Dropdown title={dropdownSubCat}>
-                                    {animals[animalIndex].categories[catIndex].subCategories.map((animal) => (
-                                        <DropdownItem key={animal._id} onSelect={() => handleSubCat(animal)}>
+                                    {animals[animalIndex].categories[
+                                        catIndex
+                                    ].subCategories.map((animal) => (
+                                        <DropdownItem
+                                            key={animal._id}
+                                            onSelect={() =>
+                                                handleSubCat(animal)
+                                            }>
                                             {animal.name}
                                         </DropdownItem>
                                     ))}
@@ -296,8 +329,14 @@ export default function CreateArticle() {
                         </div>
                     )}
                     <label htmlFor="recommanded">Recommander l'article :</label>
-                    <input onChange={handleChange} type="checkbox" name="recommanded" />
-                    <button type="submit" className='border mt-5'>Ajouter l'article</button>
+                    <input
+                        onChange={handleChange}
+                        type="checkbox"
+                        name="recommanded"
+                    />
+                    <button type="submit" className="border mt-5">
+                        Ajouter l'article
+                    </button>
                 </form>
             </div>
         </div>
