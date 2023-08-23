@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import User from '../../Components/Widgets/User';
 import Loader from "../../Components/Widgets/Loader";
-import { Page, Text, View, Document, PDFDownloadLink } from "@react-pdf/renderer"
+import { Page, Text, View, Document, PDFDownloadLink, StyleSheet } from "@react-pdf/renderer"
 import { Dropdown } from "rsuite";
 import DropdownItem from "rsuite/esm/Dropdown/DropdownItem";
 
@@ -24,32 +24,104 @@ export default function History() {
       return newDate; 
    }
 
-   function extractCards (cart) 
-   {
-      return cart.map((items) => (
-         <Text>
-            {`${items.name} pour une quantitée de ${items.quantity} vous a coûté ${items.price}`}
-         </Text>
-      ))
-   }
+   const styles = StyleSheet.create({
+      title : {
+         color : '#4FBEB7',
+         textAlign : 'center',
+         marginBottom : '20px',
+         fontSize : '16px',
+         marginTop : '16px'
+      },
+      titleInfo : {
+         color : '#4FBEB7',
+         textAlign : 'center',
+         padding : '2',
+         marginBottom : '10px',
+         fontSize : '16px',
+      },
+      colContainer : {
+         display : 'flex',
+         flexDirection : 'column',
+         marginBottom : '15px',
+         padding : '8px',
+         border : '2px solid #4FBEB7',
+         margin : '8px'
+      },
+      rowContainer : {
+         display : 'flex',
+         flexDirection : 'row',
+         justifyContent : 'flex-start',
+         alignItems : 'center',
+         gap : '8px'
+      },
+      subTitleInformations : {
+         fontSize : '12px',
+         fontWeight : 'bold'
+      },
+      informations : {
+         fontSize : '10px'
+      },
+      rowWithPrice : {
+         display : 'flex',
+         flexDirection : 'row',
+         justifyContent : 'space-between'
+      },
+      informationsWithMargin : {
+         fontSize : '12px',
+         marginTop : '20px',
+      },
+      informationsEnd : {
+         alignSelf : 'flex-end',
+         fontSize : '10px'
+      }
+   })
 
    const renderPDF = () => {
-      const currentOrder = {
-         date : changeDate(order.date),
-         price : order.totalPrice,
-         state : order.state,
-         cards : extractCards(order.cart)
-      }
-
       return (
          <Document>
-            <Page>
+            <Page size="A4">
                <View>
-                  <Text>Date: {currentOrder.date}</Text>
-                  <Text>Prix total: {currentOrder.price}</Text>
-                  <Text>État: {currentOrder.state}</Text>
-                  <Text>Articles:</Text>
-                  {currentOrder.cards}
+                  <Text style={styles.title}>Détails de la commande {order._id}</Text>
+                  <View style={styles.colContainer}>   
+                     <View style={styles.rowContainer}>
+                        <Text style={styles.subTitleInformations}>Date de la commande : </Text>
+                        <Text style={styles.informations}>{changeDate(order.date)}</Text>
+                     </View>
+                     <View style={styles.rowContainer}>
+                        <Text style={styles.subTitleInformations}>N° de la commande : </Text>
+                        <Text style={styles.informations}>{order._id}</Text>
+                     </View>
+                     <View style={styles.rowContainer}>
+                        <Text style={styles.subTitleInformations}>Montant de la commande :</Text>
+                        <Text style={styles.informations}>{order.totalPrice} €</Text>
+                     </View>
+                  </View>
+                  <View>
+                     <View style={styles.colContainer}>
+                        <Text style={styles.titleInfo}>Infos Articles</Text>
+                        <Text style={styles.subTitleInformations}>Articles commandés</Text>
+                        {order.cart.map((item, index) => (
+                           <View key={index} style={styles.rowWithPrice}>
+                              <Text style={styles.informations}>{item.quantity} ex. de {item.name}</Text>
+                              <Text style={styles.informations}>Prix : {item.price} €</Text>
+                           </View>
+                        ))}
+                        <Text style={styles.informationsWithMargin}>Adresse de livraison :</Text>
+                        <Text style={styles.informations}>Rue</Text>
+                        <Text style={styles.informations}>Ville, Code postal</Text>
+                        <Text style={styles.informations}>Pays</Text>
+                     </View>
+                     <View style={styles.colContainer}>
+                        <Text style={styles.titleInfo}>Infos paiement</Text>
+                        <Text style={styles.subTitleInformations}>Mode de paiement : </Text>
+                        <Text style={styles.informations}>Visa {'1291-1291-1291-1921'.slice(-5).padStart(8, '*')}</Text>
+                        <Text style={styles.informationsWithMargin}>Adresse de facturation :</Text>
+                        <Text style={styles.informations}>Rue</Text>
+                        <Text style={styles.informations}>Ville, Code postal</Text>
+                        <Text style={styles.informations}>Pays</Text>
+                        <Text style={styles.informationsEnd}>Montant total : {order.totalPrice} €</Text>
+                     </View>
+                  </View>
                </View>
             </Page>
          </Document>
@@ -61,8 +133,6 @@ export default function History() {
         return <Loader />
     
    }
-
-   console.log(currentUser.old_orders);
  
    return (
          <div className="w-3/4 p-4 overflow-auto mx-auto flex flex-col gap-8">
@@ -131,7 +201,6 @@ export default function History() {
                   <div className="border rounded-xl flex justify-between p-6">
                      <div className="flex flex-col">
                         <p className="font-bold">Adresse de livraison</p>
-                        <p>Email</p>
                         <p>Rue</p>
                         <p>Ville, code postal</p>
                         <p>Pays</p>
