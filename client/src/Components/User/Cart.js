@@ -124,7 +124,7 @@ const Cart = () => {
       await axios
         .post(
           "http://localhost:8000/newOrder",
-          { cart, totalPrice },
+          { cart, totalPrice, address, PaymentForm },
           { withCredentials: true }
         )
         .then((response) => {

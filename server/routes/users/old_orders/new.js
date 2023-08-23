@@ -32,13 +32,15 @@ router.post("/newOrder", async (req, res) => {
     }
   }
 
-  const { cart, totalPrice } = req.body;
+  const { cart, totalPrice, address, PaymentForm } = req.body;
 
   await collection
     .findById(userId)
     .then((user) => {
       user.old_orders.push({
         cart,
+        address,
+        PaymentForm,
         totalPrice,
         date: new Date(),
         _id: new ObjectId(),

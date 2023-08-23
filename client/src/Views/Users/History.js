@@ -107,18 +107,18 @@ export default function History() {
                            </View>
                         ))}
                         <Text style={styles.informationsWithMargin}>Adresse de livraison :</Text>
-                        <Text style={styles.informations}>Rue</Text>
-                        <Text style={styles.informations}>Ville, Code postal</Text>
-                        <Text style={styles.informations}>Pays</Text>
+                        <Text style={styles.informations}>{order.address.address}</Text>
+                        <Text style={styles.informations}>{order.address.city}, {order.address.zipcode}</Text>
+                        <Text style={styles.informations}>{order.address.country}</Text>
                      </View>
                      <View style={styles.colContainer}>
                         <Text style={styles.titleInfo}>Infos paiement</Text>
                         <Text style={styles.subTitleInformations}>Mode de paiement : </Text>
-                        <Text style={styles.informations}>Visa {'1291-1291-1291-1921'.slice(-5).padStart(8, '*')}</Text>
+                        <Text style={styles.informations}>Visa {order.PaymentForm.card.slice(-5).padStart(8, '*')}</Text>
                         <Text style={styles.informationsWithMargin}>Adresse de facturation :</Text>
-                        <Text style={styles.informations}>Rue</Text>
-                        <Text style={styles.informations}>Ville, Code postal</Text>
-                        <Text style={styles.informations}>Pays</Text>
+                        <Text style={styles.informations}>{order.address.address}</Text>
+                        <Text style={styles.informations}>{order.address.city}, {order.address.zipcode}</Text>
+                        <Text style={styles.informations}>{order.address.country}</Text>
                         <Text style={styles.informationsEnd}>Montant total : {order.totalPrice} €</Text>
                      </View>
                   </View>
@@ -153,7 +153,9 @@ export default function History() {
                               <p>Livraison à</p>
                               <Dropdown title={currentUser.email} trigger="hover">
                                  <DropdownItem>
-                                    <p>adresse</p>
+                                    {order.address ? <p>{order.address.address}</p> : <p>bof</p>}
+                                    {order.address ? <p>{order.address.city}, {order.address.zipcode}</p> : <p>bof</p>}
+                                    {order.address ? <p>{order.address.country}</p> : <p>bof</p>}
                                  </DropdownItem>
                               </Dropdown>
                            </div>
@@ -201,13 +203,13 @@ export default function History() {
                   <div className="border rounded-xl flex justify-between p-6">
                      <div className="flex flex-col">
                         <p className="font-bold">Adresse de livraison</p>
-                        <p>Rue</p>
-                        <p>Ville, code postal</p>
-                        <p>Pays</p>
+                        {order.address ? <p>{order.address.address}</p> : <p>bof</p>}
+                        {order.address ? <p>{order.address.city}, {order.address.zipcode}</p> : <p>bof</p>}
+                        {order.address ? <p>{order.address.country}</p> : <p>bof</p>}
                      </div>
                      <div className="flex flex-col">
                         <p className="font-bold">Mode de paiement</p>
-                        <p>{'1291-1291-1291-1921'.slice(-5).padStart(8, '*')}</p>
+                        <p>{order.PaymentForm.card.slice(-5).padStart(8, '*')}</p>
                      </div>
                      <div className="flex flex-col">
                         <p className="font-bold">Prix total</p>
