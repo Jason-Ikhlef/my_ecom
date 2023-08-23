@@ -23,10 +23,18 @@ export default function ArticleSeeMore() {
   const [endDate, setEndDate] = useState(null);
   const [dateDiff, setDateDiff] = useState(null);
   const [remainingTime, setRemainingTime] = useState(null);
+  const [opinions, setOpinions] = useState('');
+
+  const handleSubmitOpinion = async () => {
+    try {
+      console.log(opinions)
+      await axios.post(`http://localhost:8000/AddOpinions/${id}`, { opinions: [opinions] });
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
   const currentDate = new Date();
-
-  console.log(currentDate);
 
   const disabledBtnProps = {};
 
@@ -365,7 +373,19 @@ export default function ArticleSeeMore() {
             <p>{article.caracteristics}</p>
           </TabPanel>
           <TabPanel>
-            <p>Potentiels commentaires d'un article </p>
+            <div className="flex flex-col gap-8">
+              {article.opinions.map((item,index) => (
+                <p key={index}>{item}</p>
+              ))}
+            </div>
+            <textarea
+              name="opinions"
+              value={opinions}
+              onChange={event => setOpinions(event.target.value)}
+              rows={4}
+              cols={50}
+            />
+            <button onClick={handleSubmitOpinion} type="submit" className='mt-5 bg-[#4FBEB7] p-2 mb-2'>Valider</button>
           </TabPanel>
           <TabPanel>
             <p>Nos délais</p>
