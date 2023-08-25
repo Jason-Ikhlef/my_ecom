@@ -27,8 +27,13 @@ export default function ArticleSeeMore() {
 
   const handleSubmitOpinion = async () => {
     try {
-      console.log(opinions)
-      await axios.post(`http://localhost:8000/AddOpinions/${id}`, { opinions: [opinions] });
+      if(opinions === '') {
+        alert('veuillez remplir le champ avant validation')
+      } else {
+        alert('merci pour votre avis !');
+        await axios.post(`http://localhost:8000/AddOpinions/${id}`, { opinions: [opinions] });
+        setOpinions('');
+      }
     } catch (e) {
       console.error(e);
     }
@@ -374,18 +379,23 @@ export default function ArticleSeeMore() {
           </TabPanel>
           <TabPanel>
             <div className="flex flex-col gap-8">
-              {article.opinions.map((item,index) => (
+              {article.opinions.map((item, index) => (
                 <p key={index}>{item}</p>
               ))}
             </div>
-            <textarea
-              name="opinions"
-              value={opinions}
-              onChange={event => setOpinions(event.target.value)}
-              rows={4}
-              cols={50}
-            />
-            <button onClick={handleSubmitOpinion} type="submit" className='mt-5 bg-[#4FBEB7] p-2 mb-2'>Valider</button>
+            {currentUser ? (
+              <div>
+                <textarea
+                  name="opinions"
+                  value={opinions}
+                  onChange={event => setOpinions(event.target.value)}
+                  rows={4}
+                  cols={50}
+                />
+                <button onClick={handleSubmitOpinion} type="submit" className='mt-5 bg-[#4FBEB7] p-2 mb-2'>Valider</button>
+            </div>
+            ) : null}
+
           </TabPanel>
           <TabPanel>
             <p>Nos délais</p>
