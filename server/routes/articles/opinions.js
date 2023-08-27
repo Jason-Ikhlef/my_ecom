@@ -7,24 +7,22 @@ const { articleCollection } = require("../../mongo");
 
 router.post("/AddOpinions/:id", async (req, res) => {
 
-    const {
-        id
-    } = req.params;
+    const { id } = req.params;
+    const { opinions } = req.body;
 
-    const {
-        opinions
-    } = req.body;
-
+    
     try {
         const article = await articleCollection.findById(id);
-
-        console.log(opinions);
-
+        
         if (!article.opinions) {
             article.opinions = [];
         }
+        
+        const userEmail = req.session.user.email;
+        let completeOpinions = `${userEmail} : ${opinions}`;
+        
+        article.opinions.push(completeOpinions);
 
-        article.opinions.push(...opinions);
         await article.save();
     } catch (e) {
         console.log(e);

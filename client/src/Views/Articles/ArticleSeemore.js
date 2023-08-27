@@ -31,8 +31,13 @@ export default function ArticleSeeMore() {
         alert('veuillez remplir le champ avant validation')
       } else {
         alert('merci pour votre avis !');
-        await axios.post(`http://localhost:8000/AddOpinions/${id}`, { opinions: [opinions] });
-        setOpinions('');
+
+        let textarea = document.querySelector('textarea');
+        textarea.value = '';
+
+        await axios.post(`http://localhost:8000/AddOpinions/${id}`, { opinions: [opinions] }, { 
+          withCredentials: true,
+        });
       }
     } catch (e) {
       console.error(e);
@@ -379,8 +384,8 @@ export default function ArticleSeeMore() {
           </TabPanel>
           <TabPanel>
             <div className="flex flex-col gap-8">
-              {article.opinions.map((item, index) => (
-                <p key={index}>{item}</p>
+              {article.opinions.map((item) => (
+                <p>{item}</p>
               ))}
             </div>
             {currentUser ? (
