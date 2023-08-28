@@ -102,7 +102,7 @@ router.get("/get_user_data/:id", async (req, res) => {
       name: element.name,
       price: element.price,
       quantity: element.quantity,
-      weight: element.weight
+      weight: element.weight,
     }));
 
     let data = "";
@@ -113,11 +113,11 @@ router.get("/get_user_data/:id", async (req, res) => {
     return data.slice(0, -1);
   }
 
-  function totalCmdWeight (old_order) {
+  function totalCmdWeight(old_order) {
     let totalWeight = 0;
 
-    old_order.cart.forEach(element => {
-        totalWeight += element.weight * element.quantity;
+    old_order.cart.forEach((element) => {
+      totalWeight += element.weight * element.quantity;
     });
 
     return totalWeight;
@@ -173,6 +173,22 @@ router.get("/get_user_data/:id", async (req, res) => {
     return data;
   }
 
+  function jsonToCsvAddresses(addresses) {
+    let data = [];
+
+    for (const address of addresses) {
+      const row = {
+        Adresse: address.address,
+        Ville: address.city,
+        Code_postale: address.zipcode,
+        Pays: address.country,
+      };
+
+      data.push(row);
+    }
+    return data;
+  }
+
   let user = null;
 
   user = await userCollection.findOne({ _id: userId });
@@ -192,18 +208,20 @@ router.get("/get_user_data/:id", async (req, res) => {
 
   const generalInfos = jsonToCsv(user);
   const cmdInfos = jsonToCsvCommandes(user.old_orders);
+  const addressesInfos = jsonToCsvAddresses(user.data.addresses);
 
   const generalCsvHeaders = Object.keys(generalInfos).join(",");
   const generalCsvValues = Object.values(generalInfos).join(",");
 
-  let combinedCsvContent = null;
+  let cmdHeaders, addressesCsvHeaders = null;
+  let cmdValues, addressesValues = "";
+
+  combinedCsvContent = `${generalCsvHeaders}\n${generalCsvValues}`;
 
   if (cmdInfos.length > 0) {
-    const cmdHeaders = Object.keys(cmdInfos[0]).join(",");
-    let cmdValues = "";
+    cmdHeaders = Object.keys(cmdInfos[0]).join(",");
 
     cmdInfos.forEach((cmdInfo) => {
-
       const names = cmdInfo.Nom_article.split("\n");
       const prices = cmdInfo.Prix.split("\n");
       const quantity = cmdInfo.Quantité.split("\n");
@@ -228,9 +246,21 @@ router.get("/get_user_data/:id", async (req, res) => {
       }
     });
 
-    combinedCsvContent = `${generalCsvHeaders}\n${generalCsvValues}\n\n${cmdHeaders}\n${cmdValues}`;
+    combinedCsvContent += `\n\n${cmdHeaders}\n${cmdValues}`;
   } else {
-    combinedCsvContent = `${generalCsvHeaders}\n${generalCsvValues}\n\nAucune commande passée`;
+    combinedCsvContent += `\n\nAucune commande passées`;
+  }
+
+  if (addressesInfos.length > 0) {
+    addressesCsvHeaders = Object.keys(addressesInfos[0]).join(",");
+
+    addressesInfos.forEach(element => {
+      addressesValues += element.Adresse + "," + element.Ville + "," + element.Code_postale + "," + element.Pays + "\n";
+    });
+
+    combinedCsvContent += `\n\n${addressesCsvHeaders}\n${addressesValues}`;
+  } else {
+    combinedCsvContent += `\n\nAucune adresse enregistrée`;
   }
 
   const fileName = `user_${userId}.csv`;
