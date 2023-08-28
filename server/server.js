@@ -74,6 +74,9 @@ app.use('/', Promotion)
 const CreatePromotion = require('./routes/articles/createPromotion');
 app.use('/', CreatePromotion);
 
+const AddOpinions = require('./routes/articles/opinions');
+app.use('/', AddOpinions)
+
 // USERS
 
 const Users = require('./routes/users/index');

@@ -206,6 +206,11 @@ const articleSchema = new mongoose.Schema({
     reduction: {
         type: Number,
         default: 0
+    },
+    opinions: {
+        type: Array, 
+        default: [],
+        required: false
     }
 })
 

@@ -24,33 +24,36 @@ export default function HomePage(params) {
             <div
                 id="carrouselSwitchButton"
                 className="flex justify-evenly w-1/2">
-                <div
-                    className={`border border-transparent ${
-                        carrousel === "news"
-                            ? "border-4 border-b-[#4FBEB7] rounded"
-                            : ""
-                    }`}>
-                    <p onClick={newsCarrousel} className="cursor-pointer">
+                <div>
+                    <p
+                        onClick={newsCarrousel}
+                        className={`cursor-pointer ${
+                            carrousel === "news"
+                                ? "underline decoration-[#4FBEB7] underline-offset-[5px] decoration-4"
+                                : ""
+                        }`}>
                         Nouveautés
                     </p>
                 </div>
-                <div
-                    className={`border border-transparent ${
-                        carrousel === "promotion"
-                            ? "border-4 border-b-[#4FBEB7] rounded"
-                            : ""
-                    }`}>
-                    <p onClick={promotionCarrousel} className="cursor-pointer">
+                <div>
+                    <p
+                        onClick={promotionCarrousel}
+                        className={`cursor-pointer ${
+                            carrousel === "promotion"
+                                ? "underline decoration-[#4FBEB7] underline-offset-[5px] decoration-4"
+                                : ""
+                        }`}>
                         Promotions
                     </p>
                 </div>
-                <div
-                    className={`border border-transparent ${
-                        carrousel === "recommend"
-                            ? "border-4 border-b-[#4FBEB7] rounded"
-                            : ""
-                    }`}>
-                    <p onClick={recommendCarrousel} className="cursor-pointer">
+                <div>
+                    <p
+                        onClick={recommendCarrousel}
+                        className={`cursor-pointer ${
+                            carrousel === "recommend"
+                                ? "underline decoration-[#4FBEB7] underline-offset-[5px] decoration-4"
+                                : ""
+                        }`}>
                         Recommendations
                     </p>
                 </div>
