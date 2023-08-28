@@ -388,6 +388,83 @@ export default function ArticleSeeMore() {
                 </div>
               </div>
             </div>
+          ) : (
+            <div className="mt-10"></div>
+          )}
+        </div>
+        <div className="border rounded-xl w-full lg:w-2/5 ">
+          <p className="p-2 ml-5">Livraison</p>
+          <div className="flex gap-8">
+            <p className="p-2 ml-5">{article.price} €</p>
+            {article.reduction > 0 ? (
+              <p className="bg-green-500 font-bold text-white text-xl h-fit my-auto rounded-lg px-2">
+                -{article.reduction}%
+              </p>
+            ) : null}
+          </div>
+          {article.reduction > 0 ? (
+            <p className="p-2 ml-5 font-bold text-green-500">
+              Prix avec promotion :{" "}
+              {(article.price -
+                ((article.reduction * article.price) / 100)).toFixed(2)}
+              €
+            </p>
+          ) : null}
+          {endDate ? <p>Fin de la promotion dans : {remainingTime}</p> : null}
+          <div className="p-2 ml-5">
+            {article.stock === 0 ? (
+              <p className="text-red-600">Victime de son succès</p>
+            ) : article.stock === 1 ? (
+              <p className="text-orange-500">
+                Il ne reste plus que {article.stock} article en stock
+              </p>
+            ) : article.stock <= 5 ? (
+              <p className="text-orange-500">
+                Il ne reste plus que {article.stock} articles en stock
+              </p>
+            ) : (
+              <p className="text-[#4FBEB7]">
+                Il reste {article.stock} articles en stock
+              </p>
+            )}
+          </div>
+          <hr className="mx-5"></hr>
+          <div className="flex my-4 justify-evenly w-full mx-auto">
+            <input
+              {...disabledBtnProps}
+              onChange={(e) => setArticleQuantity(e.target.value)}
+              type="number"
+              id="nbArticles"
+              name="nbArticles"
+              defaultValue={1}
+              className="w-1/3 p-2 rounded-xl"
+              max={article.stock}
+            ></input>
+            <button
+              {...disabledBtnProps}
+              onClick={addToCart}
+              id="addToCartButton"
+              className={
+                (disabledBtnProps.disabled === true
+                  ? "bg-gray-200"
+                  : "bg-[#4FBEB7]") + " w-1/3 p-2 rounded-xl"
+              }
+            >
+              Commander
+            </button>
+          </div>
+
+          <div>
+            <Dropdown title={dropDownName}>
+              {parentArticle.articles.map((article) => (
+                <DropdownItem
+                  key={article._id}
+                  onSelect={() => handleChange(article)}
+                >
+                  {article.property}
+                </DropdownItem>
+              ))}
+            </Dropdown>
           </div>
           <div className="w-3/4 mx-auto mt-10">
             <Tabs>

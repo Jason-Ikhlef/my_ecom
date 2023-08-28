@@ -135,32 +135,33 @@ const Cart = () => {
             );
     }, [selectedOffer, currentShipping, totalWeight]);
 
-    const newOrder = async () => {
-        if (currentUser) {
-            await axios
-                .post(
-                    "http://localhost:8000/newOrder",
-                    { cart, totalPrice },
-                    { withCredentials: true }
-                )
-                .then((response) => {
-                    toast.success("Commande effectuée 💰");
-                    setCart([]);
-                    setTimeout(() => {
-                        window.location.href = "http://localhost:3000/history";
-                    }, 2000);
-                    setTotalPrice(0);
-                })
-                .catch((err) => {
-                    console.error(err);
-                });
-        } else {
-            setLogIn(true);
-            setCart([]);
-            setTotalPrice(0);
-            localStorage.removeItem("cart");
-        }
-    };
+  const newOrder = async () => {
+    if (currentUser) {
+      await axios
+        .post(
+          "http://localhost:8000/newOrder",
+          { cart, totalPrice, address, PaymentForm },
+          { withCredentials: true }
+        )
+        .then((response) => {
+          toast.success('Commande effectuée 💰')
+          setCart([]);
+          setTimeout(() => {
+            window.location.href = 'http://localhost:3000/history'
+          }, 2000);
+          setTotalPrice(0);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else {
+      setLogIn(true);
+      setCart([]);
+      setTotalPrice(0);
+      localStorage.removeItem("cart");
+    }
+  };
+
 
     const deleteArticle = async (articleId, price, quantity) => {
         if (currentUser) {
