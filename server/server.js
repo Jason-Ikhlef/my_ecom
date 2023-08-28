@@ -169,8 +169,11 @@ const setShipping = require('./routes/easypost/newShipping');
 app.use('/', setShipping);
 
 // DATA
-const getCSV = require('./routes/data/get');
-app.use('/', getCSV);
+const getGeneralUser = require('./routes/data/get');
+app.use('/', getGeneralUser);
+
+const getUniqueUser = require('./routes/data/show');
+app.use('/', getUniqueUser);
 
 // A deplacer 
 

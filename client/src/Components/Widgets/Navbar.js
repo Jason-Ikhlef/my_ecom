@@ -27,27 +27,6 @@ export default function Navbar() {
     fetchAnimals();
   }, []);
 
-  const handleClick = async (e) => {
-    e.preventDefault();
-    axios
-      .get(`http://localhost:8000/get_csv`, { responseType: "blob" })
-      .then((res) => {
-        const blobUrl = URL.createObjectURL(res.data);
-        const link = document.createElement("a");
-        link.href = blobUrl;
-
-        let date = new Date()
-        date = date.toLocaleDateString("fr").replaceAll("/", "-");
-  
-        link.download = `general_user_${date}.csv`;
-  
-        link.click();
-  
-        URL.revokeObjectURL(blobUrl);
-      })
-      .catch((err) => console.error(err));
-  };
-
   if (userLoading) {
     return <Loader />;
   }
@@ -129,8 +108,8 @@ export default function Navbar() {
                   <DropdownItem as="a" href="http://localhost:3000/admin/users">
                     Gestion des utilisateurs
                   </DropdownItem>
-                  <DropdownItem as="bouton" onClick={handleClick}>
-                    Exporter les données
+                  <DropdownItem as="a" href="http://localhost:3000/admin/data">
+                    Exporter des données
                   </DropdownItem>
                 </Dropdown>
               </div>

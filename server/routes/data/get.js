@@ -4,32 +4,18 @@ const fs = require("fs");
 const path = require('path');
 const { format } = require("@fast-csv/format");
 
-let date = new Date
-date = date.toLocaleDateString("fr").replaceAll("/", "-");
-const fileName = `general_user_${date}.csv`;
 const {
   userCollection,
   googleCollection,
   facebookCollection,
 } = require("../../mongo");
 
-router.get("/get_csv", async (req, res) => {
-
+router.get("/get_user_data", async (req, res) => {
+  
+  let date = new Date
+  date = date.toLocaleDateString("fr").replaceAll("/", "-");
+  const fileName = `general_user_${date}.csv`;
   const csvFile = fs.createWriteStream(fileName);
-
-  console.log("call");
-  //   function extractAddresses(addresses) {
-  //     return addresses.map(
-  //       (addr) => `${addr.address}, ${addr.zipcode} ${addr.city}, ${addr.country}`
-  //     );
-  //   }
-
-  //   function extractCards(cards) {
-  //     return cards.map((card) => `${card.name}: ${card.card}`);
-  //   }
-
-  // Commandes: item.old_orders.map((order) => JSON.stringify(order)),
-
 
   function averagePrice(old_orders) {
     let avgPrice = 0;
@@ -200,8 +186,6 @@ router.get("/get_csv", async (req, res) => {
   csvFile.on("finish", () => {
 
     const filePath = path.join(__dirname, `../../${fileName}`);
-
-    res.setHeader('Content-Disposition', `attachment; filename="${fileName}"`);
     
     res.status(200).download(filePath, fileName, (err) => {
       if (err) {
