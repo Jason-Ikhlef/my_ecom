@@ -44,7 +44,7 @@ function App() {
                 <Route path="/addresses" Component={Addresses} />
                 <Route path="/payments" Component={Payments} />
             </Routes>
-            <Footer />
+            {/* <Footer /> */}
         </Router>
     );
 }

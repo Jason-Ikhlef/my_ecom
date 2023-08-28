@@ -13,20 +13,48 @@ import { Dropdown } from "rsuite";
 import DropdownItem from "rsuite/esm/Dropdown/DropdownItem";
 
 export default function ArticleSeeMore() {
-    const [id, setId] = useState(null);
-    const [deleteId, setDeleteId] = useState(null);
-    const [article, setArticle] = useState(null);
-    const [parentArticle, setParentArticle] = useState(null);
-    const [articleQuantity, setArticleQuantity] = useState(1);
-    const [img, setImg] = useState("");
-    const [dropDownName, setDropDownName] = useState(null);
-    const [endDate, setEndDate] = useState(null);
-    const [dateDiff, setDateDiff] = useState(null);
-    const [remainingTime, setRemainingTime] = useState(null);
 
-    const currentDate = new Date();
+  const [id, setId] = useState(null);
+  const [deleteId, setDeleteId] = useState(null);
+  const [article, setArticle] = useState(null);
+  const [parentArticle, setParentArticle] = useState(null);
+  const [articleQuantity, setArticleQuantity] = useState(1);
+  const [img, setImg] = useState("");
+  const [dropDownName, setDropDownName] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [dateDiff, setDateDiff] = useState(null);
+  const [remainingTime, setRemainingTime] = useState(null);
+  const [opinions, setOpinions] = useState('');
 
-    console.log(currentDate);
+  const handleSubmitOpinion = async () => {
+    try {
+      if(opinions === '') {
+        toast('veuillez remplir le champ avant validation', {
+          hideProgressBar: true
+        })
+      } else {
+        toast('merci pour votre avis !', {
+          hideProgressBar: true
+        });
+        
+        let textarea = document.querySelector('textarea');
+        textarea.value = '';
+        
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
+
+        await axios.post(`http://localhost:8000/AddOpinions/${id}`, { opinions: [opinions] }, { 
+          withCredentials: true,
+        });
+        
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  const currentDate = new Date();
 
     const disabledBtnProps = {};
 
@@ -380,9 +408,6 @@ export default function ArticleSeeMore() {
                         <p>{article.caracteristics}</p>
                     </TabPanel>
                     <TabPanel>
-                        <p>Potentiels commentaires d'un article </p>
-                    </TabPanel>
-                    <TabPanel>
                         <p>Nos délais</p>
                     </TabPanel>
                     <TabPanel>
@@ -391,5 +416,50 @@ export default function ArticleSeeMore() {
                 </Tabs>
             </div>
         </div>
-    );
+      </div>
+      <div className="w-3/4 mx-auto mt-10">
+        <Tabs>
+          <TabList>
+            <Tab>Description</Tab>
+            <Tab>Caracteristique</Tab>
+            <Tab>Commentaires</Tab>
+            <Tab>Délai</Tab>
+            <Tab>Demandez conseil</Tab>
+          </TabList>
+          <TabPanel>
+            <p>{article.description}</p>
+          </TabPanel>
+          <TabPanel>
+            <p>{article.caracteristics}</p>
+          </TabPanel>
+          <TabPanel>
+            <div className="flex flex-col gap-8">
+              {article.opinions.map((item) => (
+                <p>{item}</p>
+              ))}
+            </div>
+            {currentUser ? (
+              <div>
+                <textarea
+                  name="opinions"
+                  value={opinions}
+                  onChange={event => setOpinions(event.target.value)}
+                  rows={4}
+                  cols={50}
+                />
+                <button onClick={handleSubmitOpinion} type="submit" className='mt-5 bg-[#4FBEB7] p-2 mb-2'>Valider</button>
+            </div>
+            ) : null}
+
+          </TabPanel>
+          <TabPanel>
+            <p>Nos délais</p>
+          </TabPanel>
+          <TabPanel>
+            <p>Potentiel form de prise de contact avec un admin </p>
+          </TabPanel>
+        </Tabs>
+      </div>
+    </div>
+  );
 }
