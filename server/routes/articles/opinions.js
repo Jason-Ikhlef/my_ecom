@@ -19,7 +19,11 @@ router.post("/AddOpinions/:id", async (req, res) => {
         }
         
         const userEmail = req.session.user.email;
-        let completeOpinions = `${userEmail} : ${opinions}`;
+        
+        let userEmailSplit = userEmail.split('@');
+        let pseudo = userEmailSplit[0];
+
+        let completeOpinions = `${pseudo} : ${opinions}`;
         
         article.opinions.push(completeOpinions);
 

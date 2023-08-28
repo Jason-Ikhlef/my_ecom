@@ -28,16 +28,25 @@ export default function ArticleSeeMore() {
   const handleSubmitOpinion = async () => {
     try {
       if(opinions === '') {
-        alert('veuillez remplir le champ avant validation')
+        toast('veuillez remplir le champ avant validation', {
+          hideProgressBar: true
+        })
       } else {
-        alert('merci pour votre avis !');
-
+        toast('merci pour votre avis !', {
+          hideProgressBar: true
+        });
+        
         let textarea = document.querySelector('textarea');
         textarea.value = '';
+        
+        setTimeout(() => {
+          window.location.reload();
+        }, 1500);
 
         await axios.post(`http://localhost:8000/AddOpinions/${id}`, { opinions: [opinions] }, { 
           withCredentials: true,
         });
+        
       }
     } catch (e) {
       console.error(e);
