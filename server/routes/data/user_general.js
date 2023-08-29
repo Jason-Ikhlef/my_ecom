@@ -100,13 +100,13 @@ router.get("/get_user_data", async (req, res) => {
   }
 
   function jsonToCsv(items) {
-    const csvRows = [];
+    const data = [];
     
     for (const item of items) {
 
         const wtgCmd = waitingCmd(item.old_orders);
 
-      const csvRow = {
+      const row = {
         Email: item.email,
         Adresses_enregistrées: item.data.addresses.length,
         Cartes_enregistrées: item.data.cards.length,
@@ -125,10 +125,10 @@ router.get("/get_user_data", async (req, res) => {
         Utilisateurs_facebook: totalFbUser,
       };
 
-      csvRows.push(csvRow);
+      data.push(row);
     }
 
-    return csvRows;
+    return data;
   }
 
   const obj = await userCollection.find({});
@@ -138,10 +138,6 @@ router.get("/get_user_data", async (req, res) => {
   const totalUser = obj.length;
   const totalGoogleUser = obj2.length;
   const totalFbUser = obj3.length;
-
-  console.log(totalUser);
-  console.log(totalGoogleUser);
-  console.log(totalFbUser);
 
   function mergeSets(targetSet, sourceSet) {
     for (const sourceObj of sourceSet) {

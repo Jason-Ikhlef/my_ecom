@@ -26,6 +26,8 @@ export default function DataManager() {
         id = e.target.value
     } else if (e.target.name === "user_general") {
         endpoint = "get_user_data"
+    } else if (e.target.name === "article_general") {
+      endpoint = "get_article_data";
     }
 
     axios
@@ -42,8 +44,10 @@ export default function DataManager() {
 
         if (endpoint === "get_user_data" && id !== null) {
           link.download = `user_data_${id}.csv`;
-        } else {
+        } else if (endpoint === "get_user_data") {
           link.download = `general_user_${date}.csv`;
+        } else if (endpoint === "get_article_data") {
+          link.download = `general_article_${date}.csv`;
         }
 
         console.log(link)
@@ -110,6 +114,11 @@ export default function DataManager() {
             Afficher les utilisateurs
           </button>
         )}
+      </div>
+      <div>
+        <button onClick={handleClick} name="article_general">
+          Données utilisateur général
+        </button>
       </div>
     </div>
   );
