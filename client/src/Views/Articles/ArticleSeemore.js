@@ -29,13 +29,9 @@ export default function ArticleSeeMore() {
   const handleSubmitOpinion = async () => {
     try {
       if(opinions === '') {
-        toast('veuillez remplir le champ avant validation', {
-          hideProgressBar: true
-        })
+        toast.error('Veuillez remplir le champ avant validation')
       } else {
-        toast('merci pour votre avis !', {
-          hideProgressBar: true
-        });
+        toast.success('Merci pour votre avis !');
         
         let textarea = document.querySelector('textarea');
         textarea.value = '';
@@ -406,24 +402,25 @@ export default function ArticleSeeMore() {
                 <p>{article.caracteristics}</p>
               </TabPanel>
               <TabPanel>
-                <div className="flex flex-col gap-8">
+                <div className="flex flex-col gap-4">
                   {article.opinions.map((item, index) => (
-                    <p key={index}>{item}</p>
+                    <p key={index} className="p-2">{item}</p>
                   ))}
                 </div>
                 {currentUser ? (
-                  <div>
+                  <div className="flex justify-between p-2 gap-2 rounded-2xl mt-5 bg-[#C1E1C1]">
                     <textarea
                       name="opinions"
                       value={opinions}
+                      className="resize-none w-full bg-[#C1E1C1] border rounded-xl pl-2"
                       onChange={(event) => setOpinions(event.target.value)}
-                      rows={4}
+                      rows={1}
                       cols={50}
                     />
                     <button
                       onClick={handleSubmitOpinion}
                       type="submit"
-                      className="mt-5 bg-[#4FBEB7] p-2 mb-2"
+                      className="bg-[#4FBEB7] px-3 rounded-2xl"
                     >
                       Valider
                     </button>
