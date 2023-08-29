@@ -8,7 +8,6 @@ const {
   googleCollection,
   facebookCollection,
 } = require("../../mongo");
-const { log } = require("console");
 
 router.get("/get_article_data", async (req, res) => {
   let date = new Date();

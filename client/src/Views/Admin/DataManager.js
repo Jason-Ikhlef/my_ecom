@@ -28,6 +28,8 @@ export default function DataManager() {
         endpoint = "get_user_data"
     } else if (e.target.name === "article_general") {
       endpoint = "get_article_data";
+    } else if (e.target.name === "categorie_general") {
+      endpoint = "get_categorie_data";
     }
 
     axios
@@ -48,10 +50,9 @@ export default function DataManager() {
           link.download = `general_user_${date}.csv`;
         } else if (endpoint === "get_article_data") {
           link.download = `general_article_${date}.csv`;
+        } else if (endpoint === "get_categorie_data") {
+          link.download = `general_categorie_${date}.csv`
         }
-
-        console.log(link)
-
 
         link.click();
 
@@ -117,7 +118,12 @@ export default function DataManager() {
       </div>
       <div>
         <button onClick={handleClick} name="article_general">
-          Données utilisateur général
+          Données articles général
+        </button>
+      </div>
+      <div>
+        <button onClick={handleClick} name="categorie_general">
+          Données catégories général
         </button>
       </div>
     </div>

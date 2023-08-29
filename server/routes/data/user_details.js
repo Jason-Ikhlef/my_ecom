@@ -108,6 +108,8 @@ router.get("/get_user_data/:id", async (req, res) => {
       data += item[target] + "," + "\n";
     });
 
+    console.log(data);
+
     return data.slice(0, -1);
   }
 
