@@ -189,6 +189,23 @@ router.get("/get_user_data/:id", async (req, res) => {
     return data;
   }
 
+  function jsonToCsvCart(cart) {
+    let data = [];
+
+    for (const item of cart) {
+      const row = {
+        id: item.articleId,
+        Nom_article: item.name,
+        Prix: item.price,
+        Quantité: item.quantity,
+        Poids: item.weight,
+      };
+
+      data.push(row);
+    }
+    return data;
+  }
+
   let user = null;
 
   user = await userCollection.findOne({ _id: userId });
@@ -209,12 +226,13 @@ router.get("/get_user_data/:id", async (req, res) => {
   const generalInfos = jsonToCsv(user);
   const cmdInfos = jsonToCsvCommandes(user.old_orders);
   const addressesInfos = jsonToCsvAddresses(user.data.addresses);
+  const cartInfos = jsonToCsvCart(user.cart);
 
   const generalCsvHeaders = Object.keys(generalInfos).join(",");
   const generalCsvValues = Object.values(generalInfos).join(",");
 
-  let cmdHeaders, addressesCsvHeaders = null;
-  let cmdValues, addressesValues = "";
+  let cmdHeaders,addressesCsvHeaders, cartHeader = null;
+  let cmdValues, addressesValues, cartValues = "";
 
   combinedCsvContent = `${generalCsvHeaders}\n${generalCsvValues}`;
 
@@ -246,7 +264,7 @@ router.get("/get_user_data/:id", async (req, res) => {
       }
     });
 
-    combinedCsvContent += `\n\n${cmdHeaders}\n${cmdValues}`;
+    combinedCsvContent += `\n\nHistorique des commandes :\n${cmdHeaders}\n${cmdValues}`;
   } else {
     combinedCsvContent += `\n\nAucune commande passées`;
   }
@@ -254,13 +272,43 @@ router.get("/get_user_data/:id", async (req, res) => {
   if (addressesInfos.length > 0) {
     addressesCsvHeaders = Object.keys(addressesInfos[0]).join(",");
 
-    addressesInfos.forEach(element => {
-      addressesValues += element.Adresse + "," + element.Ville + "," + element.Code_postale + "," + element.Pays + "\n";
+    addressesInfos.forEach((element) => {
+      addressesValues +=
+        element.Adresse +
+        "," +
+        element.Ville +
+        "," +
+        element.Code_postale +
+        "," +
+        element.Pays +
+        "\n";
     });
 
-    combinedCsvContent += `\n\n${addressesCsvHeaders}\n${addressesValues}`;
+    combinedCsvContent += `\n\nListe des adresses :\n${addressesCsvHeaders}\n${addressesValues}`;
   } else {
     combinedCsvContent += `\n\nAucune adresse enregistrée`;
+  }
+
+  if (cartInfos.length > 0) {
+    cartHeader = Object.keys(cartInfos[0]).join(",");
+
+    cartInfos.forEach((element) => {
+      cartValues +=
+        element.id +
+        "," +
+        element.Nom_article +
+        "," +
+        element.Prix +
+        "," +
+        element.Quantité +
+        "," +
+        element.Poids +
+        "\n";
+    });
+
+    combinedCsvContent += `\n\nContenu du panier :\n${cartHeader}\n${cartValues}`;
+  } else {
+    combinedCsvContent += `\n\nPanier vide`;
   }
 
   const fileName = `user_${userId}.csv`;
