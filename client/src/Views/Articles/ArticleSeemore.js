@@ -270,6 +270,18 @@ export default function ArticleSeeMore() {
               ) : (
                 <div className="mt-10"></div>
               )}
+              <div className="flex justify-center">
+                <Dropdown title={dropDownName} className="text-center">
+                  {parentArticle.articles.map((article) => (
+                    <DropdownItem
+                      key={article._id}
+                      onSelect={() => handleChange(article)}
+                    >
+                      {article.property}
+                    </DropdownItem>
+                  ))}
+                </Dropdown>
+              </div>
             </div>
             <div className="border rounded-xl w-full lg:w-2/5 ">
               <p className="p-2 ml-5">Livraison</p>
@@ -335,18 +347,6 @@ export default function ArticleSeeMore() {
                 </button>
               </div>
       
-              <div>
-                <Dropdown title={dropDownName}>
-                  {parentArticle.articles.map((article) => (
-                    <DropdownItem
-                      key={article._id}
-                      onSelect={() => handleChange(article)}
-                    >
-                      {article.property}
-                    </DropdownItem>
-                  ))}
-                </Dropdown>
-              </div>
               <hr className="mx-5"></hr>
               <div className="flex flex-col gap-4">
                 <div className="flex my-4 ml-5 gap-8 w-full mx-auto">
