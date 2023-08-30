@@ -14,29 +14,29 @@ const CartDropDown = () => {
     if (currentUser && !userLoading) {
       let price = 0;
       let quantity = 0;
-      currentUser.cart.map((item) => {
+      currentUser.cart.forEach((item) => {
         price += item.quantity * item.price;
         quantity += item.quantity;
       });
 
       setTotalPrice(price);
-      setTotalQuantity(quantity);
+      setTotalQuantity(quantity > 99 ? "99+" : quantity);
       setCart(currentUser.cart);
-      if (totalQuantity > 99) setTotalQuantity("99+");
     } else {
       const storage = JSON.parse(localStorage.getItem("cart")) || [];
       let price = 0;
       let quantity = 0;
-      storage.map((item) => {
+      storage.forEach((item) => {
         price += item.quantity * item.price;
         quantity += item.quantity;
       });
 
-      setTotalQuantity(quantity);
+      setTotalQuantity(quantity > 99 ? "99+" : quantity);
       setTotalPrice(price);
       setCart(storage);
     }
   }, [currentUser, userLoading]);
+
 
   const deleteArticle = async (articleId, price, quantity) => {
     if (currentUser) {
@@ -111,7 +111,7 @@ const CartDropDown = () => {
                     className="w-[100px] h-[100px]"
                   />
                   <div className="flex flex-col w-1/3">
-                    <p>{item.price} €</p>
+                    <p>{item.price.toFixed(2)} €</p>
                     <p className="whitespace-normal text-[12px]">{item.name}</p>
                     <p>Qté : {item.quantity}</p>
                     <img

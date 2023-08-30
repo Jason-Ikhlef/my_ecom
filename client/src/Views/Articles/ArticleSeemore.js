@@ -284,7 +284,10 @@ export default function ArticleSeeMore() {
               </div>
             </div>
             <div className="border rounded-xl w-full lg:w-2/5 ">
-              <p className="p-2 ml-5">Livraison</p>
+              <div className="flex justify-between">
+                <p className="p-2 ml-5">Livraison</p>
+                {endDate ? <p className="font-bold p-2 text-green-500">Fin de la promotion dans : {remainingTime}</p> : null}
+              </div>
               <div className="flex gap-8">
                 <p className="p-2 ml-5">{article.price} €</p>
                 {article.reduction > 0 ? (
@@ -302,7 +305,6 @@ export default function ArticleSeeMore() {
                   €
                 </p>
               ) : null}
-              {endDate ? <p>Fin de la promotion dans : {remainingTime}</p> : null}
                 <div className="p-2 ml-5">
                   {article.stock === 0 ? (
                     <p className="text-red-600">Victime de son succès</p>

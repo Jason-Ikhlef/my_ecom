@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Link } from "react-router-dom";
 import NewsCarrousel from "../../Components/Carrousel/NewsCarrousel";
 import PromotionCarrousel from "../../Components/Carrousel/PromotionCarrousel";
@@ -6,6 +7,8 @@ import RecommendCarrousel from "../../Components/Carrousel/RecommendCarrousel";
 
 export default function HomePage(params) {
     const [carrousel, setCarrousel] = useState("news");
+    const [getPromo, setGetPromo] = useState(null);
+
 
     const newsCarrousel = (e) => {
         setCarrousel("news");
@@ -18,6 +21,14 @@ export default function HomePage(params) {
     const recommendCarrousel = (e) => {
         setCarrousel("recommend");
     };
+
+    useEffect(() => {
+        axios.get("http://localhost:8000/get_promotions").then((res) => {
+            if (res.data.salePeriod === true) {
+                setGetPromo(res.data.salePeriod);
+            }
+        });
+    });
 
     return (
         <div className="h-[780px] flex flex-col justify-evenly items-center">
@@ -35,17 +46,20 @@ export default function HomePage(params) {
                         Nouveautés
                     </p>
                 </div>
-                <div>
-                    <p
-                        onClick={promotionCarrousel}
-                        className={`cursor-pointer ${
-                            carrousel === "promotion"
-                                ? "underline decoration-[#4FBEB7] underline-offset-[5px] decoration-4"
-                                : ""
-                        }`}>
-                        Promotions
-                    </p>
-                </div>
+                {
+                    getPromo ? 
+                    <div>
+                        <p
+                            onClick={promotionCarrousel}
+                            className={`cursor-pointer ${
+                                carrousel === "promotion"
+                                    ? "underline decoration-[#4FBEB7] underline-offset-[5px] decoration-4"
+                                    : ""
+                            }`}>
+                            Promotions
+                        </p>
+                    </div> : null
+                }
                 <div>
                     <p
                         onClick={recommendCarrousel}
