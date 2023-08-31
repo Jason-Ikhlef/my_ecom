@@ -112,7 +112,7 @@ export default function AdminCategories() {
   return (
     <div>
       <div className="flex w-3/4 justify-center mx-auto mt-8">
-        <button onClick={handleClick} name="create" className="mb-4">
+        <button onClick={handleClick} name="create" className="mb-4 1/4 bg-[#C1E1C1] p-2 rounded-xl">
           Créer un article
         </button>
       </div>
@@ -125,35 +125,43 @@ export default function AdminCategories() {
             onChange={(e) => setNewShipping(e.target.value)}
           />
         </div>
-        <button onClick={setShipping}>Valider</button>
+        <button className="bg-[#4FBEB7] p-2 rounded-xl w-1/4 mx-auto" onClick={setShipping}>Valider</button>
       </form>
       <div>
-        <form className="flex w-3/4 justify-center mx-auto mt-8">
-          <p>Créer une période de promotion :</p>
-          <div className="flex gap-8">
-            <label>Réduction sur tout le site (en %)</label>
-            <input
-              className="w-fit mx-auto border"
-              defaultValue={currentPromotion}
-              onChange={(e) => setCurrentPromotion(e.target.value)}
-            ></input>
-            <label>Date de début :</label>
-            <input
-              type="date"
-              defaultValue={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-            ></input>
-            <label>Date de fin :</label>
-            <input
-              type="date"
-              defaultValue={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-            ></input>
+        <form className="flex flex-col w-1/2 justify-center mx-auto mt-8">
+          <p className="text-center mb-8 bg-[#C1E1C1] w-1/2 mx-auto p-2 rounded-xl">Créer une période de promotion :</p>
+          <div className="flex flex-col gap-8">
+            <div>
+              <label>Réduction sur tout le site (en %)</label>
+              <input
+                className="w-fit mx-auto border"
+                defaultValue={currentPromotion}
+                onChange={(e) => setCurrentPromotion(e.target.value)}
+              ></input>
+            </div>
+            <div className="flex justify-between">
+              <div>
+                <label>Date de début :</label>
+                <input
+                  type="date"
+                  defaultValue={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                ></input>
+              </div>
+              <div>
+                <label>Date de fin :</label>
+                <input
+                  type="date"
+                  defaultValue={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                ></input>
+              </div>
+            </div>
           </div>
           <button
             onClick={setPromotionPeriod}
             name="promotion"
-            className="mb-4"
+            className="mb-8 mt-4 bg-[#4FBEB7] w-1/2 mx-auto p-2 rounded-xl"
           >
             Valider
           </button>

@@ -483,7 +483,7 @@ export default function UpdateArticle({ idArticle }) {
                             placeholder="Description de l'article"
                         />
                         <hr className="my-2"></hr>
-                        <div className="w-full flex justify-center">
+                        <div className="w-full flex flex-col justify-center">
                             <label htmlFor="price" className="underline">
                                 Prix de l'article
                             </label>
@@ -624,7 +624,7 @@ export default function UpdateArticle({ idArticle }) {
                             )}
                         </div>
                         <hr className="my-2"></hr>
-                        <div className="flex justify-evenly">
+                        <div className="flex justify-between">
                             <label htmlFor="recommanded" className="underline">
                                 Recommander l'article :
                             </label>
@@ -635,7 +635,7 @@ export default function UpdateArticle({ idArticle }) {
                                 checked={recommanded}
                             />
                         </div>
-                        <div className="flex justify-evenly">
+                        <div className="flex justify-between">
                             <label htmlFor="newArticle" className="underline">
                                 Mettre l'article en nouveauté :
                             </label>
@@ -646,7 +646,7 @@ export default function UpdateArticle({ idArticle }) {
                                 checked={newArticleState}
                             />
                         </div>
-                        <div className="w-full flex justify-center">
+                        <div className="w-full flex justify-between">
                             <label htmlFor="weight" className="underline">
                                 Poids de l'article
                             </label>
@@ -679,7 +679,7 @@ export default function UpdateArticle({ idArticle }) {
                                     </Dropdown>
                                     <div
                                         onClick={() => setIsNew(true)}
-                                        className="cursor-pointer">
+                                        className="cursor-pointer underline">
                                         Nouvel attribut
                                     </div>
                                 </>

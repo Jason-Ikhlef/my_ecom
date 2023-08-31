@@ -15,10 +15,6 @@ export default function AdminCategories ()
         {
             setState("create");
         }
-        else if (e.target.id === 'update')
-        {
-            setState("update");
-        }
         else if (e.target.id === 'delete')
         {
             setState("delete");
@@ -41,7 +37,6 @@ export default function AdminCategories ()
         <div>
             <div className="flex w-3/4 mx-auto justify-center gap-8 mt-8">
                 <button onClick={handleClick} id="create">Créer une catégorie</button>
-                <button onClick={handleClick} id="update">Modifier une catégorie</button>
                 <button onClick={handleClick} id="delete">Supprimer une catégorie</button>
             </div>
             {

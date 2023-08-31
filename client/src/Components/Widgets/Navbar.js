@@ -3,6 +3,8 @@ import axios from "axios";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "../../assets/LogoImage.png";
 import profilPicture from "../../assets/user-line.svg";
+import logoutPicture from "../../assets/door-open-line.svg";
+import LogOut from "../../Components/Widgets/LogOut";
 import User from "../Widgets/User";
 import { Dropdown } from "rsuite";
 import DropdownItem from "rsuite/esm/Dropdown/DropdownItem";
@@ -114,6 +116,54 @@ export default function Navbar() {
                 </Dropdown>
               </div>
             ) : null}
+            {currentUser ? (
+                <div className="flex items-center justify-center gap-8 mr-[-50px]">
+                    <Dropdown title='Profil' className="text-center" trigger={'hover'}>
+                        <Link
+                            to="/profil"
+                            className="text-sm flex bg-[#4FBEB7] p-2 rounded-lg">
+                            <img src={profilPicture} alt="Profil" className="w-5" />
+                            Profil
+                        </Link>
+                        <div className="text-sm flex bg-[#4FBEB7] p-2 rounded-lg cursor-pointer" onClick={LogOut}>
+                            Déconnexion
+                        </div>
+                    </Dropdown>
+                    <div>
+                        {currentUser.admin ? (
+                            <div>
+                                <Dropdown title="Gestion admin">
+                                    <DropdownItem
+                                        as="a"
+                                        href="http://localhost:3000/admin/articles">
+                                        Gestion des articles
+                                    </DropdownItem>
+                                    <DropdownItem
+                                        as="a"
+                                        href="http://localhost:3000/admin/categories">
+                                        Gestion des categories
+                                    </DropdownItem>
+                                </Dropdown>
+                            </div>
+                        ) : null}
+                    </div>
+                </div>
+            ) : (
+                <div className="flex flex-col items-center">
+                    <div className="bg-[#4FBEB7] rounded-xl px-2">
+                        <Link
+                            to="/login"
+                            className="text-sm flex bg-[#4FBEB7] py-2 rounded-lg">
+                            <img
+                                src={profilPicture}
+                                alt="Profil"
+                                className="w-5"
+                            />
+                            Se connecter
+                        </Link>
+                    </div>
+                </div>
+            )}
           </div>
         </div>
       ) : (

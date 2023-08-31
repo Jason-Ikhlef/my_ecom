@@ -287,3 +287,14 @@ code {
 #carrouselSwitchButton div:nth-child(3) p:focus::after {
   transform: translate3d(0, 0, 0);
 }
+
+.card {
+  background-image: url(../src/assets/bg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.bar 
+{
+  filter: invert(96%) sepia(3%) saturate(624%) hue-rotate(184deg) brightness(90%) contrast(90%);
+}

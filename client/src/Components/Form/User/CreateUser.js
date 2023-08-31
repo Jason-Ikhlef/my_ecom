@@ -23,6 +23,7 @@ export default function CreateUser() {
 
     try {
       const response = await axios.post('http://localhost:8000/createUser', form);
+      console.log(response);
       if (response.data === 'success') {
         toast.success('Votre compte a été crée avec succès !');
         setTimeout(() => {

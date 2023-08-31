@@ -44,7 +44,7 @@ export default function UserProfilPage ()
             <div>
                 <div className="border w-3/4 mx-auto mt-10 rounded-3xl">
                     <div className="bg-[#C1E1C1] rounded-t-3xl relative p-8">
-                        <h1 className="text-center text-3xl text-slate-400">Bonjour {currentUser.email}</h1>
+                        <h1 className="text-center text-3xl text-slate-400">Bonjour {currentUser.email.split('@')[0]}</h1>
                         <img src={profilPicture} alt="profilPicture" className="w-[100px] h-[100px] absolute bg-[#4FBEB7] rounded-full border-8"></img>
                     </div>
                     <div className="mt-2 bg-[#4FBEB7]">
@@ -61,26 +61,29 @@ export default function UserProfilPage ()
                         }
                     </div>
                 </div>
-                <div className="flex flex-wrap">
-                    <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={(e) => {setUpdate(true)}}>
-                        Modifier
-                    </p>
-                    <Link to="/history" className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer">
-                        Voir Historique
-                    </Link>
-                    <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={LogOut}>
-                        Se déconnecter
-                    </p>
-                    <p className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={deleteOnClick}>
-                        Supprimer
-                    </p>
-                    <Link to="/addresses" className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer">
-                        Adresses
-                    </Link>
-                    <Link to="/payments" className="mt-10 w-fit mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer">
-                        Moyens de paiement
-                    </Link>
-                </div>
+                {
+                    !update ? 
+                    <div className="flex flex-col w-1/2 mx-auto gap-6">
+                        <p className="mt-8 w-1/4 text-center mx-auto p-2 rounded-3xl bg-[#C1E1C1] cursor-pointer" onClick={(e) => {setUpdate(true)}}>
+                            Modifier
+                        </p>
+                        <Link to="/history" className="w-1/4 text-center mx-auto p-2 rounded-3xl bg-[#C1E1C1] cursor-pointer">
+                            Voir Historique
+                        </Link>
+                        <Link to="/addresses" className="w-1/4 text-center mx-auto p-2 rounded-3xl bg-[#C1E1C1] cursor-pointer">
+                            Adresses
+                        </Link>
+                        <Link to="/payments" className="w-1/4 text-center mx-auto p-2 rounded-3xl bg-[#C1E1C1] cursor-pointer">
+                            Moyens de paiement
+                        </Link>
+                        <p className="w-1/4 text-center mx-auto p-2 rounded-3xl bg-[#C1E1C1] cursor-pointer" onClick={LogOut}>
+                            Se déconnecter
+                        </p>
+                        <p className="w-1/4 text-center mx-auto p-2 rounded-3xl bg-[#4FBEB7] cursor-pointer" onClick={deleteOnClick}>
+                            Supprimer
+                        </p>       
+                    </div> : null
+                }
                 {
                     !currentUser.subscribe.month && !currentUser.subscribe.year ? (
                     <div>
@@ -93,7 +96,10 @@ export default function UserProfilPage ()
                 
                 {
                     update ? 
-                    <UpdateUser /> : 
+                    <div>
+                        <p className="text-xl mx-auto mt-6 cursor-pointer w-fit bg-[#C1E1C1] p-2 rounded-xl" onClick={() => {setUpdate(null)}}>Annuler</p>
+                        <UpdateUser />  
+                    </div> :
                     null
                 }
             </div>

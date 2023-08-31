@@ -14,7 +14,7 @@ const CartDropDown = () => {
     if (currentUser && !userLoading) {
       let price = 0;
       let quantity = 0;
-      currentUser.cart.map((item) => {
+      currentUser.cart.forEach((item) => {
         price += item.quantity * item.price;
         quantity += item.quantity;
       });
@@ -22,12 +22,11 @@ const CartDropDown = () => {
       setTotalPrice(price);
       setTotalQuantity(quantity);
       setCart(currentUser.cart);
-      if (totalQuantity > 99) setTotalQuantity("99+");
     } else {
       const storage = JSON.parse(localStorage.getItem("cart")) || [];
       let price = 0;
       let quantity = 0;
-      storage.map((item) => {
+      storage.forEach((item) => {
         price += item.quantity * item.price;
         quantity += item.quantity;
       });
@@ -37,6 +36,7 @@ const CartDropDown = () => {
       setCart(storage);
     }
   }, [currentUser, userLoading]);
+
 
   const deleteArticle = async (articleId, price, quantity) => {
     if (currentUser) {
@@ -50,8 +50,7 @@ const CartDropDown = () => {
           const newPrice = totalPrice - quantity * price;
           const newQuantity = totalQuantity - quantity;
           setTotalPrice(newPrice);
-          if (newQuantity > 99) setTotalQuantity("99+");
-          else setTotalQuantity(newQuantity);
+          setTotalQuantity(newQuantity);
           setCart(response.data);
         })
         .catch((err) => {
@@ -99,7 +98,7 @@ const CartDropDown = () => {
         <div className="flex flex-col border-8 h-[425px] bg-white justify-around">
           <div className="flex gap-4 mb-2 p-2">
             <p className="text-xl">Mon panier, </p>
-            <p className="text-xl">{totalQuantity} articles</p>
+            <p className="text-xl">{totalQuantity > 99 ? `+ de 99` : totalQuantity} articles</p>
           </div>
           <div className="h-[200px] overflow-auto">
             {cart.map((item, index) => (
@@ -111,7 +110,7 @@ const CartDropDown = () => {
                     className="w-[100px] h-[100px]"
                   />
                   <div className="flex flex-col w-1/3">
-                    <p>{item.price} €</p>
+                    <p>{item.price.toFixed(2)} €</p>
                     <p className="whitespace-normal text-[12px]">{item.name}</p>
                     <p>Qté : {item.quantity}</p>
                     <img
