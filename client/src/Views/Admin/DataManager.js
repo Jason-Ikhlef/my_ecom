@@ -68,56 +68,36 @@ export default function DataManager() {
   };
 
   return (
-    <div>
-      <div>
-        <button onClick={handleClick} name="global_data">
-          Données globales du site
-        </button>
-      </div>
-      <div>
-        <button onClick={handleClick} name="article_general">
-          Données articles général
-        </button>
-      </div>
-      <div>
-        <button onClick={handleClick} name="categorie_general">
-          Données catégories général
-        </button>
-      </div>
-      <div>
-        <button onClick={handleClick} name="user_general">
-          Données utilisateur général
-        </button>
-      </div>
+    <div className="flex flex-col gap-6 w-1/2 mx-auto text-center mt-6">
       <div>
         {userDisplay ? (
           <>
-            <button onClick={() => setUserDisplay(false)}>
+            <button onClick={() => setUserDisplay(false)} className="bg-[#4FBEB7] p-2 rounded-xl mb-6">
               Masquer les utilisateurs
             </button>
             {userList ? (
-              <table>
-                <thead>
+              <table className="w-full">
+                <thead className="bg-[#C1E1C1]">
                   <tr>
-                    <th>Email</th>
-                    <th>Admin</th>
-                    <th>Abonnement</th>
-                    <th>Données</th>
+                    <th className="p-2">Email</th>
+                    <th className="p-2">Admin</th>
+                    <th className="p-2">Abonnement</th>
+                    <th className="p-2">Données</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody className="border">
                   {userList.map((user) => (
-                    <tr key={user._id}>
-                      <td>{user.email}</td>
-                      <td>{user.admin ? "oui" : "non"}</td>
-                      <td>
+                    <tr key={user._id} className="border">
+                      <td className="p-2">{user.email}</td>
+                      <td className="p-2">{user.admin ? "oui" : "non"}</td>
+                      <td className="p-2">
                         {user.subscribed.month
                           ? "Mensuel"
                           : user.subscribed.year
                           ? "Annuel"
                           : "Aucun"}
                       </td>
-                      <td>
+                      <td className="p-2">
                         {" "}
                         <button
                           onClick={handleClick}
@@ -136,11 +116,36 @@ export default function DataManager() {
             )}
           </>
         ) : (
-          <button onClick={() => setUserDisplay(true)}>
+          <button onClick={() => setUserDisplay(true)} className="bg-[#4FBEB7] p-2 rounded-xl">
             Afficher les utilisateurs
           </button>
         )}
       </div>
+      {
+        !userDisplay ?
+        <div className="flex flex-col gap-6 ">
+          <div>
+            <button onClick={handleClick} name="global_data" className="bg-[#C1E1C1] p-2 rounded-xl">
+              Données globales du site
+            </button>
+          </div>
+          <div>
+            <button onClick={handleClick} name="article_general" className="bg-[#C1E1C1] p-2 rounded-xl">
+              Données articles général
+            </button>
+          </div>
+          <div>
+            <button onClick={handleClick} name="categorie_general" className="bg-[#C1E1C1] p-2 rounded-xl">
+              Données catégories général
+            </button>
+          </div>
+          <div>
+            <button onClick={handleClick} name="user_general" className="bg-[#C1E1C1] p-2 rounded-xl">
+              Données utilisateur général
+            </button>
+          </div>
+        </div> : null
+      }
     </div>
   );
 }
