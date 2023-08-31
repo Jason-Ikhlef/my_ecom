@@ -20,7 +20,7 @@ const CartDropDown = () => {
       });
 
       setTotalPrice(price);
-      setTotalQuantity(quantity > 99 ? "99+" : quantity);
+      setTotalQuantity(quantity);
       setCart(currentUser.cart);
     } else {
       const storage = JSON.parse(localStorage.getItem("cart")) || [];
@@ -31,7 +31,7 @@ const CartDropDown = () => {
         quantity += item.quantity;
       });
 
-      setTotalQuantity(quantity > 99 ? "99+" : quantity);
+      setTotalQuantity(quantity);
       setTotalPrice(price);
       setCart(storage);
     }
@@ -50,8 +50,7 @@ const CartDropDown = () => {
           const newPrice = totalPrice - quantity * price;
           const newQuantity = totalQuantity - quantity;
           setTotalPrice(newPrice);
-          if (newQuantity > 99) setTotalQuantity(99);
-          else setTotalQuantity(newQuantity);
+          setTotalQuantity(newQuantity);
           setCart(response.data);
         })
         .catch((err) => {
@@ -99,7 +98,7 @@ const CartDropDown = () => {
         <div className="flex flex-col border-8 h-[425px] bg-white justify-around">
           <div className="flex gap-4 mb-2 p-2">
             <p className="text-xl">Mon panier, </p>
-            <p className="text-xl">{totalQuantity > 99 ? `+ de ${totalQuantity}` : totalQuantity} articles</p>
+            <p className="text-xl">{totalQuantity > 99 ? `+ de 99` : totalQuantity} articles</p>
           </div>
           <div className="h-[200px] overflow-auto">
             {cart.map((item, index) => (
