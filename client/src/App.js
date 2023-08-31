@@ -19,6 +19,7 @@ import SubPage from "./Views/App/SubPage";
 import History from "./Views/Users/History";
 import Addresses from "./Views/Users/Addresses";
 import Payments from "./Views/Users/Payments";
+import DataManager from "./Views/Admin/DataManager";
 
 function App() {
     return (
@@ -43,6 +44,7 @@ function App() {
                 <Route path="/history" Component={History} />
                 <Route path="/addresses" Component={Addresses} />
                 <Route path="/payments" Component={Payments} />
+                <Route path="/admin/data" Component={DataManager} />
             </Routes>
             <Footer />
         </Router>
