@@ -22,18 +22,22 @@ export default function DataManager() {
     let endpoint = null;
     let id = null;
     if (e.target.name === "user_unique") {
-        endpoint = "get_user_data"
-        id = e.target.value
+      endpoint = "get_user_data";
+      id = e.target.value;
     } else if (e.target.name === "user_general") {
-        endpoint = "get_user_data"
+      endpoint = "get_user_data";
     } else if (e.target.name === "article_general") {
       endpoint = "get_article_data";
     } else if (e.target.name === "categorie_general") {
       endpoint = "get_categorie_data";
+    } else if (e.target.name === "global_data") {
+      endpoint = "get_general_data";
     }
 
     axios
-      .get(`http://localhost:8000/${endpoint}${id ? `/${id}` : ''}`, { responseType: "blob" })
+      .get(`http://localhost:8000/${endpoint}${id ? `/${id}` : ""}`, {
+        responseType: "blob",
+      })
       .then((res) => {
         console.log(res);
         const blobUrl = URL.createObjectURL(res.data);
@@ -51,7 +55,9 @@ export default function DataManager() {
         } else if (endpoint === "get_article_data") {
           link.download = `general_article_${date}.csv`;
         } else if (endpoint === "get_categorie_data") {
-          link.download = `general_categorie_${date}.csv`
+          link.download = `general_categorie_${date}.csv`;
+        } else if (endpoint === "get_general_data") {
+          link.download = `general_infos_${date}.csv`;
         }
 
         link.click();
@@ -63,6 +69,21 @@ export default function DataManager() {
 
   return (
     <div>
+      <div>
+        <button onClick={handleClick} name="global_data">
+          Données globales du site
+        </button>
+      </div>
+      <div>
+        <button onClick={handleClick} name="article_general">
+          Données articles général
+        </button>
+      </div>
+      <div>
+        <button onClick={handleClick} name="categorie_general">
+          Données catégories général
+        </button>
+      </div>
       <div>
         <button onClick={handleClick} name="user_general">
           Données utilisateur général
@@ -98,7 +119,11 @@ export default function DataManager() {
                       </td>
                       <td>
                         {" "}
-                        <button onClick={handleClick} name="user_unique" value={user._id}>
+                        <button
+                          onClick={handleClick}
+                          name="user_unique"
+                          value={user._id}
+                        >
                           Obtenir les données
                         </button>
                       </td>
@@ -115,16 +140,6 @@ export default function DataManager() {
             Afficher les utilisateurs
           </button>
         )}
-      </div>
-      <div>
-        <button onClick={handleClick} name="article_general">
-          Données articles général
-        </button>
-      </div>
-      <div>
-        <button onClick={handleClick} name="categorie_general">
-          Données catégories général
-        </button>
       </div>
     </div>
   );

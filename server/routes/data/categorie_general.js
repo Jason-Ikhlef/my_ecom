@@ -14,17 +14,6 @@ router.get("/get_categorie_data", async (req, res) => {
   date = date.toLocaleDateString("fr").replaceAll("/", "-");
   const fileName = `general_categorie_${date}.csv`;
 
-  function escapeCSVValue(value) {
-    if (
-      typeof value === "string" &&
-      (value.includes(",") || value.includes('"') || value.includes("\n"))
-    ) {
-      return `"${value.replace(/"/g, '""')}"`;
-    } else {
-      return value;
-    }
-  }
-
   async function getNbObjects(categorieName) {
     let count = await articleCollection.count({ animalsName: categorieName });
     return count;

@@ -108,8 +108,6 @@ router.get("/get_user_data/:id", async (req, res) => {
       data += item[target] + "," + "\n";
     });
 
-    console.log(data);
-
     return data.slice(0, -1);
   }
 
@@ -231,7 +229,9 @@ router.get("/get_user_data/:id", async (req, res) => {
   const generalCsvHeaders = Object.keys(generalInfos).join(",");
   const generalCsvValues = Object.values(generalInfos).join(",");
 
-  let cmdHeaders,addressesCsvHeaders, cartHeader = null;
+  let cmdHeaders = null;
+  let addressesCsvHeaders = null;
+  let cartHeader = null;
   let cmdValues, addressesValues, cartValues = "";
 
   combinedCsvContent = `${generalCsvHeaders}\n${generalCsvValues}`;

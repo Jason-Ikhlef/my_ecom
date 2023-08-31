@@ -142,8 +142,8 @@ router.get("/get_article_data", async (req, res) => {
     return [firstRow, secondRow];
   }
 
-  async function getTopCartArticle(items) {
-    const { mostOrderedByUnique, mostOrderedByQuantity } =
+ async function getTopCartArticle(items) {
+    const  { mostOrderedByUnique, mostOrderedByQuantity } =
       mostWishListedArticle(items);
 
     const byUniqueArticle = await articleCollection.findOne({
@@ -244,7 +244,12 @@ router.get("/get_article_data", async (req, res) => {
   const header = Object.keys(articlesInfos[0]).join(",");
   const headerTopArticle = Object.keys(topArticle[0]).join(",");
   const headerTopCartArticle = Object.keys(topCartArticle[0]).join(",");
-  let values, valuesTopArticleUnique = "";
+  
+  let values = "";
+  let valuesTopArticleUnique = "";
+  let valuesTopArticleQuantity = "";
+  let valuesTopCartArticleUnique = "";
+  let valuesTopCartArticleQuantity = "";
 
   articlesInfos.forEach((element) => {
     values +=
@@ -283,21 +288,15 @@ router.get("/get_article_data", async (req, res) => {
   }
   valuesTopArticleUnique += "\n";
 
-  let valuesTopArticleQuantity = "";
-
   for (const property in topArticle[1]) {
     valuesTopArticleQuantity += escapeCSVValue(topArticle[1][property]) + ",";
   }
   valuesTopArticleQuantity += "\n";
 
-  let valuesTopCartArticleUnique = "";
-
   for (const property in topCartArticle[0]) {
     valuesTopCartArticleUnique += escapeCSVValue(topCartArticle[0][property]) + ",";
   }
   valuesTopCartArticleUnique += "\n";
-
-  let valuesTopCartArticleQuantity = "";
 
   for (const property in topCartArticle[1]) {
     valuesTopCartArticleQuantity += escapeCSVValue(topCartArticle[1][property]) + ",";

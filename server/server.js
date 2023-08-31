@@ -181,6 +181,9 @@ app.use('/', getGeneralArticle);
 const getGeneralCategorie = require('./routes/data/categorie_general');
 app.use('/', getGeneralCategorie);
 
+const getGeneralData = require('./routes/data/general_infos');
+app.use('/', getGeneralData);
+
 // A deplacer 
 
 const { articleCollection, appCollection } = require("./mongo");
