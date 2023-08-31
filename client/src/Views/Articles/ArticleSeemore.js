@@ -357,7 +357,7 @@ export default function ArticleSeeMore() {
                     className="w-[20px] h-auto"
                     alt="Checkmark"
                   ></img>
-                  <p>Livraison à domicile en Belgique (gratuit) et en France</p>
+                  <p>Livraison partout dans le monde</p>
                 </div>
                 <div className="flex my-4 ml-5 gap-8 w-full mx-auto">
                   <img
