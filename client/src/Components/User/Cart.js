@@ -22,6 +22,7 @@ const Cart = () => {
     const [logIn, setLogIn] = useState(true);
     const [showPopup, setShowPopup] = useState(false);
     const [isSelectingAddress, setIsSelectingAddress] = useState(false);
+    const [isEmptyCvv, setIsEmptyCvv] = useState(null)
 
     const [address, setAddress] = useState(null);
     const [payment, setPayment] = useState(null);
@@ -65,12 +66,19 @@ const Cart = () => {
         if (
             PaymentForm.name !== "" &&
             PaymentForm.card !== "" &&
-            PaymentForm.date !== "" &&
-            PaymentForm.cvv !== ""
+            PaymentForm.date !== "" 
         ) {
-            closePopup();
-            setPayment(PaymentForm);
-            newOrder();
+            console.log(PaymentForm);
+            if (
+                PaymentForm.cvv === ''
+            ) {
+                setIsEmptyCvv(true)
+            }
+            else {
+                closePopup();
+                setPayment(PaymentForm);
+                newOrder();
+            }
         }
     };
 
@@ -576,11 +584,29 @@ const Cart = () => {
                             <div className="popup-overlay z-20">
                                 <div className="popup-container">
                                     <h2 className="text-2xl font-semibold mb-4">
-                                        Moyen de paiement
+                                        {isEmptyCvv ? 'Renseignez votre CVV' : 'Moyen de paiement'}
                                     </h2>
                                     <div className="flex gap-6">
                                         {currentUser &&
                                         currentUser.data.cards.length !== 0 ? (
+                                            isEmptyCvv ? (
+                                               <div className="my-6">
+                                                    <form>
+                                                        <label htmlFor="cvv">CVV</label>
+                                                        <input
+                                                            type="password"
+                                                            id="cvv"
+                                                            name="cvv"
+                                                            value={PaymentForm.cvv}
+                                                            onChange={
+                                                                handlePaymentChange
+                                                            }
+                                                            required
+                                                            className="border"
+                                                        />
+                                                    </form>
+                                               </div> 
+                                            ) : (
                                             currentUser.data.cards.map(
                                                 (item, index) => (
                                                     <div
@@ -599,6 +625,7 @@ const Cart = () => {
                                                     </div>
                                                 )
                                             )
+                                        )
                                         ) : (
                                             <form className="flex flex-col mx-auto mt-8 border rounded-xl p-2">
                                                 <label htmlFor="name">

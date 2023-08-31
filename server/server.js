@@ -171,6 +171,22 @@ app.use('/', GetShipping);
 const setShipping = require('./routes/easypost/newShipping');
 app.use('/', setShipping);
 
+// DATA
+const getGeneralUser = require('./routes/data/user_general');
+app.use('/', getGeneralUser);
+
+const getUniqueUser = require('./routes/data/user_details');
+app.use('/', getUniqueUser);
+
+const getGeneralArticle = require('./routes/data/article_general');
+app.use('/', getGeneralArticle);
+
+const getGeneralCategorie = require('./routes/data/categorie_general');
+app.use('/', getGeneralCategorie);
+
+const getGeneralData = require('./routes/data/general_infos');
+app.use('/', getGeneralData);
+
 // A deplacer 
 
 const { articleCollection, appCollection } = require("./mongo");

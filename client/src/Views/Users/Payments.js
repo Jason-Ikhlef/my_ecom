@@ -142,7 +142,6 @@ export default function Payments() {
                         name="cvv"
                         defaultValue={form.cvv}
                         onChange={handleChange}
-                        required
                         className="border"
                     />
                     <button
@@ -239,7 +238,6 @@ export default function Payments() {
                             id="cvv"
                             name="cvv"
                             onChange={handleEditChange}
-                            required
                             className="border"
                         />
                         <button
