@@ -74,9 +74,10 @@ async function setState(userId, collection, req) {
         req.session.user.old_orders = user.old_orders;
         req.session.save()
         if (currentIndex < 3) setState(userId, collection, req)
+        else currentIndex = 0
       }
     }
-  }, 6000);
+  }, 3000);
 
   return () => clearTimeout(timer);
 }
