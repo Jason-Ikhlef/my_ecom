@@ -8,7 +8,7 @@ import RecommendCarrousel from "../../Components/Carrousel/RecommendCarrousel";
 export default function HomePage(params) {
     const [carrousel, setCarrousel] = useState("news");
     const [getPromo, setGetPromo] = useState(null);
-
+    const [articles, setArticles] = useState(null);
 
     const newsCarrousel = (e) => {
         setCarrousel("news");
@@ -30,6 +30,21 @@ export default function HomePage(params) {
         });
     });
 
+    useEffect(() => {
+        const fetchArticles = async () => {
+            try {
+                const response = await axios.get(
+                    "http://localhost:8000/slider/promotions", 
+                );
+                setArticles(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        fetchArticles();
+    }, []);
+
     return (
         <div className="h-[780px] flex flex-col justify-evenly items-center">
             <div
@@ -47,7 +62,7 @@ export default function HomePage(params) {
                     </p>
                 </div>
                 {
-                    getPromo ? 
+                    getPromo || articles ? 
                     <div>
                         <p
                             onClick={promotionCarrousel}

@@ -311,7 +311,7 @@ const Cart = () => {
                                                 className="w-[100px] h-[100px]"
                                             />
                                             <div className="flex flex-col w-1/3">
-                                                <p>{item.price} €</p>
+                                                <p>{item.price.toFixed(2)} €</p>
                                                 <p className="whitespace-normal text-[12px]">
                                                     {item.name}
                                                 </p>

@@ -93,7 +93,7 @@ export default function History() {
                      </View>
                      <View style={styles.rowContainer}>
                         <Text style={styles.subTitleInformations}>Montant de la commande :</Text>
-                        <Text style={styles.informations}>{order.totalPrice} €</Text>
+                        <Text style={styles.informations}>{order.totalPrice.toFixed(2)} €</Text>
                      </View>
                   </View>
                   <View>
@@ -103,7 +103,7 @@ export default function History() {
                         {order.cart.map((item, index) => (
                            <View key={index} style={styles.rowWithPrice}>
                               <Text style={styles.informations}>{item.quantity} ex. de {item.name}</Text>
-                              <Text style={styles.informations}>Prix : {item.price} €</Text>
+                              <Text style={styles.informations}>Prix : {item.price.toFixed(2)} €</Text>
                            </View>
                         ))}
                         <Text style={styles.informationsWithMargin}>Adresse de livraison :</Text>

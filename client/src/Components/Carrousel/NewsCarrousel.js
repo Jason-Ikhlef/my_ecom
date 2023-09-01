@@ -53,7 +53,7 @@ export default function NewsCarrousel() {
                             <img
                                 src={`http://localhost:8000/storage/${article.pictures[0]}`}
                                 alt="Photo article"
-                                className="w-[300px] mx-auto"
+                                className="w-[300px] h-[300px] mx-auto"
                             />
                             <p className="text-center mt-3">
                                 {article.description}
