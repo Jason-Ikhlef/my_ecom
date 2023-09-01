@@ -62,7 +62,7 @@ export default function HomePage(params) {
                     </p>
                 </div>
                 {
-                    getPromo || articles ? 
+                    getPromo || articles && articles.length !== 0 ? 
                     <div>
                         <p
                             onClick={promotionCarrousel}
