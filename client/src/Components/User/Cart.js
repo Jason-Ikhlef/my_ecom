@@ -493,7 +493,6 @@ const Cart = () => {
                                                             );
                                                         }}>
                                                         {" "}
-                                                        {/* en cliquant sur la div / la card contenant les infos, ouvre de quoi la modifier */}
                                                         <p>{item.country}</p>
                                                         <p>{item.city}</p>
                                                         <p>{item.zipcode}</p>

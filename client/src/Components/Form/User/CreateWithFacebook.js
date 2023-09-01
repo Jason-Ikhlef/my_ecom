@@ -10,12 +10,10 @@ export default function CreateWithFacebook() {
         const [login, setLogin] = useState(false);
         const [data, setData] = useState(null);
 
-        // const [picture, setPicture] = useState('');
     
         const responseFacebook = (response) => {
             console.log(response);
             setData(response);
-            // setPicture(response.picture.data.url);
             if (response.accessToken) {
               setLogin(true);
             } else {

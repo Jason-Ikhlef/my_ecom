@@ -51,7 +51,6 @@ export default function SubPage() {
     )
   };
 
-  //faire des check pour savoir si l'utilisateur est abonné ou non avec true ou false
 
 
   return (

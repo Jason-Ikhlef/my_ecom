@@ -13,7 +13,6 @@ import UpdateUser from "./Components/Form/User/UpdateUser";
 import AdminUser from "./Views/Admin/User";
 import AdminArticles from "./Views/Admin/Articles";
 import AdminCategories from "./Views/Admin/Categories";
-import Footer from "./Components/Widgets/Footer";
 import Cart from "./Components/User/Cart";
 import SubPage from "./Views/App/SubPage";
 import History from "./Views/Users/History";
@@ -39,14 +38,12 @@ function App() {
                 <Route path="/admin/categories" Component={AdminCategories} />
                 <Route path="/articles/seatch/:name" Component={UpdateUser} />
                 <Route path="/cart" Component={Cart} />
-                {/* <Route path='/articles/seatch/:name' Component={UpdateUser} /> */}
                 <Route path="/subpage" Component={SubPage} />
                 <Route path="/history" Component={History} />
                 <Route path="/addresses" Component={Addresses} />
                 <Route path="/payments" Component={Payments} />
                 <Route path="/admin/data" Component={DataManager} />
-            </Routes>
-            <Footer />
+            </Routes>    
         </Router>
     );
 }

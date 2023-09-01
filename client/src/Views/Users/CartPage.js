@@ -9,12 +9,6 @@ const UserCart = () => {
   const { currentUser, userLoading } = User();
   const [cart, setCart] = useState([]);
 
-  // const [shippingCost, setShippingCost] = useState(null);
-
-  // useEffect(() => {
-  //   axios.post('https://api.easypost.com/v2/addresses')
-  // }, [])
-
   if (userLoading) {
     return <Loader />;
   }

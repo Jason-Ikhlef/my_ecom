@@ -31,7 +31,6 @@ router.delete("/deleteUser/:id", async (req, res) => {
         });
         res.json("success");
     } catch (e) {
-        // voir pour envoyer des messages plus clairs en fonction des erreurs
         console.log(e);
         res.json("fail");
     }

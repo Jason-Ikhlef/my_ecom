@@ -28,7 +28,6 @@ router.post("/DeleteCategory", async (req, res) => {
             console.log('Animal deleted');
             return;
         } catch (e) {
-            // voir pour envoyer des messages plus clairs en fonction des erreurs
             console.log(e);
             res.json("fail");
         }
@@ -51,7 +50,6 @@ router.post("/DeleteCategory", async (req, res) => {
                 console.log('Category deleted');
                 return
             } catch (e) {
-                // voir pour envoyer des messages plus clairs en fonction des erreurs
                 console.log(e);
                 res.json("fail");
             }
@@ -66,7 +64,6 @@ router.post("/DeleteCategory", async (req, res) => {
                         animal.save();
                         console.log('SubCategory deleted');
                     } catch (e) {
-                        // voir pour envoyer des messages plus clairs en fonction des erreurs
                         console.log(e);
                         res.json("fail");
                     }

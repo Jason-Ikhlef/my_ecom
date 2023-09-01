@@ -18,7 +18,6 @@ router.post("/NewCategory", async (req, res) => {
     let animal, group, series, idCat = null;
 
     if (animals === "" || animals === null) {
-        // res.status(400).json("Aucun animal sélectionné");
         return;
     }
 
@@ -38,14 +37,12 @@ router.post("/NewCategory", async (req, res) => {
             });
             console.log('animal category saved');
         } catch (e) {
-            // voir pour envoyer des messages plus clairs en fonction des erreurs
             console.log(e);
             res.json("fail");
         }
     }
 
     if (category === '' || category === null) {
-        // res.status(400).json("Animal crée, aucune catégorie ajoutée");
         return;
     }
 
@@ -74,13 +71,11 @@ router.post("/NewCategory", async (req, res) => {
             console.log('category saved');
 
         } catch (e) {
-            // voir pour envoyer des messages plus clairs en fonction des erreurs
             res.json("fail");
         }
     }
 
     if (subCategory === '' || subCategory === null) {
-        // res.status(400).json("Animal et catégorie crées, aucune sous-catégorie ajoutée");
         return;
     }
 
@@ -109,7 +104,6 @@ router.post("/NewCategory", async (req, res) => {
                 animal.categories[idCat].subCategories.push(series);
                 console.log('subcategory saved');
             } catch (e) {
-                // voir pour envoyer des messages plus clairs en fonction des erreurs
                 console.log(e);
                 res.json("fail");
             }
