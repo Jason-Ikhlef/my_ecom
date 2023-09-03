@@ -1,5 +1,5 @@
 {
-  "name": "serveur",
+  "name": "server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,8 +10,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@easypost/api": "^6.7.0",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "express": "^4.18.2",
-    "mongoose": "^7.4.0"
+    "express-session": "^1.17.3",
+    "fast-csv": "^4.3.6",
+    "jsonexport": "^3.2.0",
+    "mongoose": "^7.4.0",
+    "multer": "^1.4.5-lts.1"
   }
 }

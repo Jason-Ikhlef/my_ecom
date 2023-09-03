@@ -15,3 +15,286 @@ code {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.content_border {
+  box-shadow: 5px 5px 0px 0px #289FED,
+    10px 10px 0px 0px #5FB8FF,
+    15px 15px 0px 0px #A1D8FF,
+    20px 20px 0px 0px #CAE6FF,
+    25px 25px 0px 0px #E1EEFF,
+    5px 5px 15px 5px rgba(0, 0, 0, 0);
+}
+
+.border-8 {
+  border: 10px solid #ffffff;
+}
+
+.rs-dropdown-toggle,
+.rs-dropdown-menu,
+.rs-dropdown-toggle:hover {
+  background-color: #4FBEB7;
+  color: #000;
+}
+
+.rs-btn:focus,
+.rs-btn:hover {
+  background-color: #4FBEB7;
+}
+
+.rs-dropdown-item:hover {
+  background-color: #4FBEB7;
+  color: #000;
+}
+
+.cartImg .rs-dropdown button[role="button"] {
+  height: 25px;
+  width: 25px;
+  background-image: url(./assets/cart.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.cartImg .rs-dropdown button[role="button"] svg {
+  display: none;
+}
+
+.lds-roller {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.lds-roller div {
+  animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  transform-origin: 40px 40px;
+}
+
+.lds-roller div:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #fcf;
+  margin: -4px 0 0 -4px;
+}
+
+.lds-roller div:nth-child(1) {
+  animation-delay: -0.036s;
+}
+
+.lds-roller div:nth-child(1):after {
+  top: 63px;
+  left: 63px;
+}
+
+.lds-roller div:nth-child(2) {
+  animation-delay: -0.072s;
+}
+
+.lds-roller div:nth-child(2):after {
+  top: 68px;
+  left: 56px;
+}
+
+.lds-roller div:nth-child(3) {
+  animation-delay: -0.108s;
+}
+
+.lds-roller div:nth-child(3):after {
+  top: 71px;
+  left: 48px;
+}
+
+.lds-roller div:nth-child(4) {
+  animation-delay: -0.144s;
+}
+
+.lds-roller div:nth-child(4):after {
+  top: 72px;
+  left: 40px;
+}
+
+.lds-roller div:nth-child(5) {
+  animation-delay: -0.18s;
+}
+
+.lds-roller div:nth-child(5):after {
+  top: 71px;
+  left: 32px;
+}
+
+.lds-roller div:nth-child(6) {
+  animation-delay: -0.216s;
+}
+
+.lds-roller div:nth-child(6):after {
+  top: 68px;
+  left: 24px;
+}
+
+.lds-roller div:nth-child(7) {
+  animation-delay: -0.252s;
+}
+
+.lds-roller div:nth-child(7):after {
+  top: 63px;
+  left: 17px;
+}
+
+.lds-roller div:nth-child(8) {
+  animation-delay: -0.288s;
+}
+
+.lds-roller div:nth-child(8):after {
+  top: 56px;
+  left: 12px;
+}
+
+@keyframes lds-roller {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+#subbutton {
+  margin: 1em auto 2em;
+  border: 10px solid #F0F0FF;
+  overflow: hidden;
+  box-shadow: 0 .25em .5em #CCC, inset 0 0 1em .25em #CCC;
+}
+
+/* le bloc défilant */
+#subbutton> :first-child {
+  display: inline-block;
+  padding-right: 2em;
+  padding-left: 100%;
+  white-space: nowrap;
+  animation: defilement-sub 15s infinite linear;
+}
+
+#subbutton> :first-child {
+  animation-name: defilement-sub;
+  animation-duration: 15s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+@keyframes defilement-sub {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.subscription-card {
+  margin-bottom: 15px;
+}
+
+#carrouselSwitchButton div {
+  margin: 0 2rem;
+}
+
+/* Underline styles */
+#carrouselSwitchButton div p {
+  display: block;
+  position: relative;
+  padding: 0.2em 0;
+}
+
+/* Fade in */
+#carrouselSwitchButton div p::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: #4FBEB7;
+  opacity: 0;
+  transition: opacity 300ms, transform 500ms;
+}
+
+/* Slide in */
+#carrouselSwitchButton div p {
+  overflow: hidden;
+}
+
+#carrouselSwitchButton div p::after {
+  opacity: 1;
+  transform: translate3d(-100%, 0, 0);
+}
+
+#carrouselSwitchButton div p:hover::after,
+#carrouselSwitchButton div p:focus::after {
+  transform: translate3d(0, 0, 0);
+}
+
+#carrouselSwitchButton div:nth-child(2) p {
+  overflow: hidden;
+}
+
+#carrouselSwitchButton div:nth-child(2) p::after {
+  opacity: 1;
+  transform: translate3d(-100%, 0, 0);
+}
+
+#carrouselSwitchButton div:nth-child(2) p:hover::after,
+#carrouselSwitchButton div:nth-child(2) p:focus::after {
+  transform: translate3d(0, 0, 0);
+}
+
+#carrouselSwitchButton div:nth-child(3) p {
+  overflow: hidden;
+}
+
+#carrouselSwitchButton div:nth-child(3) p::after {
+  opacity: 1;
+  transform: translate3d(-100%, 0, 0);
+}
+
+#carrouselSwitchButton div:nth-child(3) p:hover::after,
+#carrouselSwitchButton div:nth-child(3) p:focus::after {
+  transform: translate3d(0, 0, 0);
+}
+
+.card {
+  background-image: url(../src/assets/bg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.bar 
+{
+  filter: invert(96%) sepia(3%) saturate(624%) hue-rotate(184deg) brightness(90%) contrast(90%);
+}
